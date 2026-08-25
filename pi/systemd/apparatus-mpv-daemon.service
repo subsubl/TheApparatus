@@ -1,20 +1,23 @@
 [Unit]
-Description=The Apparatus - Pi B mpv Serial Daemon (LOOP_A/LOOP_B/TRIGGER_SEEK)
+Description=The Apparatus - Serial link daemon (ESP32 -> mpv IPC)
 BindsTo=apparatus-player-b.service
-After=apparatus-player-b.service
 Requires=apparatus-player-b.service
+After=apparatus-player-b.service
 
 [Service]
 Type=simple
 User=pi
 Environment=APPARATUS_SERIAL=/dev/serial0
 Environment=APPARATUS_MPV_SOCKET=/tmp/apparatus-mpv.sock
+Environment=APPARATUS_LAYER2_START_S=0
+Environment=APPARATUS_LAYER3_START_S=300
+Environment=APPARATUS_MASTER_END_S=600
 ExecStart=/usr/bin/python3 /home/pi/apparatus/mpv_daemon.py
 Restart=always
 RestartSec=3
 
-# dialout for /dev/serial0, video/render for IPC-adjacent ops
-SupplementaryGroups=dialout video render
+# dialout for /dev/serial0
+SupplementaryGroups=dialout video render input
 
 [Install]
 WantedBy=graphical.target

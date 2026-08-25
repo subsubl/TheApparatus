@@ -1,17 +1,16 @@
 [Unit]
-Description=The Apparatus - Pi A Loop Player (Layer 1)
+Description=The Apparatus - Pi A Loop Player (Layer 1 autoloader)
 After=graphical.target
 Wants=graphical.target
 
 [Service]
 Type=simple
 User=pi
-Environment=APPARATUS_LAYER1_VIDEO=/home/pi/media/layer1_loop.mp4
 ExecStart=/usr/bin/python3 /home/pi/apparatus/player_a.py
 Restart=always
 RestartSec=3
 
-SupplementaryGroups=video render
+SupplementaryGroups=video render input
 
 [Install]
 WantedBy=graphical.target

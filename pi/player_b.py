@@ -1,69 +1,49 @@
 #!/usr/bin/env python3
 """
-The Apparatus - Pi B Master Player
-==================================
-Launches mpv with the 10-minute contiguous master file (Layer2 00:00-05:00,
-Layer3 05:00-10:00), IPC socket enabled, and pre-seeds the A-B loop to the
-Layer 2 region so playback loops Layer 2 until the ESP32 touch trigger fires.
+The Apparatus - Pi B Master Player (autoloader edition)
+=======================================================
+Master L2/L3 file -> Mixer CH2. Videolooper behavior identical to Pi A but
+matching master_L2_L3*.(mp4|mkv|mov|avi|ts).
 
-The trigger_watcher.py daemon owns the IPC socket after this; it re-points the
-A-B loop and seeks on CONTACT. This launcher exits once mpv is up - systemd
-keeps the Restart=always wrapper around the whole stack via two services.
+A-B loop is seeded to the Layer 2 region (00:00-05:00) via mpv launch flags,
+so EVERY respawn (including autoloader hot-swaps) re-seeds Layer 2 looping.
+The serial daemon (mpv_daemon.py) owns the IPC socket afterwards and re-points
+loop + seeks on CONTACT.
 
-Key zero-blackout details:
-  --ab-loop-a=0 --ab-loop-b=300     start looping Layer 2 only
-  --hr-seek=no                      relative seeks stay instant (no keyframe
-                                    hunt pause); our trigger uses absolute+exact
-                                    which lands precisely on the 05:00 boundary
-  --keep-open=no --loop-file=inf    never stop, never show idle screen
+Run under systemd: apparatus-player-b.service
 """
 
 import os
-import subprocess
 import sys
-import time
 
-VIDEO = os.environ.get("APPARATUS_MASTER_VIDEO", "/home/pi/media/master_L2_L3.mp4")
-MPV_SOCKET = os.environ.get("APPARATUS_MPV_SOCKET", "/tmp/apparatus-mpv.sock")
-
-
-def wait_for_file(path: str) -> bool:
-    start = time.time()
-    while not os.path.exists(path):
-        if time.time() - start > 120:
-            return False
-        print(f"[apparatus-B] waiting for {path} ...", flush=True)
-        time.sleep(2)
-    return True
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from media_autoloader import AutoPlayer  # noqa: E402
 
 
 def main() -> int:
-    if not wait_for_file(VIDEO):
-        print(f"[apparatus-B] FATAL: {VIDEO} not found", flush=True)
-        return 1
-
-    cmd = [
-        "mpv",
-        f"--input-ipc-server={MPV_SOCKET}",
-        # A-B loop seeded to Layer 2 region (00:00 - 05:00)
-        "--ab-loop-a=0",
-        "--ab-loop-b=300",
-        "--keep-open=no",
-        "--fullscreen",
-        "--no-osd-bar",
-        "--osc=no",
-        "--hwdec=auto",
-        "--profile=high-quality",
-        "--video-sync=display-resample",
-        "--input-default-bindings=no",
-        "--input-vo-keyboard=no",       # no stray keypresses during exhibition
-        VIDEO,
-    ]
-    print("[apparatus-B] launching:", " ".join(cmd), flush=True)
-    while True:
-        rc = subprocess.call(cmd)
-        print(f"[apparatus-B] mpv exited rc={rc}, restarting in 2s", flush=True)
-        time.sleep(2)
+    layer3_start = os.environ.get("APPARATUS_LAYER3_START_S", "300")
+    ap = AutoPlayer(
+        stems=("master_l2_l3", "master"),
+        mpv_socket=os.environ.get("APPARATUS_MPV_SOCKET", "/tmp/apparatus-mpv.sock"),
+        label="PI-B/MASTER",
+        fixed_args=[
+            f"--ab-loop-a=0",             # Layer 2 region start
+            f"--ab-loop-b={layer3_start}",  # Layer 3 boundary
+            "--keep-open=no",
+            "--fullscreen",
+            "--no-osd-bar",
+            "--osc=no",
+            "--hwdec=auto",
+            "--profile=high-quality",
+            "--video-sync=display-resample",
+            "--vo=gpu",
+            "--gpu-context=drm",
+            "--input-default-bindings=no",
+            "--input-vo-keyboard=no",
+        ],
+    )
+    ap.run_forever()
+    return 0
 
 
 if __name__ == "__main__":

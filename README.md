@@ -161,6 +161,34 @@ TheApparatus/
 └── pi/                         # Raspberry Pi playback stack
 ```
 
+## Flashable Raspberry Pi Images (CI-built)
+
+Preconfigured Raspberry Pi OS Lite (64-bit, Bookworm) images for **Pi 3/4/5**
+are built automatically by GitHub Actions (`.github/workflows/build-images.yml`):
+go to the repo's **Actions → Raspberry Pi Images** run → download artifact
+(`apparatus-pi-A-img` / `apparatus-pi-B-img`, xz-compressed), flash with
+Raspberry Pi Imager / balenaEtcher. Tagged releases attach both images.
+
+| Image | Services enabled | Scans `/home/pi/media` for |
+|-------|------------------|----------------------------|
+| `apparatus-pi-A` | Layer 1 autoloader | `layer1_loop*.mp4` (fallback `layer1*`) |
+| `apparatus-pi-B` | Master autoloader + ESP32 serial daemon | `master_L2_L3*.mp4` (fallback `master*`) |
+
+Videolooper behavior on **both** Pis (`pi/media_autoloader.py`):
+- Boot → scan media folder → gapless autoplay of newest matching file
+  (`.mp4 .mkv .mov .avi .ts`)
+- **Hot reload**: replace/add a matching file while running → player swaps to
+  it within ~10 s — no reboot needed for content updates
+- No media yet → gray placeholder card ("unit alive, awaiting media")
+- Media folder is empty in the image by design; copy files via SSH/SFTP or USB
+
+Pi B image additionally ships: stable PL011 UART for the ESP32 link
+(`disable-bt` overlay, serial console stripped from the kernel cmdline),
+`python3-serial`, and the `LOOP_A/LOOP_B/TRIGGER_SEEK` daemon.
+
+Image login: user `pi`, password `apparatus`, SSH enabled — change before any
+public exhibition build (`first-user-name` / `password` inputs in the workflow).
+
 ## Pi Playback Stack (Zero-Blackout Architecture)
 
 ### Serial protocol (replaces the old GPIO pulse trigger)

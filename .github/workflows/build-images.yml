@@ -1,0 +1,55 @@
+name: Raspberry Pi Images (The Apparatus)
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [master]
+    paths:
+      - 'pi/**'
+      - 'image/**'
+      - '.github/workflows/build-images.yml'
+
+jobs:
+  build-image:
+    name: ${{ matrix.flavor }} image
+    runs-on: ubuntu-24.04-arm
+    strategy:
+      fail-fast: false
+      matrix:
+        flavor: [A, B]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build ${{ matrix.flavor }} image
+        uses: usimd/pi-gen-action@v1
+        id: build
+        with:
+          image-name: apparatus-pi-${{ matrix.flavor }}
+          stage-list: stage0 stage1 stage2 ./image/common-stack ./${{ matrix.flavor == 'A' && 'image/flavor-a' || 'image/flavor-b' }}
+          pi-gen-version: armbookworm
+          release: bookworm
+          hostname: apparatus-${{ matrix.flavor }}
+          first-user-name: pi
+          disable-first-boot-user-rename: 1
+          password: apparatus
+          enable-ssh: 1
+          timezone: Europe/Ljubljana
+          locale: en_GB.UTF-8
+          compression: xz
+          compression-level: 6
+          verbose-output: true
+          increase-runner-disk-size: true
+
+      - name: Upload image artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: apparatus-pi-${{ matrix.flavor }}-img
+          path: ${{ steps.build.outputs.image-path }}
+          if-no-files-found: error
+
+      - name: Attach to release (tag builds only)
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: ${{ steps.build.outputs.image-path }}

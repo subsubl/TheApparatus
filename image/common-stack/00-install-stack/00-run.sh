@@ -2,35 +2,22 @@
 
 echo "=== The Apparatus: installing playback stack ==="
 
-# Locate the repository root (marker: pi/media_autoloader.py).
-# Primary: this stage lives in <repo>/image/common-stack/00-install-stack,
-# so the repo root is three levels up from this script's directory.
-# Fallbacks cover pi-gen copying/symlinking stages elsewhere.
-SRC_ROOT=""
-for c in \
-    "$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)" \
-    "${PWD}" \
-    /home/runner/work/*/*/ ; do
-    if [ -f "${c%/}/pi/media_autoloader.py" ]; then
-        SRC_ROOT="${c%/}"
-        break
-    fi
-done
-if [ -z "${SRC_ROOT}" ]; then
-    echo "FATAL: could not locate repository root (pi/media_autoloader.py not found)"
-    exit 1
-fi
-echo "Repository root: ${SRC_ROOT}"
-
-install -v -d -m 2755 "${ROOTFS_DIR}/home/pi/media"
-install -v -d -m 2755 "${ROOTFS_DIR}/home/pi/apparatus"
+# This stage is fully self-contained: the workflow bundles the playback
+# stack into ./files/ before pi-gen runs, because the build container
+# sees ONLY the stage directories - never the repository checkout.
+STAGE_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+FILES_DIR="${STAGE_DIR}/files"
 
 for f in media_autoloader.py player_a.py player_b.py mpv_daemon.py test_mpv_daemon.py; do
-    install -v -m 755 "${SRC_ROOT}/pi/${f}" "${ROOTFS_DIR}/home/pi/apparatus/${f}"
+    if [ ! -f "${FILES_DIR}/${f}" ]; then
+        echo "FATAL: ${FILES_DIR}/${f} missing (bundle step did not run?)"
+        exit 1
+    fi
+    install -v -m 755 "${FILES_DIR}/${f}" "${ROOTFS_DIR}/home/pi/apparatus/${f}"
 done
 
 for u in apparatus-player-a.service apparatus-player-b.service apparatus-mpv-daemon.service; do
-    install -v -m 644 "${SRC_ROOT}/pi/systemd/${u}" "${ROOTFS_DIR}/etc/systemd/system/${u}"
+    install -v -m 644 "${FILES_DIR}/${u}" "${ROOTFS_DIR}/etc/systemd/system/${u}"
 done
 
 cat > "${ROOTFS_DIR}/home/pi/media/PUT_VIDEOS_HERE.txt" << 'EOF'
@@ -45,7 +32,7 @@ Pi B scans this folder for:   master_L2_L3*.mp4 (fallback: master*.mp4)
 - Until a match is found, a gray placeholder card is displayed.
 EOF
 
-# Ownership fixup inside the chroot (canonical pi-gen pattern: helper in ROOTFS/tmp)
+# Ownership fixup inside the chroot (canonical pi-gen pattern)
 cat > "${ROOTFS_DIR}/tmp/apparatus_chown.sh" << 'EOF'
 #!/bin/bash -e
 chown -R pi:pi /home/pi/media /home/pi/apparatus

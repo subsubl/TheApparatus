@@ -21,6 +21,18 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Bundle playback stack into custom stage
+        run: |
+          mkdir -p image/common-stack/00-install-stack/files
+          cp pi/media_autoloader.py pi/player_a.py pi/player_b.py \
+             pi/mpv_daemon.py pi/test_mpv_daemon.py \
+             image/common-stack/00-install-stack/files/
+          cp pi/systemd/apparatus-player-a.service \
+             pi/systemd/apparatus-player-b.service \
+             pi/systemd/apparatus-mpv-daemon.service \
+             image/common-stack/00-install-stack/files/
+          ls -la image/common-stack/00-install-stack/files/
+
       - name: Free runner disk space (rm-based, no apt purge)
         run: |
           sudo rm -rf /usr/local/lib/android /usr/share/dotnet /opt/ghc \

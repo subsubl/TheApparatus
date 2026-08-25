@@ -21,6 +21,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Free runner disk space (rm-based, no apt purge)
+        run: |
+          sudo rm -rf /usr/local/lib/android /usr/share/dotnet /opt/ghc \
+            /usr/local/.ghc /opt/hostedtoolcache/CodeQL /usr/share/swift 2>/dev/null || true
+          sudo docker image prune -af > /dev/null 2>&1 || true
+          df -h /
+
       - name: Build ${{ matrix.flavor }} image
         uses: usimd/pi-gen-action@v1
         id: build
@@ -42,7 +49,6 @@ jobs:
           compression: xz
           compression-level: 6
           verbose-output: true
-          increase-runner-disk-size: true
 
       - name: Upload image artifact
         uses: actions/upload-artifact@v4

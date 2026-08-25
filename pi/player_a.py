@@ -18,6 +18,9 @@ from media_autoloader import AutoPlayer  # noqa: E402
 
 
 def main() -> int:
+    # VO chain env-overridable (Pi 5 frame-drop workaround, see mpv #17447)
+    default_vo = ("--vo=gpu --gpu-context=drm").split()
+    vo_args = os.environ.get("APPARATUS_MPV_VO_ARGS", "").split() or default_vo
     ap = AutoPlayer(
         stems=("layer1_loop", "layer1"),
         mpv_socket=os.environ.get("APPARATUS_MPV_SOCKET_A", "/tmp/apparatus-mpvA.sock"),
@@ -31,8 +34,7 @@ def main() -> int:
             "--hwdec=auto",
             "--profile=high-quality",
             "--video-sync=display-resample",
-            "--vo=gpu",
-            "--gpu-context=drm",
+            *vo_args,
             "--input-default-bindings=no",
             "--input-vo-keyboard=no",
         ],

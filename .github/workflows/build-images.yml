@@ -30,11 +30,14 @@ jobs:
           pi-gen-version: armbookworm
           release: bookworm
           hostname: apparatus-${{ matrix.flavor }}
-          first-user-name: pi
+          username: pi
           disable-first-boot-user-rename: 1
           password: apparatus
           enable-ssh: 1
-          timezone: Europe/Ljubljana
+          # NOTE: must be a zone present in npm `countries-and-timezones`
+          # (Europe/Ljubljana is only an alias there and fails validation).
+          # Same UTC offset as Ljubljana.
+          timezone: Europe/Vienna
           locale: en_GB.UTF-8
           compression: xz
           compression-level: 6

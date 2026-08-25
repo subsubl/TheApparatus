@@ -111,6 +111,13 @@ def main():
     if mock.received:
         failures.append(f"GARBAGE produced commands: {mock.received}")
 
+    # --- CAMERA_ON / CAMERA_OFF: stub path (no compositor present) ---
+    os.environ["APPARATUS_CAMERA_SCRIPT"] = "/tmp/apparatus-nonexistent-compositor.py"
+    md.handle("CAMERA_ON")    # must not raise
+    md.handle("CAMERA_OFF")
+    if mock.received:
+        failures.append(f"CAMERA_* leaked mpv commands: {mock.received}")
+
     os.unlink(MOCK_SOCK)
 
     if failures:

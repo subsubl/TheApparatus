@@ -145,15 +145,23 @@ void ApparatusStateMachine::_handleMicro(float dsp_normalized) {
 void ApparatusStateMachine::_handleContact(bool touch_active, const RadarFrame& frame) {
     if (touch_active) {
         if (!_pi_trigger_active) {
-            // Rising edge of CONTACT: fire the Layer 3 cut ONCE
+            // Rising edge of CONTACT: fire the Layer 3 cut ONCE,
+            // then activate the live camera (master plan: viewer's face
+            // superimposes onto the centered archival faces).
             piSend("TRIGGER_SEEK");
+            piSend("CAMERA_ON");
             _pi_trigger_active = true;
         }
         _updatePWMOutput(1.0f);   // Instant full-scale (VactrolManager bypasses slew)
         return;
     }
 
-    // Touch released
+    // Touch released: deactivate live camera first
+    if (_pi_trigger_active) {
+        piSend("CAMERA_OFF");
+        _pi_trigger_active = false;
+    }
+
     float dist = _effectiveDistance(frame);
     if (frame.valid && frame.target_state != TARGET_STATE_NONE &&
         dist > 0 && dist <= g_config.D_max) {

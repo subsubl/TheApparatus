@@ -8,6 +8,9 @@ echo "=== The Apparatus: installing playback stack ==="
 STAGE_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 FILES_DIR="${STAGE_DIR}/files"
 
+install -v -d -m 2755 "${ROOTFS_DIR}/home/pi/media"
+install -v -d -m 2755 "${ROOTFS_DIR}/home/pi/apparatus"
+
 for f in media_autoloader.py player_a.py player_b.py mpv_daemon.py test_mpv_daemon.py; do
     if [ ! -f "${FILES_DIR}/${f}" ]; then
         echo "FATAL: ${FILES_DIR}/${f} missing (bundle step did not run?)"

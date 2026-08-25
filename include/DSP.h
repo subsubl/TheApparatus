@@ -18,7 +18,7 @@
 #ifndef DSP_H
 #define DSP_H
 
-#include "Config.h"
+#include "PinDefinitions.h"
 #include <cmath>
 #include <vector>
 

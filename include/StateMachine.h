@@ -6,12 +6,12 @@
 #ifndef STATE_MACHINE_H
 #define STATE_MACHINE_H
 
-#include "Config.h"
+#include "PinDefinitions.h"
 #include "DSP.h"
 
 class ApparatusStateMachine {
 public:
-    ApparatusStateMachine(const CalibrationConfig& config, DSPPipeline& dsp);
+    ApparatusStateMachine(DSPPipeline& dsp);
 
     // Main update - call every loop iteration
     void update(bool touch_active, const RadarFrame& radar_frame,
@@ -22,7 +22,7 @@ public:
     const char* getStateName() const { return STATE_NAMES[_current_state]; }
     uint8_t getPWMOutput() const { return _pwm_output; }
     float getPWMOutputFloat() const { return _pwm_output_float; }
-    bool getPiTrigger() const { return _pi_trigger_active; }
+    bool getPiTrigger() const;
     float getBasePWM() const { return _base_pwm; }
     float getGammaShaped() const { return _gamma_shaped; }
     float getDistanceVariance() const { return _distance_variance; }
@@ -31,7 +31,6 @@ public:
     void printState() const;
 
 private:
-    const CalibrationConfig& _config;
     DSPPipeline& _dsp;
 
     // State tracking
@@ -47,10 +46,11 @@ private:
     float _distance_variance = 0.0f;
     uint32_t _stationary_start_time = 0;
 
-    // Output values
-    uint8_t _pwm_output = 0;
-    float _pwm_output_float = 0.0f;
+    // Output values (0.0-1.0 normalized mix level)
+    uint8_t _pwm_output = 0;          // Legacy 0-255 mirror for telemetry
+    float _pwm_output_float = 0.0f;   // Normalized mix target
     bool _pi_trigger_active = false;
+    bool _pi_loop_b_set = false;      // Serial loop state tracking
 
     // MACRO/MICRO variables
     float _base_pwm = 0.0f;

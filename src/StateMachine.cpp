@@ -1,34 +1,44 @@
 /**
  * @file StateMachine.cpp
- * @brief 4-Tier State Machine Implementation
+ * @brief 4-Tier State Machine Implementation (serial Pi link edition)
  *
- * Transitions (evaluated every loop iteration, non-blocking):
+ * Transitions:
+ *   IDLE  --target enters [D_min, D_max]-->          MACRO
+ *   MACRO --variance < thr for lock_time-->          MICRO
+ *   MACRO --distance > D_max + hyst-->               IDLE
+ *   MICRO --variance >= thr-->                       MACRO
+ *   MICRO --distance > D_max + hyst-->               IDLE
+ *   ANY    --touch-->                                CONTACT
+ *   CONTACT --touch released-->                      radar decides
  *
- *   IDLE  --target enters [D_min, D_max]-->                MACRO
- *   MACRO --variance < thr for lock_time-->                MICRO
- *   MACRO --distance > D_max + hyst-->                     IDLE
- *   MICRO --variance >= thr (movement resumes)-->          MACRO
- *   MICRO --distance > D_max + hyst-->                     IDLE
- *   ANY   --touch asserted-->                              CONTACT
- *   CONTACT --touch released--> (radar decides) IDLE/MACRO/MICRO
- *
- * Bidirectional hysteresis: entry requires distance <= D_max; exit requires
- * distance > D_max + hysteresis. This forms a deadband guard that prevents
- * chatter when a viewer hovers exactly at the threshold line.
+ * Mix output is normalized 0.0-1.0; the VactrolManager applies gamma,
+ * clamps, and slew. Pi trigger: CONTACT sends TRIGGER_SEEK once per edge.
  */
 
 #include "StateMachine.h"
 #include <Arduino.h>
 #include <math.h>
 
+extern HardwareSerial PiLink;  // Defined in main.cpp
+
 /* ============================================================================
  * CONSTRUCTOR
  * ============================================================================ */
 
-ApparatusStateMachine::ApparatusStateMachine(const CalibrationConfig& config, DSPPipeline& dsp)
-    : _config(config), _dsp(dsp) {
+ApparatusStateMachine::ApparatusStateMachine(DSPPipeline& dsp) : _dsp(dsp) {
     _state_enter_time = millis();
-    _last_pwm_update = millis();
+}
+
+/* ============================================================================
+ * PI SERIAL LINK HELPERS
+ * ============================================================================ */
+
+bool ApparatusStateMachine::getPiTrigger() const { return _pi_trigger_active; }
+
+static void piSend(const char* cmd) {
+    PiLink.print(cmd);
+    PiLink.print('\n');
+    log_i("PiLink -> %s", cmd);
 }
 
 /* ============================================================================
@@ -36,9 +46,10 @@ ApparatusStateMachine::ApparatusStateMachine(const CalibrationConfig& config, DS
  * ============================================================================ */
 
 void ApparatusStateMachine::update(bool touch_active, const RadarFrame& radar_frame,
-                                   bool dsp_ready, float dsp_normalized, float dsp_biquad_raw) {
+                                   bool dsp_ready, float dsp_normalized,
+                                   float dsp_biquad_raw) {
 
-    // --- Touch debounce ---
+    // Touch debounce
     bool touch_stable = touch_active;
     if (touch_active != _last_touch_state) {
         _touch_debounce_time = millis();
@@ -48,7 +59,7 @@ void ApparatusStateMachine::update(bool touch_active, const RadarFrame& radar_fr
     }
     _last_touch_state = touch_active;
 
-    // --- CONTACT has absolute priority (hard override of all radar logic) ---
+    // CONTACT has absolute priority
     if (touch_stable || _current_state == STATE_CONTACT) {
         _handleContact(touch_stable, radar_frame);
         return;
@@ -69,54 +80,63 @@ void ApparatusStateMachine::update(bool touch_active, const RadarFrame& radar_fr
 void ApparatusStateMachine::_handleIdle(const RadarFrame& frame) {
     float dist = _effectiveDistance(frame);
 
-    // Entry condition: valid target within [D_min - small margin, D_max]
     if (frame.valid && frame.target_state != TARGET_STATE_NONE &&
-        dist > 0 && dist <= _config.D_max && dist >= (_config.D_min - _config.hysteresis)) {
+        dist > 0 && dist <= g_config.D_max &&
+        dist >= (g_config.D_min - g_config.hysteresis)) {
         _transitionTo(STATE_MACRO);
         return;
     }
 
-    // Stay idle: glide fader to 0%, keep Pi trigger LOW
     _pi_trigger_active = false;
     _base_pwm = 0.0f;
     _gamma_shaped = 0.0f;
+
+    // Distance-zone Pi automation: far zone keeps Layer 2 loop
+    if (_pi_loop_b_set && frame.valid &&
+        dist > g_config.pi_zone_far_cm) {
+        piSend("LOOP_A");
+        _pi_loop_b_set = false;
+    }
+
     _updatePWMOutput(0.0f);
 }
 
 void ApparatusStateMachine::_handleMacro(const RadarFrame& frame) {
     float dist = _effectiveDistance(frame);
 
-    // Exit upward (with bidirectional hysteresis): only beyond D_max + hysteresis
     if (!frame.valid || frame.target_state == TARGET_STATE_NONE ||
-        dist > (_config.D_max + _config.hysteresis) || dist <= 0) {
+        dist > (g_config.D_max + g_config.hysteresis) || dist <= 0) {
         _transitionTo(STATE_IDLE);
         return;
     }
 
-    // Promote to MICRO on stationary lock
     if (_isTargetStationary(dist)) {
         _transitionTo(STATE_MICRO);
         return;
     }
 
-    // MACRO behavior: filtered distance -> gamma-shaped PWM
     float filtered_dist = _dsp.getDistanceFiltered();
     float linear = _mapDistanceToPWM(filtered_dist);
-    _gamma_shaped = _applyGamma(linear);
+    _gamma_shaped = powf(linear, g_config.gamma_exponent);
     _base_pwm = _gamma_shaped * 255.0f;
 
     _pi_trigger_active = false;
-    _updatePWMOutput(_base_pwm);
+
+    // Near zone hint: viewer well inside range
+    if (!_pi_loop_b_set && dist < g_config.pi_zone_near_cm) {
+        piSend("LOOP_B");
+        _pi_loop_b_set = true;
+    } else if (_pi_loop_b_set && dist > g_config.pi_zone_far_cm) {
+        piSend("LOOP_A");
+        _pi_loop_b_set = false;
+    }
+
+    _updatePWMOutput(_gamma_shaped);
 }
 
 void ApparatusStateMachine::_handleMicro(float dsp_normalized) {
-    // Exit to IDLE if target vanished entirely (checked via last frame in update())
-    // Exit to MACRO handled in update() via movement detection below.
-
-    // Breathing modulation around the locked base:
-    //   P_out = P_base + N_resp * M * 255
-    float modulation = dsp_normalized * _config.breathing_depth_M * 255.0f;
-    float p_out = _base_pwm + modulation;
+    float modulation = dsp_normalized * g_config.breathing_depth_M;
+    float p_out = constrain(_pwm_output_float + modulation * 0.25f, 0.0f, 1.0f);
     _updatePWMOutput(p_out);
 
     _pi_trigger_active = false;
@@ -124,23 +144,19 @@ void ApparatusStateMachine::_handleMicro(float dsp_normalized) {
 
 void ApparatusStateMachine::_handleContact(bool touch_active, const RadarFrame& frame) {
     if (touch_active) {
-        // Hard override: instant 100% PWM + Pi trigger HIGH (no slew limit)
-        _pwm_output_float = constrain(255.0f,
-                                      (float)_config.pwm_min_clamp,
-                                      (float)_config.pwm_max_clamp);
-        _pwm_output = (uint8_t)_pwm_output_float;
-        ledcWrite(VACTROL_PWM_CHANNEL, _pwm_output);
-        _last_pwm_output = _pwm_output_float;
-        _last_pwm_update = millis();
-
-        _pi_trigger_active = true;
+        if (!_pi_trigger_active) {
+            // Rising edge of CONTACT: fire the Layer 3 cut ONCE
+            piSend("TRIGGER_SEEK");
+            _pi_trigger_active = true;
+        }
+        _updatePWMOutput(1.0f);   // Instant full-scale (VactrolManager bypasses slew)
         return;
     }
 
-    // Touch released: exit CONTACT based on current radar picture
+    // Touch released
     float dist = _effectiveDistance(frame);
     if (frame.valid && frame.target_state != TARGET_STATE_NONE &&
-        dist > 0 && dist <= _config.D_max) {
+        dist > 0 && dist <= g_config.D_max) {
         _transitionTo(_isTargetStationary(dist) ? STATE_MICRO : STATE_MACRO);
     } else {
         _transitionTo(STATE_IDLE);
@@ -156,16 +172,9 @@ float ApparatusStateMachine::_effectiveDistance(const RadarFrame& frame) const {
 }
 
 float ApparatusStateMachine::_mapDistanceToPWM(float distance_cm) const {
-    float clamped = constrain(distance_cm, _config.D_min, _config.D_max);
-    // D_min -> 1.0, D_max -> 0.0 (closer = more Layer 2/3 bleed-through)
-    float linear = 1.0f - (clamped - _config.D_min) / (_config.D_max - _config.D_min);
+    float clamped = constrain(distance_cm, g_config.D_min, g_config.D_max);
+    float linear = 1.0f - (clamped - g_config.D_min) / (g_config.D_max - g_config.D_min);
     return constrain(linear, 0.0f, 1.0f);
-}
-
-float ApparatusStateMachine::_applyGamma(float v) const {
-    if (v <= 0.0f) return 0.0f;
-    if (v >= 1.0f) return 1.0f;
-    return powf(v, _config.gamma_exponent);
 }
 
 float ApparatusStateMachine::_calculateDistanceVariance(float d) {
@@ -184,17 +193,17 @@ float ApparatusStateMachine::_calculateDistanceVariance(float d) {
         float diff = _dist_history[i] - mean;
         acc += diff * diff;
     }
-    return sqrtf(acc / _dist_history_count);   // Std deviation (cm) - comparable to ±5 cm spec
+    return sqrtf(acc / _dist_history_count);
 }
 
 bool ApparatusStateMachine::_isTargetStationary(float distance_cm) {
     _distance_variance = _calculateDistanceVariance(distance_cm);
 
-    if (_distance_variance < _config.variance_threshold_cm) {
+    if (_distance_variance < g_config.variance_threshold_cm) {
         if (_stationary_start_time == 0) {
             _stationary_start_time = millis();
         }
-        return (millis() - _stationary_start_time) >= _config.stationary_lock_time_ms;
+        return (millis() - _stationary_start_time) >= g_config.stationary_lock_time_ms;
     }
     _stationary_start_time = 0;
     return false;
@@ -220,54 +229,41 @@ void ApparatusStateMachine::_transitionTo(ApparatusState_t new_state) {
             break;
 
         case STATE_MICRO:
-            // Lock P_base at current Macro PWM level (master briefing §4)
-            _base_pwm = _pwm_output_float;
-            _dsp.reset();   // Fresh AGC window so breathing wave settles cleanly
+            _base_pwm = _pwm_output_float * 255.0f;
+            _dsp.reset();   // Fresh AGC window for clean breathing wave
             break;
 
         case STATE_CONTACT:
-            // Nothing special - handler asserts outputs immediately
             break;
     }
 
     log_i("State: %s -> %s", STATE_NAMES[_previous_state], STATE_NAMES[_current_state]);
 }
 
-void ApparatusStateMachine::_updatePWMOutput(float target_pwm) {
+void ApparatusStateMachine::_updatePWMOutput(float target_norm) {
     uint32_t now = millis();
     uint32_t dt = (now > _last_pwm_update) ? (now - _last_pwm_update) : 1;
-
-    // Slew-rate limiting (inertia glide). CONTACT bypasses this entirely.
-    float max_change = _config.slew_rate_limit * dt;
-    float current = _last_pwm_output;
-    float limited;
-    if (target_pwm > current) {
-        limited = fminf(target_pwm, current + max_change);
-    } else {
-        limited = fmaxf(target_pwm, current - max_change);
-    }
-
-    _pwm_output_float = constrain(limited,
-                                  (float)_config.pwm_min_clamp,
-                                  (float)_config.pwm_max_clamp);
-    _pwm_output = (uint8_t)_pwm_output_float;
-
-    _last_pwm_output = _pwm_output_float;
     _last_pwm_update = now;
 
-    ledcWrite(VACTROL_PWM_CHANNEL, _pwm_output);
-}
+    float max_change = g_config.slew_rate_limit * dt * 0.01f;  // Per-ms glide
+    float current = _pwm_output_float;
+    float limited;
+    if (target_norm > current) {
+        limited = fminf(target_norm, current + max_change);
+    } else {
+        limited = fmaxf(target_norm, current - max_change);
+    }
 
-/* ============================================================================
- * PUBLIC INTERFACE
- * ============================================================================ */
+    _pwm_output_float = constrain(limited, 0.0f, 1.0f);
+    _pwm_output = (uint8_t)(_pwm_output_float * 255.0f + 0.5f);
+}
 
 void ApparatusStateMachine::forceState(ApparatusState_t new_state) {
     _transitionTo(new_state);
 }
 
 void ApparatusStateMachine::printState() const {
-    log_i("State=%s PWM=%d base=%.1f var=%.2fcm piTrig=%s",
-          getStateName(), _pwm_output, _base_pwm, _distance_variance,
+    log_i("State=%s mix=%.2f base=%.0f var=%.2fcm piTrig=%s",
+          getStateName(), _pwm_output_float, _base_pwm, _distance_variance,
           _pi_trigger_active ? "HIGH" : "LOW");
 }

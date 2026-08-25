@@ -1,5 +1,5 @@
 [Unit]
-Description=The Apparatus - Pi B Trigger Watcher (ESP32 GPIO -> mpv IPC cut)
+Description=The Apparatus - Pi B mpv Serial Daemon (LOOP_A/LOOP_B/TRIGGER_SEEK)
 BindsTo=apparatus-player-b.service
 After=apparatus-player-b.service
 Requires=apparatus-player-b.service
@@ -7,14 +7,14 @@ Requires=apparatus-player-b.service
 [Service]
 Type=simple
 User=pi
-Environment=APPARATUS_TRIGGER_GPIO=19
+Environment=APPARATUS_SERIAL=/dev/serial0
 Environment=APPARATUS_MPV_SOCKET=/tmp/apparatus-mpv.sock
-ExecStart=/usr/bin/python3 /home/pi/apparatus/trigger_watcher.py
+ExecStart=/usr/bin/python3 /home/pi/apparatus/mpv_daemon.py
 Restart=always
 RestartSec=3
 
-# gpiochip access without root
-SupplementaryGroups=gpio video render
+# dialout for /dev/serial0, video/render for IPC-adjacent ops
+SupplementaryGroups=dialout video render
 
 [Install]
 WantedBy=graphical.target

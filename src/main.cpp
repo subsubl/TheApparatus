@@ -1,10 +1,16 @@
 /**
  * @file main.cpp
- * @brief Main Entry Point for The Apparatus Firmware
- * 
- * Initializes all subsystems, runs the main control loop at ~100 Hz,
- * handles touch interrupts, manages NVS configuration persistence,
- * and coordinates the radar DSP pipeline, state machine, and web server.
+ * @brief The Apparatus — WJ-AVE5 edition
+ *
+ * Subsystem wiring per loop iteration (all non-blocking):
+ *   RadarParser::update()      -> UART frame extraction / SIM generation
+ *   DSPPipeline::process()     -> 10 Hz respiration extraction
+ *   StateMachine::update()     -> 4-tier logic, normalized mix target
+ *   VactrolManager::update()   -> 6-ch PWM with gamma/clamp/slew
+ *   RelayManager::update()     -> press sequencers + auto triggers
+ *   ButtonBank::update()       -> performer buttons
+ *   WebConsole::broadcast()    -> 20 Hz telemetry
+ *   PiLink                     -> serial commands to mpv daemon
  */
 
 #include <Arduino.h>
@@ -12,258 +18,150 @@
 #include <WiFi.h>
 #include <esp_task_wdt.h>
 
-#include "Config.h"
-#include "Radar.h"
+#include "PinDefinitions.h"
+#include "RadarParser.h"
 #include "DSP.h"
 #include "StateMachine.h"
-#include "WebServer.h"
-#include "FXRelay.h"
+#include "VactrolManager.h"
+#include "RelayManager.h"
+#include "WebConsole.h"
 
 /* ============================================================================
- * GLOBAL INSTANCES
+ * GLOBALS
  * ============================================================================ */
 
-// Configuration (loaded from NVS)
 CalibrationConfig g_config;
 Preferences g_preferences;
 
-// Hardware drivers
-RadarDriver g_radar;
-DSPPipeline g_dsp(g_config);
-ApparatusStateMachine g_state_machine(g_config, g_dsp);
-ApparatusWebServer g_web_server(80);
-FXRelayController g_fx_relays;
+HardwareSerial PiLink(1);   // UART1 remapped to GPIO 2 (TX-only)
 
-// Touch interrupt handling
+RadarParser g_radar;
+DSPPipeline g_dsp(g_config);
+ApparatusStateMachine g_state_machine(g_dsp);
+VactrolManager g_vactrols;
+RelayManager g_relays;
+ButtonBank g_buttons;
+BootSequencer g_boot;
+WebConsole g_web(80);
+
 volatile bool g_touch_triggered = false;
-volatile uint32_t g_touch_interrupt_time = 0;
+volatile uint32_t g_touch_last_isr_us = 0;
 portMUX_TYPE g_touch_mux = portMUX_INITIALIZER_UNLOCKED;
 
-// Main loop timing
-static constexpr uint32_t MAIN_LOOP_TARGET_MS = 10;  // 100 Hz main loop
-uint32_t g_loop_start_time = 0;
-uint32_t g_last_status_print = 0;
+static constexpr uint32_t MAIN_LOOP_TARGET_MS = 10;
 
 /* ============================================================================
- * TOUCH INTERRUPT HANDLER
+ * TOUCH ISR (GPIO 34, external pull-down hardware assumed)
  * ============================================================================ */
 
-void IRAM_ATTR touchInterruptHandler() {
-    // Debounce in ISR - minimum 5ms between interrupts
+void IRAM_ATTR touchISR() {
     uint32_t now = micros();
-    if (now - g_touch_interrupt_time > 5000) {
-        g_touch_interrupt_time = now;
-        // Read current pin state
-        bool touch_state = digitalRead(TOUCH_PIN) == TOUCH_ACTIVE_LEVEL;
-        if (g_config.touch_inverted) touch_state = !touch_state;
-        
-        // Atomic update
+    if (now - g_touch_last_isr_us > 5000) {
+        g_touch_last_isr_us = now;
+        bool state = (digitalRead(TOUCH_PIN) == TOUCH_ACTIVE_LEVEL);
+        if (g_config.touch_inverted) state = !state;
         portENTER_CRITICAL_ISR(&g_touch_mux);
-        g_touch_triggered = touch_state;
+        g_touch_triggered = state;
         portEXIT_CRITICAL_ISR(&g_touch_mux);
     }
 }
 
 /* ============================================================================
- * NVS CONFIGURATION MANAGEMENT
+ * NVS PERSISTENCE
  * ============================================================================ */
 
 void loadConfiguration() {
-    g_preferences.begin(NVS_NAMESPACE, true);  // Read-only first
-    
+    g_preferences.begin(NVS_NAMESPACE, true);
     if (g_preferences.isKey(NVS_KEY_CONFIG)) {
         size_t len = g_preferences.getBytesLength(NVS_KEY_CONFIG);
-        if (len == sizeof(CalibrationConfig)) {
-            g_preferences.getBytes(NVS_KEY_CONFIG, &g_config, len);
-            // Version check for future migrations
-            if (g_config.config_version != 1) {
-                log_w("Config version mismatch, using defaults");
-                g_config = CalibrationConfig();  // Reset to defaults
-            } else {
-                log_i("Configuration loaded from NVS");
-            }
+        CalibrationConfig loaded;
+        if (len == sizeof(CalibrationConfig) &&
+            g_preferences.getBytes(NVS_KEY_CONFIG, &loaded, len) == len &&
+            loaded.config_version == CONFIG_VERSION) {
+            g_config = loaded;
+            log_i("Config loaded from NVS (v%u)", loaded.config_version);
         } else {
-            log_w("Config size mismatch, using defaults");
-            g_config = CalibrationConfig();
+            log_w("NVS config stale (size %u, v%u) - defaults", len,
+                  len >= sizeof(uint8_t) ? 0 : 0);
+            // Keep defaults on mismatch; struct layout changed -> fresh start
         }
     } else {
-        log_i("No config in NVS, using defaults");
-        g_config = CalibrationConfig();
+        log_i("No NVS config - defaults");
     }
-    
     g_preferences.end();
 }
 
 void saveConfiguration() {
-    g_preferences.begin(NVS_NAMESPACE, false);  // Read-write
-    g_config.config_version = 1;
+    g_preferences.begin(NVS_NAMESPACE, false);
+    g_config.config_version = CONFIG_VERSION;
     g_preferences.putBytes(NVS_KEY_CONFIG, &g_config, sizeof(CalibrationConfig));
     g_preferences.end();
-    log_i("Configuration saved to NVS");
 }
 
-void resetConfiguration() {
-    g_config = CalibrationConfig();
-    saveConfiguration();
-    log_i("Configuration reset to defaults");
-}
+static volatile bool g_factory_reset_requested = false;
+void requestFactoryReset() { g_factory_reset_requested = true; }
 
-/* ============================================================================
- * HARDWARE INITIALIZATION
- * ============================================================================ */
-
-void initHardware() {
-    // Status LED
-    pinMode(STATUS_LED_PIN, OUTPUT);
-    digitalWrite(STATUS_LED_PIN, LOW);
-    
-    // Pi Trigger Pin
-    pinMode(PI_TRIGGER_PIN, OUTPUT);
-    digitalWrite(PI_TRIGGER_PIN, !PI_TRIGGER_ACTIVE_LEVEL);  // Inactive state
-    
-    // FX Relay Pins (stubbed - initialize to default states)
-    uint8_t fx_pins[FX_RELAY_COUNT] = FX_RELAY_PINS;
-    for (int i = 0; i < FX_RELAY_COUNT; i++) {
-        pinMode(fx_pins[i], OUTPUT);
-        digitalWrite(fx_pins[i], FX_RELAY_CONFIGS[i].default_state ? FX_RELAY_ACTIVE_LEVEL : !FX_RELAY_ACTIVE_LEVEL);
-    }
-    
-    // Initialize FX Relay Controller
-    g_fx_relays.begin();
-    
-    // Touch Input with Interrupt
-    pinMode(TOUCH_PIN, INPUT_PULLDOWN);  // Adjust based on hardware
-    attachInterrupt(digitalPinToInterrupt(TOUCH_PIN), touchInterruptHandler, CHANGE);
-    
-    // Vactrol PWM Setup (LEDC)
-    ledcSetup(VACTROL_PWM_CHANNEL, VACTROL_PWM_FREQ, VACTROL_PWM_RESOLUTION);
-    ledcAttachPin(VACTROL_PWM_PIN, VACTROL_PWM_CHANNEL);
-    ledcWrite(VACTROL_PWM_CHANNEL, 0);  // Start at 0%
-    
-    // Enable watchdog timer (8 second timeout)
-    esp_task_wdt_init(8, true);
-    esp_task_wdt_add(NULL);
-    
-    log_i("Hardware initialized");
-}
-
-/* ============================================================================
- * WIFI & WEB SERVER SETUP
- * ============================================================================ */
-
-void initWiFiAndWebServer() {
-    // Start in AP mode for configuration access
-    WiFi.mode(WIFI_AP);
-    WiFi.softAP(g_config.wifi_ssid, g_config.wifi_password);
-    
-    IPAddress ap_ip = WiFi.softAPIP();
-    log_i("AP Mode started: SSID='%s', IP=%s", g_config.wifi_ssid, ap_ip.toString().c_str());
-    
-    // Start web server
-    if (!g_web_server.begin()) {
-        log_e("Failed to start web server!");
-    }
-}
-
-/* ============================================================================
- * TELEMETRY PACKET CONSTRUCTION
- * ============================================================================ */
-
-TelemetryPacket buildTelemetryPacket() {
-    TelemetryPacket packet;
-    packet.timestamp_ms = millis();
-    packet.state = g_state_machine.getState();
-    
-    // Radar data (latest parsed frame - const reference, does not consume flags)
-    const RadarFrame& frame = g_radar.getLatestFrame();
-    packet.distance_raw = frame.detection_distance_cm;
-    packet.distance_filtered = g_dsp.getDistanceFiltered();
-    
-    for (int i = 0; i < RADAR_GATE_COUNT; i++) {
-        packet.stationary_energy[i] = frame.stationary_gate_energy[i];
-    }
-    
-    // DSP data
-    packet.biquad_raw = g_dsp.getBiquadRaw();
-    packet.agc_normalized = g_dsp.getAGCNormalized();
-    packet.peak_gate = g_dsp.getPeakGate();
-    
-    // State machine outputs
-    packet.pwm_output = g_state_machine.getPWMOutput();
-    packet.base_pwm = g_state_machine.getBasePWM();
-    packet.gamma_shaped = g_state_machine.getGammaShaped();
-    packet.pi_trigger = g_state_machine.getPiTrigger();
-    
-    return packet;
-}
-
-/* ============================================================================
- * CONFIGURATION CALLBACK (from WebServer)
- * ============================================================================ */
-
-// This would be called from WebServer when config changes via WebSocket
-// For now, we'll poll a flag in the main loop
-volatile bool g_config_changed = false;
-volatile bool g_config_reset_requested = false;
-
-void onConfigChanged() {
-    g_config_changed = true;
-}
-
-void onConfigReset() {
-    g_config_reset_requested = true;
-}
+// WebConsole handlers
+static void relayFireFromGui(uint8_t idx) { g_relays.fireSequence(idx); }
+static void relayStopFromGui(uint8_t idx) { g_relays.stopSequence(idx); }
 
 /* ============================================================================
  * SETUP
  * ============================================================================ */
 
 void setup() {
-    // Serial for debug
     Serial.begin(115200);
-    delay(100);  // Allow serial to connect
-    
-    log_i("\n\n========================================");
-    log_i("  The Apparatus - Firmware v1.0");
-    log_i("  Interactive Multimedia Art Installation");
-    log_i("  ESP32 + HLK-LD2410 + Vactrol Crossfader");
+    delay(100);
+
     log_i("========================================");
-    
-    // Load configuration from NVS
+    log_i("  THE APPARATUS - WJ-AVE5 Edition");
+    log_i("  ESP32-WROOM-32 | LD2410 | Vactrols x6");
+    log_i("  Relays x8 | Buttons x%d | PiLink", BUTTON_MAX);
+    log_i("========================================");
+
     loadConfiguration();
-    
-    // Initialize hardware
-    initHardware();
-    
-    // Initialize radar (configures Engineering Mode 0x62)
+
+    // --- GPIO: relays first (boot-safe HIGH = released) ---
+    g_relays.begin();
+
+    // Touch input
+    pinMode(TOUCH_PIN, INPUT);   // GPIO34: input-only, external pull-down
+    attachInterrupt(digitalPinToInterrupt(TOUCH_PIN), touchISR, CHANGE);
+
+    // Performer buttons
+    g_buttons.begin();
+
+    // Pi link serial
+    PiLink.begin(PI_LINK_BAUD, SERIAL_8N1, -1, PI_LINK_TX_PIN);
+
+    // Vactrol PWM engine
+    g_vactrols.begin();
+
+    // Watchdog
+    esp_task_wdt_init(8, true);
+    esp_task_wdt_add(NULL);
+
+#ifdef APPARATUS_SIM_MODE
+    log_i("*** SIM MODE ***");
+#else
     if (!g_radar.begin()) {
-        log_e("Radar initialization failed! Continuing without radar...");
-        // Blink error pattern
-        for (int i = 0; i < 10; i++) {
-            digitalWrite(STATUS_LED_PIN, HIGH);
-            delay(100);
-            digitalWrite(STATUS_LED_PIN, LOW);
-            delay(100);
-        }
-    } else {
-        log_i("Radar initialized successfully");
+        log_e("Radar init failed - continuing radarless");
     }
-    
-    // Initialize WiFi and Web Server
-    initWiFiAndWebServer();
-    
-    // Initialize DSP pipeline
-    g_dsp.reset();
-    
-    // Initial status
-    g_state_machine.printState();
-    g_radar.printStatus();
-    
-    log_i("Setup complete. Entering main loop...");
-    log_i("Web UI: http://%s", WiFi.softAPIP().toString().c_str());
-    
-    g_loop_start_time = millis();
-    g_last_status_print = millis();
+#endif
+
+    // WiFi AP + console
+    WiFi.mode(WIFI_AP);
+    WiFi.softAP(g_config.wifi_ssid, g_config.wifi_password);
+    log_i("AP '%s' @ %s", g_config.wifi_ssid, WiFi.softAPIP().toString().c_str());
+
+    g_web.setRelayFireHandler(relayFireFromGui);
+    g_web.setRelayStopHandler(relayStopFromGui);
+    g_web.begin();
+
+    // Power-on ritual for the WJ-AVE5 (mixer power click etc.)
+    g_boot.start();
+
+    log_i("Setup complete.");
 }
 
 /* ============================================================================
@@ -272,92 +170,105 @@ void setup() {
 
 void loop() {
     uint32_t loop_start = millis();
-    
-    // Feed watchdog
     esp_task_wdt_reset();
-    
-    // === 1. Update Radar (read UART, parse frames) ===
+
+    // 1. Radar
     g_radar.update();
-    
-    // === 2. Get Touch State (atomic read) ===
-    bool touch_active = false;
+
+    // 2. Touch state
+    bool touch_active;
     portENTER_CRITICAL(&g_touch_mux);
     touch_active = g_touch_triggered;
     portEXIT_CRITICAL(&g_touch_mux);
-    
-    // === 3. Process Radar Frame & DSP Pipeline ===
+
+    // 3. DSP pipeline at 10 Hz
+    RadarFrame current_frame = g_radar.getLatestFrame();
     bool dsp_ready = false;
-    float dsp_normalized = 0.0f;
-    float dsp_biquad_raw = 0.0f;
-    
-    RadarFrame current_frame = g_radar.getLatestFrame();  // Copy for state machine
+    float dsp_norm = 0.0f, dsp_biquad = 0.0f;
     if (g_radar.hasNewFrame()) {
         g_radar.clearNewFrameFlag();
-        dsp_ready = g_dsp.process(current_frame, dsp_normalized, dsp_biquad_raw);
+        dsp_ready = g_dsp.process(current_frame, dsp_norm, dsp_biquad);
     }
-    
-    // === 4. Update State Machine ===
-    g_state_machine.update(touch_active, current_frame, dsp_ready, dsp_normalized, dsp_biquad_raw);
-    
-    // === 5. Update FX Relays ===
-    g_fx_relays.update();
-    
-    // === 6. Handle Configuration Changes ===
-    if (g_config_changed) {
-        g_config_changed = false;
+
+    // 4. State machine
+    ApparatusState_t prev_state = g_state_machine.getState();
+    g_state_machine.update(touch_active, current_frame, dsp_ready, dsp_norm, dsp_biquad);
+    ApparatusState_t now_state = g_state_machine.getState();
+    bool state_changed = (prev_state != now_state);
+
+    // 5. Vactrols (mix target normalized 0-1 from state machine)
+    float mix_target = g_state_machine.getPWMOutputFloat();
+    g_vactrols.update(mix_target, now_state == STATE_CONTACT);
+
+    // 6. Relays + performer buttons + boot ritual
+    g_relays.update(state_changed, now_state, dsp_ready ? dsp_norm : 0.0f);
+    g_buttons.update(g_relays);
+    g_boot.update(g_relays);
+
+    // 7. Factory reset check
+    if (g_factory_reset_requested) {
+        g_factory_reset_requested = false;
+        g_config = CalibrationConfig();
         saveConfiguration();
-        g_web_server.notifyConfigChanged();
-        log_i("Configuration updated and saved");
+        log_w("Factory reset - restarting");
+        delay(200);
+        ESP.restart();
     }
-    
-    if (g_config_reset_requested) {
-        g_config_reset_requested = false;
-        resetConfiguration();
-        g_web_server.notifyConfigChanged();
-        g_dsp.reset();
-        ESP.restart();  // Clean restart after reset
+
+    // 8. Telemetry 20 Hz
+    static uint32_t last_tele = 0;
+    if (millis() - last_tele >= 50) {
+        last_tele = millis();
+        TelemetryPacket p;
+        p.timestamp_ms = millis();
+        p.state = now_state;
+        const RadarFrame& f = g_radar.getLatestFrame();
+        p.distance_raw = f.detection_distance_cm;
+        p.distance_filtered = g_dsp.getDistanceFiltered();
+        for (int i = 0; i < RADAR_GATE_COUNT; i++)
+            p.stationary_energy[i] = f.stationary_gate_energy[i];
+        p.biquad_raw = g_dsp.getBiquadRaw();
+        p.agc_normalized = g_dsp.getAGCNormalized();
+        p.peak_gate = g_dsp.getPeakGate();
+        p.mix_pwm = g_vactrols.getValue(VACT_MIX);
+        p.pi_trigger = g_state_machine.getPiTrigger();
+        p.gamma_shaped = g_state_machine.getGammaShaped();
+        p.base_pwm_f = g_state_machine.getBasePWM();
+        for (int i = 0; i < RELAY_COUNT; i++) {
+            p.relay_seq[i] = g_relays.getSeqActive(i);
+            p.relay_pressed[i] = g_relays.isPressed(i);
+        }
+        for (int i = 0; i < VACTROL_COUNT; i++) {
+            p.vactrol_val[i] = g_vactrols.getValue(i);
+            p.vactrol_auto[i] = g_config.vactrol[i].auto_mode;
+        }
+        g_web.broadcastTelemetry(p);
     }
-    
-    // === 6. Broadcast Telemetry (20 Hz) ===
-    static uint32_t last_telemetry = 0;
-    if (millis() - last_telemetry >= 50) {  // 20 Hz = 50ms
-        TelemetryPacket packet = buildTelemetryPacket();
-        g_web_server.broadcastTelemetry(packet);
-        last_telemetry = millis();
+
+    // 9. Status print every 10 s
+    static uint32_t last_status = 0;
+    if (millis() - last_status > 10000) {
+        last_status = millis();
+        log_i("St=%s mix=%.2f dist=%.0f agc=%.2f frames=%lu err=%lu ws=%u",
+              g_state_machine.getStateName(), mix_target,
+              g_dsp.getDistanceFiltered(), g_dsp.getAGCNormalized(),
+              (unsigned long)g_radar.getFramesReceived(),
+              (unsigned long)g_radar.getParseErrors(),
+              (unsigned)g_web.getClientCount());
     }
-    
-    // === 7. Update Web Server (cleanup, etc.) ===
-    g_web_server.update();
-    
-    // === 8. Status LED Blink (heartbeat) ===
-    static uint32_t last_led_toggle = 0;
-    static bool led_state = false;
-    if (millis() - last_led_toggle > 1000) {
-        led_state = !led_state;
-        digitalWrite(STATUS_LED_PIN, led_state);
-        last_led_toggle = millis();
+
+    // 10. Heartbeat LED
+    static uint32_t last_led = 0;
+    static bool led = false;
+    if (millis() - last_led > 1000) {
+        last_led = millis();
+        led = !led;
+        digitalWrite(STATUS_LED_PIN, led);
     }
-    
-    // === 9. Periodic Status Print (every 10 seconds) ===
-    if (millis() - g_last_status_print > 10000) {
-        TelemetryPacket status_packet = buildTelemetryPacket();
-        log_i("=== Status @ %lu ms ===", millis());
-        log_i("State: %s", g_state_machine.getStateName());
-        log_i("PWM: %d, Pi Trigger: %s", g_state_machine.getPWMOutput(), 
-              g_state_machine.getPiTrigger() ? "HIGH" : "LOW");
-        log_i("Dist: raw=%d filtered=%.1f", status_packet.distance_raw, status_packet.distance_filtered);
-        log_i("DSP: biquad=%.3f agc=%.3f", status_packet.biquad_raw, status_packet.agc_normalized);
-        log_i("Radar frames: %lu, errors: %lu", g_radar.getFramesReceived(), g_radar.getParseErrors());
-        log_i("WS Clients: %d", g_web_server.getWebSocketClientCount());
-        g_fx_relays.printStatus();
-        g_last_status_print = millis();
-    }
-    
-    // === 10. Loop Timing Control ===
-    uint32_t loop_time = millis() - loop_start;
-    if (loop_time < MAIN_LOOP_TARGET_MS) {
-        delay(MAIN_LOOP_TARGET_MS - loop_time);
-    } else if (loop_time > MAIN_LOOP_TARGET_MS * 2) {
-        log_w("Main loop overrun: %lu ms (target %d ms)", loop_time, MAIN_LOOP_TARGET_MS);
+
+    // Loop pacing
+    uint32_t spent = millis() - loop_start;
+    if (spent < MAIN_LOOP_TARGET_MS) {
+        delay(MAIN_LOOP_TARGET_MS - spent);
     }
 }

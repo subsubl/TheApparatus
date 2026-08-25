@@ -3,20 +3,14 @@
  * @brief HLK-LD2410 Engineering Mode UART Driver - protocol-verified implementation
  */
 
-#include "Radar.h"
+#include "RadarParser.h"
 #include <Arduino.h>
-
-/* ============================================================================
- * CONSTRUCTOR
- * ============================================================================ */
-
-RadarDriver::RadarDriver() {}
 
 /* ============================================================================
  * INITIALIZATION / SHUTDOWN
  * ============================================================================ */
 
-bool RadarDriver::begin() {
+bool RadarParser::begin() {
 #ifdef APPARATUS_SIM_MODE
     log_i("=== SIMULATION MODE - no radar hardware required ===");
     log_i("Scenario: 0-12s approach | 12-48s stationary+breathing | 48-60s retreat");
@@ -59,7 +53,7 @@ bool RadarDriver::begin() {
 #endif // APPARATUS_SIM_MODE
 }
 
-void RadarDriver::end() {
+void RadarParser::end() {
 #ifndef APPARATUS_SIM_MODE
     Serial2.end();
 #endif
@@ -69,7 +63,7 @@ void RadarDriver::end() {
  * UART INGESTION
  * ============================================================================ */
 
-void RadarDriver::_readUartToBuffer() {
+void RadarParser::_readUartToBuffer() {
     while (Serial2.available()) {
         int b = Serial2.read();
         if (b < 0) break;
@@ -82,7 +76,7 @@ void RadarDriver::_readUartToBuffer() {
     }
 }
 
-int RadarDriver::_readByte() {
+int RadarParser::_readByte() {
     if (_rx_tail == _rx_head) return -1;
     uint8_t b = _rx_buffer[_rx_tail];
     _rx_tail = (_rx_tail + 1) % RX_BUFFER_SIZE;
@@ -93,7 +87,7 @@ int RadarDriver::_readByte() {
  * MAIN UPDATE - byte-stream frame extractor (or SIM generator)
  * ============================================================================ */
 
-void RadarDriver::update() {
+void RadarParser::update() {
 #ifdef APPARATUS_SIM_MODE
     _simUpdate();
 #else
@@ -118,7 +112,7 @@ void RadarDriver::update() {
 
 #ifdef APPARATUS_SIM_MODE
 
-void RadarDriver::_simUpdate() {
+void RadarParser::_simUpdate() {
     uint32_t now = millis();
     if (_latest_frame.timestamp_ms != 0 && now - _latest_frame.timestamp_ms < SIM_PERIOD_MS) return;
 
@@ -180,7 +174,7 @@ void RadarDriver::_simUpdate() {
 
 // Concentrate energy in gates around the target position with triangular
 // falloff so peak-gate selection has a meaningful maximum.
-void RadarDriver::_simFillGates(RadarFrame& f, float dist_cm, uint8_t base_energy) {
+void RadarParser::_simFillGates(RadarFrame& f, float dist_cm, uint8_t base_energy) {
     for (int i = 0; i < RADAR_GATE_COUNT; i++) {
         float gate_center = i*RADAR_GATE_SIZE_CM + RADAR_GATE_SIZE_CM/2.0f;
         float d = fabsf(dist_cm - gate_center) / RADAR_GATE_SIZE_CM;
@@ -192,7 +186,7 @@ void RadarDriver::_simFillGates(RadarFrame& f, float dist_cm, uint8_t base_energ
 
 #endif // APPARATUS_SIM_MODE
 
-void RadarDriver::_processByte(uint8_t byte) {
+void RadarParser::_processByte(uint8_t byte) {
     switch (_state) {
 
         case ParseState::SYNC_HEADER: {
@@ -277,7 +271,7 @@ void RadarDriver::_processByte(uint8_t byte) {
  * REPORT FRAME HANDLING
  * ============================================================================ */
 
-void RadarDriver::_handleReportFrame(const uint8_t* data, uint16_t len) {
+void RadarParser::_handleReportFrame(const uint8_t* data, uint16_t len) {
     if (len < 3 || data[1] != REPORT_HEAD_MARKER) {
         _parse_errors++;
         return;
@@ -311,7 +305,7 @@ void RadarDriver::_handleReportFrame(const uint8_t* data, uint16_t len) {
     }
 }
 
-bool RadarDriver::_parseEngineeringPayload(const uint8_t* p, uint16_t len) {
+bool RadarParser::_parseEngineeringPayload(const uint8_t* p, uint16_t len) {
     // p points at 0xAA. Expected layout (35 bytes incl. AA ... 55 00):
     // [0]=AA [1]=state [2..3]=mov_dist [4]=mov_e [5..6]=still_dist [7]=still_e
     // [8..9]=det_dist [10]=max_mov_gate [11]=max_still_gate
@@ -345,7 +339,7 @@ bool RadarDriver::_parseEngineeringPayload(const uint8_t* p, uint16_t len) {
  * COMMAND TRANSMISSION & ACK MATCHING
  * ============================================================================ */
 
-void RadarDriver::_sendCommand(uint16_t cmd_id, const uint8_t* params, uint8_t param_len) {
+void RadarParser::_sendCommand(uint16_t cmd_id, const uint8_t* params, uint8_t param_len) {
     uint8_t frame[32];
     size_t pos = 0;
 
@@ -369,7 +363,7 @@ void RadarDriver::_sendCommand(uint16_t cmd_id, const uint8_t* params, uint8_t p
     Serial2.flush();
 }
 
-bool RadarDriver::_waitAckFor(uint16_t cmd_id, uint32_t timeout_ms) {
+bool RadarParser::_waitAckFor(uint16_t cmd_id, uint32_t timeout_ms) {
     if (timeout_ms == 0) {
         // Fire-and-forget mode: just flush any stale bytes
         while (_readByte() >= 0) {}
@@ -395,7 +389,7 @@ bool RadarDriver::_waitAckFor(uint16_t cmd_id, uint32_t timeout_ms) {
     return false;
 }
 
-void RadarDriver::_handleAckFrame(const uint8_t* data, uint16_t len) {
+void RadarParser::_handleAckFrame(const uint8_t* data, uint16_t len) {
     // data: cmd_word(2 LE) | 01 00 | status(2 LE) | optional value bytes
     if (len < 6) {
         _parse_errors++;
@@ -424,7 +418,7 @@ void RadarDriver::_handleAckFrame(const uint8_t* data, uint16_t len) {
  * DEBUG
  * ============================================================================ */
 
-void RadarDriver::printStatus() const {
+void RadarParser::printStatus() const {
     log_i("Radar: frames=%lu acks=%lu errors=%lu last=%lums ago",
           (unsigned long)_frames_received, (unsigned long)_acks_received,
           (unsigned long)_parse_errors,

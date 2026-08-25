@@ -1,0 +1,19 @@
+[Unit]
+Description=The Apparatus - Pi B mpv Master Player (Layer 2/3)
+After=graphical.target
+Wants=graphical.target
+
+[Service]
+Type=simple
+User=pi
+Environment=APPARATUS_MASTER_VIDEO=/home/pi/media/master_L2_L3.mp4
+Environment=APPARATUS_MPV_SOCKET=/tmp/apparatus-mpv.sock
+ExecStart=/usr/bin/python3 /home/pi/apparatus/player_b.py
+Restart=always
+RestartSec=3
+
+# GPU/DRM access for fullscreen video without a desktop session
+SupplementaryGroups=video render
+
+[Install]
+WantedBy=graphical.target

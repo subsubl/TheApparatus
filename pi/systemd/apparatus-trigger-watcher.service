@@ -1,0 +1,20 @@
+[Unit]
+Description=The Apparatus - Pi B Trigger Watcher (ESP32 GPIO -> mpv IPC cut)
+BindsTo=apparatus-player-b.service
+After=apparatus-player-b.service
+Requires=apparatus-player-b.service
+
+[Service]
+Type=simple
+User=pi
+Environment=APPARATUS_TRIGGER_GPIO=19
+Environment=APPARATUS_MPV_SOCKET=/tmp/apparatus-mpv.sock
+ExecStart=/usr/bin/python3 /home/pi/apparatus/trigger_watcher.py
+Restart=always
+RestartSec=3
+
+# gpiochip access without root
+SupplementaryGroups=gpio video render
+
+[Install]
+WantedBy=graphical.target

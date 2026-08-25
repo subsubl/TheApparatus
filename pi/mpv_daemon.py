@@ -8,9 +8,9 @@ mpv's IPC socket:
   LOOP_A        -> seed A-B loop to Layer 2 region (00:00 - 05:00)
   LOOP_B        -> hint loop into Layer 3 region (05:00 - 10:00)
   TRIGGER_SEEK  -> CONTACT hard cut: re-point A-B to Layer 3 + instant
-                   exact seek to 05:00 (zero-blackout)
-  CAMERA_ON     -> live camera feed active (face superimposition layer)
-  CAMERA_OFF    -> live camera feed off
+                   exact seek to 05:00 (zero-blackout).
+                   (Live-camera keying is a mixer button pressed by relay -
+                   no serial involvement.)
 
 Wiring: ESP32 PI_LINK_TX (GPIO2) -> Pi RXD (GPIO15 on Pi header, /dev/serial0)
 Common GND mandatory. 115200 8N1.
@@ -22,7 +22,6 @@ it is now BOTH the serial listener and the cut executor).
 import json
 import os
 import socket
-import subprocess
 import sys
 import time
 
@@ -91,30 +90,6 @@ def handle(cmd) -> bool:
         ok = ok_loop and ok_seek
         log(f"TRIGGER_SEEK {'OK - LAYER 3 LIVE' if ok else 'FAILED'}")
         return ok
-
-    elif cmd == "CAMERA_ON":
-        # Live-camera activation for the Layer 3 face-superimposition.
-        # Hook: launch/notify the compositing pipeline here. Kept as a
-        # subprocess hook so the visual system can evolve independently
-        # of this daemon (e.g. OpenCV compositor, OBS, or a second mpv).
-        script = os.environ.get("APPARATUS_CAMERA_SCRIPT",
-                                "/home/pi/apparatus/camera_compositor.py")
-        if os.path.exists(script):
-            subprocess.Popen(["python3", script, "on"])
-            log("CAMERA_ON -> compositor activated")
-        else:
-            log(f"CAMERA_ON received (no compositor at {script} - stub)")
-        return False
-
-    elif cmd == "CAMERA_OFF":
-        script = os.environ.get("APPARATUS_CAMERA_SCRIPT",
-                                "/home/pi/apparatus/camera_compositor.py")
-        if os.path.exists(script):
-            subprocess.Popen(["python3", script, "off"])
-            log("CAMERA_OFF -> compositor deactivated")
-        else:
-            log("CAMERA_OFF received (no compositor - stub)")
-        return False
 
     elif cmd:
         log(f"unknown cmd: {cmd!r}")

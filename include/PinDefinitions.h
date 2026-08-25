@@ -323,8 +323,9 @@ struct CalibrationConfig {
         {true, TRIG_MANUAL,       120, 1, 150, false, 5000, "WJ-BTN4"},
         {true, TRIG_MANUAL,       120, 1, 150, false, 5000, "WJ-BTN5"},
         {true, TRIG_MANUAL,       120, 1, 150, false, 5000, "WJ-BTN6"},
-        {true, TRIG_MANUAL,       120, 1, 150, false, 5000, "WJ-BTN7"},
-        {true, TRIG_ON_L3_CUT,    120, 1, 150, false, 5000, "WJ-BTN8"}
+        // Camera imposition = AVE5's own keyer, pressed by this relay on contact:
+        {true, TRIG_ON_L3_CUT,    120, 1, 150, false, 5000, "WJ-CAM"},
+        {true, TRIG_MANUAL,       120, 1, 150, false, 5000, "WJ-BTN8"}
     };
 
     // Power-on button sequence (mixer mains-on ritual)

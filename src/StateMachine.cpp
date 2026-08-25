@@ -145,23 +145,18 @@ void ApparatusStateMachine::_handleMicro(float dsp_normalized) {
 void ApparatusStateMachine::_handleContact(bool touch_active, const RadarFrame& frame) {
     if (touch_active) {
         if (!_pi_trigger_active) {
-            // Rising edge of CONTACT: fire the Layer 3 cut ONCE,
-            // then activate the live camera (master plan: viewer's face
-            // superimposes onto the centered archival faces).
+            // Rising edge of CONTACT: fire the Layer 3 cut ONCE.
+            // Live-camera superimposition is handled on the mixer itself:
+            // a relay with trigger "Layer 3 Cut (Contact)" presses the
+            // AVE5's camera/key button (see RelayManager auto-triggers).
             piSend("TRIGGER_SEEK");
-            piSend("CAMERA_ON");
             _pi_trigger_active = true;
         }
         _updatePWMOutput(1.0f);   // Instant full-scale (VactrolManager bypasses slew)
         return;
     }
 
-    // Touch released: deactivate live camera first
-    if (_pi_trigger_active) {
-        piSend("CAMERA_OFF");
-        _pi_trigger_active = false;
-    }
-
+    // Touch released
     float dist = _effectiveDistance(frame);
     if (frame.valid && frame.target_state != TARGET_STATE_NONE &&
         dist > 0 && dist <= g_config.D_max) {

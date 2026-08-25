@@ -35,15 +35,11 @@ Pi B scans this folder for:   master_L2_L3*.mp4 (fallback: master*.mp4)
 - Until a match is found, a gray placeholder card is displayed.
 EOF
 
-# Ownership fixup inside the chroot (canonical pi-gen pattern)
-cat > "${ROOTFS_DIR}/tmp/apparatus_chown.sh" << 'EOF'
-#!/bin/bash -e
+# Ownership fixup inside the chroot (stdin heredoc - canonical pi-gen pattern)
+pushd "${ROOTFS_DIR}" > /dev/null
+on_chroot << EOF
 chown -R pi:pi /home/pi/media /home/pi/apparatus
 EOF
-chmod +x "${ROOTFS_DIR}/tmp/apparatus_chown.sh"
-pushd "${ROOTFS_DIR}" > /dev/null
-on_chroot /tmp/apparatus_chown.sh
 popd > /dev/null
-rm -f "${ROOTFS_DIR}/tmp/apparatus_chown.sh"
 
 echo "=== Apparatus stack installed ==="

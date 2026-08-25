@@ -34,7 +34,8 @@ jobs:
         with:
           image-name: apparatus-pi-${{ matrix.flavor }}
           stage-list: stage0 stage1 stage2 ./image/common-stack ./${{ matrix.flavor == 'A' && 'image/flavor-a' || 'image/flavor-b' }}
-          pi-gen-version: armbookworm
+          # 64-bit OS for Pi 3/4/5: pi-gen branch `bookworm-arm64`
+          pi-gen-version: bookworm-arm64
           release: bookworm
           hostname: apparatus-${{ matrix.flavor }}
           username: pi

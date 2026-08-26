@@ -48,3 +48,32 @@ Decisions grounded in sources; traps found the hard way. See also README
 
 GPIO 34–39 input-only, no pull-ups. GPIO 6–11 flash. strapping pins 0/2/5/12/15
 careful at boot (relay board default-off choice mitigates 12/15 concerns).
+
+## Touch frontend decision
+
+TTP223-class module drives GPIO34: its output is **push-pull**, so the usual
+"input-only pins need external resistors" caveat does NOT apply — no pull-down
+needed. Practical notes from component guides: mounts behind non-conductive
+panels up to a few millimeters, ~60 ms response both edges, auto-calibrates
+0.5 s after power-on (don't touch during boot), keep it physically away from
+relay coils and long runs parallel to mains. Mode pads: default momentary +
+active-HIGH is exactly what CONTACT edge-detection expects.
+
+## Sourcing (checked 2026-08-26)
+
+- **Vactrols**: NSL-32SR2 (Advanced Photonix/Luna) — Electrokit Sweden stock,
+  ~45 SEK ea: 40 Ω on / 5 MΩ off, rise 5 ms / fall 80 ms, LED 25 mA @ 2.5 V,
+  LDR up to 60 V / 50 mW. Rise/fall asymmetry matches the DAFx modeling above;
+  order ≥ 10 for channel matching.
+- **WJ-AVE5 service manual**: Elektrotanya carries the SM (schematics, ~72 pp);
+  ManualsLib mirrors SM + Operating Instructions. Use it to plan relay tap
+  points and settle the keyer-button latching question before wiring.
+
+## Kiosk resilience patterns (from fielded Pi displays)
+
+Layered self-healing worth adopting if the installation must run unattended
+for weeks: hardware watchdog (`/dev/watchdog` + systemd `WatchdogSec`),
+external healthcheck cron writing a status JSON, `Restart=always` on all
+player units (we have this), player self-relaunch on decode stall. Our
+autoloader already covers crash-relaunch; watchdog integration is a cheap
+future add.

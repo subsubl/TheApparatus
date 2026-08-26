@@ -113,12 +113,15 @@ Bidirectional hysteresis at D_max prevents boundary chatter.
 Panels:
 1. **System state** — badge, mix PWM, Pi trigger, distances, gamma
 2. **Radar gates** — 9 energy bars, peak gate highlighted ◄
-3. **Breathing oscilloscope** — biquad raw + AGC normalized traces @ 20 Hz
-4. **Vactrol channels ×6** — AUTO/MANUAL toggle, manual slider, min/max clamp, per-channel slew
-5. **Sensor calibration** — D_min/D_max/hysteresis/gamma/M/slew/variance/breath-threshold/Pi zones + PWM clamps → Save to NVS / Factory reset
-6. **Relay bank ×8** — trigger dropdown, press length/count/gap, clock toggle +
+3. **Radar Preview** — top-down view of the room: LD2410 at bottom, gate arcs
+   every 75 cm, D_min/D_max band, Pi zone lines, live target dot (color-coded by
+   state, ♥ pulse in MICRO breathing lock)
+4. **Breathing oscilloscope** — biquad raw + AGC normalized traces @ 20 Hz
+5. **Vactrol channels ×6** — AUTO/MANUAL toggle, manual slider, min/max clamp, per-channel slew
+6. **Sensor calibration** — D_min/D_max/hysteresis/gamma/M/slew/variance/breath-threshold/Pi zones + PWM clamps → Save to NVS / Factory reset
+7. **Relay bank ×8** — trigger dropdown, press length/count/gap, clock toggle +
    interval, **GPIO remap dropdown**, FIRE/STOP buttons, live pressed dot
-7. **Boot sequence editor** — 12 steps, per-step relay/N-presses/length/gap/dwell,
+8. **Boot sequence editor** — 12 steps, per-step relay/N-presses/length/gap/dwell,
    start delay, replay button
 
 WebSocket messages: `{type:"telemetry"|"config"|"saved"|...}`, client→server
@@ -232,6 +235,41 @@ python3 pi/test_mpv_daemon.py    # -> ALL TESTS PASS (no hardware needed)
 6. Configure boot steps → REPLAY NOW → observe choreography
 7. Touch GPIO34 plate → CONTACT: mix snaps to 100%, Pi logs `TRIGGER_SEEK OK`
 8. Save config, power-cycle → settings and boot ritual restored from NVS
+
+## GUI Quality Assurance (Playwright)
+
+`tools/gui-test/` contains a browser test suite that runs the **real firmware
+SPA** against a mock ESP32 backend:
+
+```bash
+cd tools/gui-test
+npm install && npx playwright install chromium
+python3 ../extract_spa.py        # pull the SPA out of WebConsole.cpp verbatim
+npx playwright test              # 14 tests, ~10 s
+```
+
+Coverage: WS connection & 20 Hz telemetry · state badge cycling · metric
+updates · 9 gate bars + peak marker · radar preview canvas rendering ·
+oscilloscope signal · vactrol cards · relay card controls · boot panel ·
+FIRE/config commands reaching the WebSocket (asserted server-side) · save
+payload integrity · zero JS errors under live telemetry.
+
+## Research Notes & Design Justifications
+
+- **LD2410 gate sensitivity**: per-gate sensitivity thresholds exist in the
+  protocol (gate N sensitivity 0–100; 100 = off) — a future firmware option to
+  mask interference sources behind walls. Not yet exposed.
+- **mpv on Pi 5**: upstream issue #17447 reports dropped frames with
+  `--vo=gpu --gpu-context=drm` on Pi 5. Both players accept
+  `APPARATUS_MPV_VO_ARGS="--vo=gpu-next …"` to override the video output chain
+  without code changes (Pi 3/4 defaults are unaffected).
+- **Vactrol physics** (DAFx-23 power-balanced modeling literature): LDR turn-on
+  is fast (tens of ms) while turn-off is slow (hundreds of ms), and the
+  resistance-vs-LED-current curve is strongly nonlinear — this is exactly why
+  the firmware applies gamma shaping plus slew limiting, and why each channel's
+  min-clamp should be kept > 0 (an LED current floor keeps the LDR responsive;
+  driving to true 0 mA makes releases sluggish). Calibrate γ per channel during
+  bench bring-up.
 
 ## License
 

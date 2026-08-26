@@ -80,8 +80,39 @@ from the GUI if you want motorized-fade moments.)
 - CONTACT: relay 7 → face appears over Layer 3 montage; release → relay 8 →
   face gone. Fully hands-free, matches the latching reality.
 
+## Electrical topology — ANSWERED (service manual, Switch Board schematic p42)
+
+The SM was acquired and OCR-transcribed in full (72 pp; private local copy,
+not redistributed). The switch board is a **scanned key matrix**:
+
+- Scan lines **SCAN0–SCAN5** × key-return lines **KEY0–KEY7** run to the main
+  board via connectors **CN2 / CN3** (10-pin).
+- Every key cell carries a **series 1 kΩ resistor + isolation diode**
+  (R31–R38 = "1K", D45/D46/D47/D48/D49… per row) — classic diode-isolated
+  matrix, scanned by Panasonic custom gate array **MN188166CCP2**.
+- Q1–Q12 on the switch board are the scan drivers/level shifters.
+
+**Consequence for our wiring:**
+
+1. **Relay across the button pads is the ONLY safe method.** Soldering a wire
+   from a button pad "to ground" would short a driven scan line through the
+   matrix diodes and corrupt unrelated keys — do not do it.
+2. Our relays are invisible to the scanner when open; when closed they simply
+   parallel the visitor-equivalent press. **No timing hazard**: a mechanical
+   press is also "slow" relative to nothing — the scanner debounces itself;
+   our default 120 ms press is comfortably above any sane debounce window
+   (~10–50 ms typical for this era).
+3. Never close two relays that share a scan line simultaneously with different
+   intents? Not an issue either: diodes make cross-talk impossible — worst
+   case two keys register at once (which is exactly what physically pressing
+   two buttons does).
+
+Verified schematic pages in this SM: Overall Block Diagram · Exploded View ·
+Switch Board (p42) · Power Board (p44) · Video/REA boards · Replacement Parts
+List. Local reference copies live outside the repo (license: personal use).
+
 ## Still open (needs service manual, not operating manual)
 
-- Button electrical topology: direct-to-ground vs scanned matrix → decides
-  solder-tap points vs button-terminal bridging.
-- Scan-rate/bounce tolerance (if matrix-scanned) → validates 120 ms press.
+- ~~Button electrical topology~~ → **ANSWERED above** (diode key-matrix).
+- Exact CN2/CN3 pinout table → available in the local PDF (p42) if we ever
+  want to tap KEY/SCAN lines directly with an analog mux instead of relays.

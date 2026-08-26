@@ -23,32 +23,26 @@ Run pattern:
 | Pi kiosk resilience | display-pi patterns: hardware `/dev/watchdog` + healthcheck cron + `Restart=always` + player self-relaunch | roadmap enhancement |
 | (earlier) mpv Pi5 | #17447 frame drops → `APPARATUS_MPV_VO_ARGS` override shipped | players |
 
-## ⏳ Pending
+## ⏳ Still open
 
-1. **H.264 encode params for frame-exact cuts** (P1)
-   `ffmpeg h264 keyframe interval gop settings reliable frame exact seeking cut points archive master`
-   → decides the re-encode recipe for the 10-min master so TRIGGER_SEEK lands
-   on a keyframe at exactly t=300 s (GOP ≈ 1 s, closed GOP, no B-frame reordering
-   across boundaries are the working hypotheses to verify).
+1. **WJ-AVE5 service manual deep-read** (P0, wiring phase)
+   PDF located (Elektrotanya / ManualsLib). Download and extract: button matrix
+   vs direct-to-ground topology, keyer-button latching behavior, safe relay tap
+   points. Manual review beats web search here.
 
-2. **WJ-AVE5 button electrical scan** (P0 follow-up)
-   Download the service manual PDF (Elektrotanya link in Research-Notes) and
-   extract: button matrix vs direct-to-ground, keyer button latching behavior,
-   safe tap points. Manual review beats web search here.
+2. **ESP32-native touch backup** (P3, only if TTP223 disappoints)
+   `ESP32 touchRead capacitive metal plate distance reliability exhibition`
 
-3. **LD2410 mounting / gallery coexistence** (P2)
-   `24GHz mmWave radar false triggers fans HVAC metal reflections installation art mounting height angle`
+## ✅ Done (second pass, 2026-08-26)
 
-4. **Bookworm/Wayland screen-blanking & EDID lock** (P2)
-   `raspberry pi os bookworm wayland disable screen blanking headless edid force hdmi kiosk`
+| Topic | Key finding | Where applied |
+|-------|-------------|---------------|
+| H.264 frame-exact cuts | `keyint=N:min-keyint=N:no-scenecut` (N = fps) ⇒ guaranteed IDR every 1 s; IDR bars cross-GOP refs ⇒ t=300 s always instant-seekable | wiki/Research-Notes encode recipe |
+| Radar gallery mounting | 2.2–2.8 m height, ~30° down-tilt; ceiling fans & moving curtains top false sources; no direct HVAC airflow | wiki/Research-Notes |
+| Bookworm blanking | 3 layers (kernel/compositor/DPMS); kernel layer killed via `consoleblank=0` in cmdline.txt — automated by new stage `03-display-config` | shipped in image |
+| Gate-sensitivity write frames | Extracted from ESPHome source (vendored): CMD **0x64**, payload `[00 00][gate u32LE][01 00][motion u32LE][02 00][still u32LE]`, inside open config session, then query-params + close | wiki/Research-Notes + vendor file |
+| Vactrol batch matching | PantalaLabs/vactrol-tracer pattern: PWM sweep → ADC readout → curve compare; our ESP32 can be the jig itself | wiki/Research-Notes |
 
-5. **Vactrol batch matching procedure** (P2, bench)
-   `matching LDR vactrol channels calibration jig response curve measurement automation`
-
-6. **Per-gate sensitivity write frames** (P3)
-   Source: HLK-LD2410 datasheet §command table (0x64/0x68 family per ESPHome
-   implementation) + ESPHome `ld2410` source on GitHub — read code, don't guess.
-
-7. **Alternative: ESP32 native touch (GPIO 12/13?) as backup plate tech** (P3)
-   `ESP32 touchRead capacitive metal plate distance reliability exhibition` —
-   only if TTP223 disappoints on long wire runs.
+*(First-pass findings — WJ-AVE5 SM location, NSL-32SR2 sourcing, TTP223 push-pull,
+LD2410 tuning entities, kiosk watchdog patterns — see first Done table above and
+wiki/Research-Notes.md.)*

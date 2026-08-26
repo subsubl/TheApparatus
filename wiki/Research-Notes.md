@@ -77,3 +77,64 @@ external healthcheck cron writing a status JSON, `Restart=always` on all
 player units (we have this), player self-relaunch on decode stall. Our
 autoloader already covers crash-relaunch; watchdog integration is a cheap
 future add.
+
+## Frame-exact cuts: master encode recipe
+
+TRIGGER_SEEK must land on a keyframe at exactly t=300 s. Encode the master so
+an **IDR frame exists every second** (N = fps):
+
+```bash
+# 25 fps (use keyint=30:min-keyint=30 for 30 fps)
+ffmpeg -i master_in.mov -c:v libx264 -pix_fmt yuv420p -crf 18 -preset slow \
+  -x264-params keyint=25:min-keyint=25:no-scenecut \
+  -c:a aac -b:a 256k master_L2_L3.mp4
+```
+
+- `keyint=min-keyint=N` forces uniform GOP length — no encoder whimsy.
+- `no-scenecut` forbids extra scene-cut I-frames (keeps grid exact).
+- Default x264 I-frames are IDR → no references across GOP boundaries →
+  seeking to t=300 starts decoding cleanly at that frame. Zero-blackout cut
+  preserved.
+- Verify before shipping: `ffprobe -select_streams v -show_frames` around
+  t=300 and confirm `key_frame=1` exactly there.
+
+## LD2410 per-gate sensitivity — write protocol (from ESPHome source)
+
+Spec extracted from ESPHome's implementation (vendored at
+`docs/vendor/esphome_ld2410.cpp`, MIT): within an open config session,
+send command **0x64** (`CMD_GATE_SENS`) with the 18-byte payload
+
+```
+[00 00] [gate u32 LE] [01 00] [motion_thr u32 LE] [02 00] [still_thr u32 LE]
+```
+
+then `query_parameters()` and close the session (same open/close discipline as
+our engineering-mode toggle). Thresholds are 0–100; ~100 effectively disables a
+gate — exactly what we need to mask ceiling fans or wall-mounted interference
+per gallery. Planned feature: WebConsole "Gate sensitivity" panel writing all
+9 gate pairs through RadarParser's existing command layer.
+
+## Gallery mounting (radar)
+
+Field consensus: mount **2.2–2.8 m high, tilted down ~30°**. Top real-world
+false-trigger sources are **ceiling fans** (periodic Doppler) and **moving
+curtains**; avoid direct HVAC airflow and metal surfaces inside the cone.
+Per-gate threshold masking (above) is the sanctioned cure when geometry can't
+avoid a nuisance sector.
+
+## Display blanking (Bookworm Lite images)
+
+Three independent blanking layers exist: kernel console, compositor idle
+(n/a — we run none), monitor DPMS. The kernel layer is now neutralized in the
+images itself: stage `image/common-stack/03-display-config` appends
+`consoleblank=0` to `/boot/firmware/cmdline.txt`. If a venue display misbehaves
+with EDID, force modes manually via e.g. `video=HDMI-A-1:1920x1080@60D` on the
+same line.
+
+## Vactrol batch matching (bench jig)
+
+Pattern per PantalaLabs/vactrol-tracer: sweep LED current (PWM), read the LDR
+divider with an ADC, plot R vs duty. Any spare ESP32 does this natively
+(LEDC + ADC). Procedure: order ≥10 NSL-32SR2, trace each unit, group channels
+with matching curves, install matched pairs into symmetric controls (Color X/Y),
+record each channel's curve → derive its γ for the firmware clamp/gamma table.

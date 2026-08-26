@@ -3,7 +3,7 @@
 ```
 HLK-LD2410 ─UART2─▶ RadarParser ─▶ EMA(500ms) ─▶ PeakGate+Centroid ─▶ Biquad(0.1–0.5Hz) ─▶ AGC[-1,+1]
                                                                                         │
-Touch(GPIO34) ──ISR──┐                                                                  │
+Touch(GPIO12/T5)──┐                                                                  │
                      ▼                                                                  ▼
               ╔══════════════════════ 4-TIER STATE MACHINE ════════════════════╗
               ║ IDLE(0%) ⇄ MACRO(dist^γ + slew) ⇄ MICRO(P_base + breath·M)    ║

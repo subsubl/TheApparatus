@@ -49,15 +49,22 @@ Decisions grounded in sources; traps found the hard way. See also README
 GPIO 34–39 input-only, no pull-ups. GPIO 6–11 flash. strapping pins 0/2/5/12/15
 careful at boot (relay board default-off choice mitigates 12/15 concerns).
 
-## Touch frontend decision
+## Touch frontend decision — SUPERSEDED 2026-08-26
 
-TTP223-class module drives GPIO34: its output is **push-pull**, so the usual
-"input-only pins need external resistors" caveat does NOT apply — no pull-down
-needed. Practical notes from component guides: mounts behind non-conductive
-panels up to a few millimeters, ~60 ms response both edges, auto-calibrates
-0.5 s after power-on (don't touch during boot), keep it physically away from
-relay coils and long runs parallel to mains. Mode pads: default momentary +
-active-HIGH is exactly what CONTACT edge-detection expects.
+User decision: **use the ESP32's internal touch peripheral** with a bare metal
+plate — no external touch IC. Final wiring: pad **T5 = GPIO12** (the only
+touch-capable pin free in our matrix), plate → 1 kΩ series → GPIO12, plus
+10 kΩ pull-down to GND at the pin. GPIO12 is a strapping pin (must read LOW at
+boot) — the pull-down guarantees that.
+
+Implementation: `touchPlateSetup()/touchPlateUpdate()` in main.cpp poll
+`touchRead()` every ~10 ms with hysteresis (enter <72 % of baseline, exit >88 %)
+and an idle-only drift-tracking baseline EMA, so temperature/humidity wander is
+followed but a resting hand cannot re-baseline itself.
+
+Historical note (kept for reference): TTP223-class modules output push-pull and
+would have needed no pull resistor on input-only pins — that path is no longer
+used. GPIO34 is freed as a spare performer-button input.
 
 ## Sourcing (checked 2026-08-26)
 

@@ -1,7 +1,8 @@
 # Serial Protocol
 
 ESP32 (UART1 TX, GPIO2) → Pi B (`/dev/serial0` via PL011), **115200 8N1**,
-newline-terminated ASCII. Common GND mandatory.
+newline-terminated ASCII. Common GND mandatory. Pi B outputs PAL composite
+(baked into the image) into the mixer's CH2.
 
 ## Commands
 

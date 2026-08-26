@@ -44,26 +44,50 @@ ButtonBank g_buttons;
 BootSequencer g_boot;
 WebConsole g_web(80);
 
-volatile bool g_touch_triggered = false;
-volatile uint32_t g_touch_last_isr_us = 0;
+volatile bool g_touch_triggered = false;   // legacy flag (kept for telemetry ext.)
 portMUX_TYPE g_touch_mux = portMUX_INITIALIZER_UNLOCKED;
 
 static constexpr uint32_t MAIN_LOOP_TARGET_MS = 10;
 
 /* ============================================================================
- * TOUCH ISR (GPIO 34, external pull-down hardware assumed)
+ * TOUCH PLATE - ESP32 INTERNAL CAPACITIVE PERIPHERAL (pad T5 / GPIO12)
+ * Metal plate -> 1k series -> GPIO12, 10k pull-down to GND (also keeps the
+ * GPIO12 strap pin LOW through reset). Hysteresis + drift-tracking baseline;
+ * no ISR needed - polled every ~10 ms in the main loop.
  * ============================================================================ */
 
-void IRAM_ATTR touchISR() {
-    uint32_t now = micros();
-    if (now - g_touch_last_isr_us > 5000) {
-        g_touch_last_isr_us = now;
-        bool state = (digitalRead(TOUCH_PIN) == TOUCH_ACTIVE_LEVEL);
-        if (g_config.touch_inverted) state = !state;
-        portENTER_CRITICAL_ISR(&g_touch_mux);
-        g_touch_triggered = state;
-        portEXIT_CRITICAL_ISR(&g_touch_mux);
+static float g_touch_baseline = 0.0f;
+static bool  g_touch_active = false;
+static constexpr float TOUCH_ENTER_RATIO = 0.72f;  // trigger below 72% of baseline
+static constexpr float TOUCH_EXIT_RATIO  = 0.88f;  // release above 88%
+static constexpr float TOUCH_DRIFT_ALPHA = 0.02f;  // baseline EMA when idle
+
+static void touchPlateSetup() {
+    uint32_t acc = 0;
+    for (int i = 0; i < 8; i++) {
+        acc += touchRead(TOUCH_PIN);
+        delay(2);
     }
+    g_touch_baseline = acc / 8.0f;
+    g_touch_active = false;
+    log_i("Touch plate T5/GPIO%d baseline=%u", TOUCH_PIN,
+          (unsigned)g_touch_baseline);
+}
+
+// Returns true while a touch is sensed. Baseline slowly follows temperature/
+// humidity drift only while idle, so a resting hand cannot re-baseline itself.
+static bool touchPlateUpdate() {
+    uint16_t v = touchRead(TOUCH_PIN);
+    if (!g_touch_active) {
+        if (v < g_touch_baseline * TOUCH_ENTER_RATIO) {
+            g_touch_active = true;
+        } else {
+            g_touch_baseline += ((float)v - g_touch_baseline) * TOUCH_DRIFT_ALPHA;
+        }
+    } else if (v > g_touch_baseline * TOUCH_EXIT_RATIO) {
+        g_touch_active = false;
+    }
+    return g_touch_active;
 }
 
 /* ============================================================================
@@ -124,9 +148,8 @@ void setup() {
     // --- GPIO: relays first (boot-safe HIGH = released) ---
     g_relays.begin();
 
-    // Touch input
-    pinMode(TOUCH_PIN, INPUT);   // GPIO34: input-only, external pull-down
-    attachInterrupt(digitalPinToInterrupt(TOUCH_PIN), touchISR, CHANGE);
+    // Touch plate: internal capacitive peripheral (no external frontend)
+    touchPlateSetup();
 
     // Performer buttons
     g_buttons.begin();
@@ -175,11 +198,8 @@ void loop() {
     // 1. Radar
     g_radar.update();
 
-    // 2. Touch state
-    bool touch_active;
-    portENTER_CRITICAL(&g_touch_mux);
-    touch_active = g_touch_triggered;
-    portEXIT_CRITICAL(&g_touch_mux);
+    // 2. Touch state (polled internal peripheral, hysteresis inside)
+    bool touch_active = touchPlateUpdate();
 
     // 3. DSP pipeline at 10 Hz
     RadarFrame current_frame = g_radar.getLatestFrame();

@@ -42,6 +42,9 @@ Factory reset wipes the namespace.
 
 See `PinDefinitions.h` (source of truth). Highlights: radar UART2 16/17 @256k,
 vactrols 13/14/25/26/27/33 (10-bit LEDC), relays 4/18/19/21/22/23/32/15
-(active-LOW, GUI-remappable), touch 34 (input-only!), PiLink TX GPIO2 @115200.
+(active-LOW, GUI-remappable), touch plate = **internal touch pad T5 / GPIO12**
+(1k series + 10k pull-down; strap-safe), PiLink TX GPIO2 @115200.
 
 > GPIO 34/35/36/39 are input-only on ESP32 — never assign them to outputs.
+> GPIO12 is a strapping pin: keep the 10k pull-down fitted so it reads LOW
+> through reset.

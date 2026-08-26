@@ -26,12 +26,16 @@ Run pattern:
 ## ⏳ Still open
 
 1. **WJ-AVE5 service manual deep-read** (P0, wiring phase)
-   PDF located (Elektrotanya / ManualsLib). Download and extract: button matrix
-   vs direct-to-ground topology, keyer-button latching behavior, safe relay tap
-   points. Manual review beats web search here.
+   PDF located on 3 mirrors (Elektrotanya / freeservicemanuals.info /
+   eserviceinfo.com) but ALL are CAPTCHA-gated for robots → needs one manual
+   browser download by the user. Preliminary deep-read DONE from Operating
+   Instructions via ManualsLib: control map + effect list + "Superimpose by
+   Camera" confirmed; relay→button plan written in wiki/WJ-AVE5-Notes.md.
+   Remaining: schematic-level button topology + keyer latching behavior.
 
-2. **ESP32-native touch backup** (P3, only if TTP223 disappoints)
-   `ESP32 touchRead capacitive metal plate distance reliability exhibition`
+2. ~~**ESP32-native touch backup**~~ → **DONE & PROMOTED**: user chose internal
+   peripheral as PRIMARY. Implemented on T5/GPIO12 with hysteresis+drift
+   baseline; TTP223 module no longer needed. See wiki/Research-Notes.md.
 
 ## ✅ Done (second pass, 2026-08-26)
 

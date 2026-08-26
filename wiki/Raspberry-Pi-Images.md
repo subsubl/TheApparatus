@@ -32,6 +32,17 @@ Extensions: `.mp4 .mkv .mov .avi .ts`. Newest matching file wins.
   (**hot content updates**: copy the new file over SSH/SFTP/USB, walk away).
 - Every respawn (including hot swaps) re-seeds Pi B's A-B loop to Layer 2.
 
+## Video output (PAL composite)
+
+Both players feed the WJ-AVE5 via the Pi's **3.5 mm AV jack as PAL SD
+composite**. This is baked into the images: stage `04-pal-composite` sets
+`enable_tvout=1` and `sdtv_mode=2` (PAL) in `/boot/firmware/config.txt` at
+build time — flash and play, no raspi-config needed.
+
+> **Hardware caveat:** only **Pi 3 / Pi 4** have composite out on the AV jack.
+> The **Pi 5 has NO composite output at all** — use Pi 3/4 for both roles.
+> HDMI remains live in parallel if you ever need a setup monitor.
+
 ## Media folder
 
 Empty in the image by design (`PUT_VIDEOS_HERE.txt` explains conventions).

@@ -28,11 +28,12 @@ analog hardware chain itself tearing the picture apart as you approach.
 2. [[Firmware]] — ESP32 code structure, DSP math, NVS configuration
 3. [[WebUI]] — console panels, WebSocket protocol, calibration guide
 4. [[Relay-System]] — WJ-AVE5 button spoofing, triggers, boot ritual
-5. [[Raspberry-Pi-Images]] — CI flashable images, videolooper behavior
-6. [[Serial-Protocol]] — ESP32 ↔ Pi B command reference
-7. [[Bench-Bring-Up]] — first power-on checklist and calibration
-8. [[QA-and-Testing]] — Playwright GUI suite, mock server, self-tests
-9. [[Research-Notes]] — protocol traps, mpv pitfalls, vactrol physics
+5. [[WJ-AVE5-Notes]] — mixer controls map, relay→button plan, deep-read status
+6. [[Raspberry-Pi-Images]] — CI flashable images, videolooper behavior, PAL composite
+7. [[Serial-Protocol]] — ESP32 ↔ Pi B command reference
+8. [[Bench-Bring-Up]] — first power-on checklist and calibration
+9. [[QA-and-Testing]] — Playwright GUI suite, mock server, self-tests
+10. [[Research-Notes]] — protocol traps, mpv pitfalls, vactrol physics
 
 ## Quick links
 

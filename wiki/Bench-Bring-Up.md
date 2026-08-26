@@ -20,7 +20,9 @@ matched, parse error counter ~0, AP up.
 
 ## 2. Touch / CONTACT
 
-Short GPIO34 to 3V3 (or touch plate): state snaps to CONTACT, mix PWM 100%,
+Short GPIO12 to GND is NOT needed - just touch the plate (or, to force CONTACT
+without the plate, briefly bridge a jumper from GPIO12 to any clean GND while
+watching the serial monitor): state snaps to CONTACT, mix PWM 100%,
 Pi logs `TRIGGER_SEEK OK - LAYER 3 LIVE`. Release → state returns per radar.
 
 ## 3. Relays
@@ -44,8 +46,10 @@ inverting board.
 ## 5. Pis
 
 Flash images (see [[Raspberry-Pi-Images]]), drop correctly-named files into
-`/home/pi/media`, confirm autoplay + hot-swap. Wire PiLink TX→Pi RXD + common
-GND; daemon log shows `TRIGGER_SEEK OK` on touch.
+`/home/pi/media`, confirm autoplay + hot-swap. Images output **PAL composite**
+on the 3.5 mm AV jack (pre-configured); cable that into the mixer's channel
+inputs. Wire PiLink TX→Pi RXD + common GND; daemon log shows `TRIGGER_SEEK OK`
+on touch.
 
 ## 6. Persistence
 

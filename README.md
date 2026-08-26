@@ -15,7 +15,7 @@ buttons through **8 relays**, and exposes a full calibration/control WebUI.
 | **Vactrols ×6** | WJ-AVE5 sliders | LEDC @ 10-bit / 5 kHz: Mix/T-Bar GPIO13, Color X GPIO14, Color Y GPIO25, Wipe Speed GPIO26, Effect Level GPIO27, Aux Mod GPIO33 |
 | **Relays ×8** | WJ-AVE5 buttons (active-LOW board) | GPIO4, 18, 19, 21, 22, 23, 32, 15 — **GUI-remappable at runtime** |
 | **Performer buttons ×8** | Physical buttons | GPIO5, 12, then input-only bank 34, 35, 36, 39 + spares (external pull-downs required) |
-| **Touch plate** | Capacitive sensor | GPIO34 (input-only, active-HIGH), interrupt-driven |
+| **Touch plate** | Bare metal plate → **ESP32 internal touch peripheral, T5 = GPIO12** (1 kΩ series + 10 kΩ pull-down; no external touch IC) |
 | **Pi B link** | UART1 TX → Pi serial0 | GPIO2 @ 115200 8N1 — ASCII protocol `LOOP_A` / `LOOP_B` / `TRIGGER_SEEK` |
 | **Status LED** | Onboard | GPIO2* (see PinDefinitions.h; move if conflicting with PiLink TX) |
 
@@ -27,7 +27,7 @@ buttons through **8 relays**, and exposes a full calibration/control WebUI.
 ```
 HLK-LD2410 ─UART2─▶ RadarParser ─▶ EMA(500ms) ─▶ PeakGate+Centroid ─▶ Biquad(0.1–0.5Hz) ─▶ AGC[-1,+1]
                                                                                         │
-Touch(GPIO34) ──ISR──┐                                                                  │
+Touch(GPIO12/T5)──┐                                                                  │
                      ▼                                                                  ▼
               ╔══════════════════════ 4-TIER STATE MACHINE ════════════════════╗
               ║ IDLE(0%) ⇄ MACRO(dist^γ + slew) ⇄ MICRO(P_base + breath·M)    ║
@@ -104,7 +104,7 @@ non-blocking sequencer** performs the wake-up button choreography:
 | **IDLE (0)** | No target or distance > D_max + hysteresis | Mix vactrol → 0%, Layer 1 regime |
 | **MACRO (1)** | Target in [D_min, D_max], moving | Distance → PWM with gamma shaping + slew limit |
 | **MICRO (2)** | Variance < thr for > lock time | Lock P_base, add breathing: P_out = P_base + N_resp × M |
-| **CONTACT (3)** | Touch active on GPIO34 | Mix = 100% instantly, serial `TRIGGER_SEEK` to Pi B |
+| **CONTACT (3)** | Touch sensed on GPIO12 (T5) | Mix = 100% instantly, serial `TRIGGER_SEEK` to Pi B |
 
 Bidirectional hysteresis at D_max prevents boundary chatter.
 
@@ -233,7 +233,7 @@ python3 pi/test_mpv_daemon.py    # -> ALL TESTS PASS (no hardware needed)
 4. Remap a relay pin from the GUI → confirm click moves to the new GPIO
 5. Set a clock interval → confirm periodic re-firing
 6. Configure boot steps → REPLAY NOW → observe choreography
-7. Touch GPIO34 plate → CONTACT: mix snaps to 100%, Pi logs `TRIGGER_SEEK OK`
+7. Touch the GPIO12 plate → CONTACT: mix snaps to 100%, Pi logs `TRIGGER_SEEK OK`
 8. Save config, power-cycle → settings and boot ritual restored from NVS
 
 ## GUI Quality Assurance (Playwright)

@@ -112,19 +112,26 @@ static const uint8_t DATA_FOOTER[4] = {0xF8, 0xF7, 0xF6, 0xF5};
 
 /* ============================================================================
  * PERFORMER BUTTONS + TOUCH OVERRIDE
- * Note: GPIO 34 is input-only, no internal pull -> EXTERNAL pull-down required.
+ * Touch uses the ESP32 INTERNAL touch peripheral on T4 = GPIO 13.
+ * Wire the metal plate directly to GPIO13 through a small series resistor
+ * (220R-1k); a ~1 nF cap from the pin to GND stabilizes readings. No external
+ * pull resistors needed - the peripheral handles everything.
  * ============================================================================ */
 
-// Capacitive touch plate (CONTACT override). Input-only pin, external pulldown,
-// sensor output drives it to 3V3 when touched.
-#define TOUCH_PIN               34
-#define TOUCH_ACTIVE_LEVEL      HIGH
+// Capacitive touch plate (CONTACT override). ESP32 INTERNAL touch peripheral,
+// pad T5 = GPIO 12 - the only touch-capable pin free in our matrix, so NO
+// other signals move. Wire: plate -> 1k series -> GPIO12, plus 10k pull-down
+// to GND at the pin. The pull-down doubles as boot insurance: GPIO12 is a
+// strapping pin (flash-voltage select) and must read LOW through reset.
+#define TOUCH_PIN               12   // T5 touch-capable (free in our matrix)
+#define TOUCH_PAD_INDEX         5    // T5
+#define TOUCH_ACTIVE_LEVEL      HIGH // legacy digitalRead semantic (unused w/ touchRead)
 
 // 8 performer buttons. ACTIVE-HIGH wiring: pin --[button]-- 3V3.
 // GPIOs 25/26 are shared with vactrol PWM in this matrix and therefore NOT
 // usable as buttons; the button bank uses free inputs instead:
 //   35, 36, 39 (input-only, external pull-downs REQUIRED)
-//   34 is reserved for touch above.
+//   34 freed (was touch; now spare input)
 // To keep exactly 8 buttons we accept 7 physical buttons mapped to relays
 // 1..7 (relay 8 remains GUI/auto-only), OR wire additional via I2C expander.
 #define BUTTON_MAX              7

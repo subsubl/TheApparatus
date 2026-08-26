@@ -57,7 +57,8 @@ private:
     void _writeLevel(uint8_t index, bool pressed);
     void _sequencerTick(uint8_t i);
     void _clockTick(uint8_t i);
-    void _autoTriggerCheck(bool state_changed, ApparatusState_t new_state, float agc);
+    void _autoTriggerCheck(bool state_changed, ApparatusState_t prev,
+                           ApparatusState_t new_state, float agc);
     bool _cooldownOk(uint8_t index) const;
 };
 

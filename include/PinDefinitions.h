@@ -179,6 +179,7 @@ enum FxTrigger : uint8_t {
     TRIG_ON_L2_ENTRY     = 2,   // MACRO entered -> dissolve into Layer 2
     TRIG_ON_BREATH_LOCK  = 3,   // MICRO locked
     TRIG_ON_L3_CUT       = 4,   // CONTACT entered -> Layer 3 hard cut
+    TRIG_ON_L3_RELEASE   = 7,   // CONTACT exited -> un-press latched buttons (AVE5)
     TRIG_INHALE          = 5,
     TRIG_EXHALE          = 6
 };
@@ -190,9 +191,10 @@ static const char* const TRIGGER_NAMES[] = {
     "Breath Lock (Micro)",
     "Layer 3 Cut (Contact)",
     "Inhale Peak",
-    "Exhale Peak"
+    "Exhale Peak",
+    "Layer 3 Release (un-latch)"
 };
-#define FX_TRIGGER_COUNT 7
+#define FX_TRIGGER_COUNT 8
 
 /* ============================================================================
  * WJ-AVE5 PHYSICAL CONTROL SURFACE
@@ -368,7 +370,8 @@ struct CalibrationConfig {
         {true, TRIG_MANUAL,       120, 1, 150, false, 5000, "WJ-BTN6", 6},
         // Camera imposition = AVE5's own keyer, pressed by this relay on contact:
         {true, TRIG_ON_L3_CUT,    120, 1, 150, false, 5000, "WJ-CAM", 10},
-        {true, TRIG_MANUAL,       120, 1, 150, false, 5000, "WJ-BTN8", 12}
+        // AVE5 buttons are latching: this relay un-presses them on release
+        {true, TRIG_ON_L3_RELEASE,120, 1, 150, false, 5000, "WJ-CAM-OFF", 10}
     };
 
     // Power-on button sequence (mixer mains-on ritual)

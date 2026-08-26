@@ -62,11 +62,14 @@ bool RelayManager::remapPin(uint8_t index, uint8_t new_pin) {
  * ============================================================================ */
 
 void RelayManager::update(bool state_changed, ApparatusState_t new_state, float agc) {
+    static ApparatusState_t s_prev_state = STATE_IDLE;
+    ApparatusState_t prev = s_prev_state;
     for (uint8_t i = 0; i < RELAY_COUNT; i++) {
         _sequencerTick(i);
         _clockTick(i);
     }
-    _autoTriggerCheck(state_changed, new_state, agc);
+    _autoTriggerCheck(state_changed, prev, new_state, agc);
+    s_prev_state = new_state;
 }
 
 /* ============================================================================
@@ -187,7 +190,8 @@ bool RelayManager::_cooldownOk(uint8_t index) const {
  * AUTOMATIC TRIGGERS - layer-linked + breath events
  * ============================================================================ */
 
-void RelayManager::_autoTriggerCheck(bool state_changed, ApparatusState_t new_state,
+void RelayManager::_autoTriggerCheck(bool state_changed, ApparatusState_t prev,
+                                     ApparatusState_t new_state,
                                      float agc) {
     uint32_t now = millis();
 
@@ -199,6 +203,8 @@ void RelayManager::_autoTriggerCheck(bool state_changed, ApparatusState_t new_st
             bool fire = false;
             switch (s.trigger) {
                 case TRIG_ON_L3_CUT:      fire = (new_state == STATE_CONTACT); break;
+                case TRIG_ON_L3_RELEASE:  fire = (prev != STATE_CONTACT) &&
+                                                 (new_state != STATE_CONTACT); break;
                 case TRIG_ON_L2_ENTRY:    fire = (new_state == STATE_MACRO);   break;
                 case TRIG_ON_BREATH_LOCK: fire = (new_state == STATE_MICRO);   break;
                 case TRIG_ON_L1_RETURN:   fire = (new_state == STATE_IDLE);    break;

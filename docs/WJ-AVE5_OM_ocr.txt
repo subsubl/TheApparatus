@@ -1,0 +1,5805 @@
+=== PAGE 1 ===
+VIDE-V30760
+Operating
+ENGLISH
+Instructions
+DEUTSCH
+Digital AVMixer
+WJ-AVE5
+FRANCAISE
+ITALIANO
+Panasonic
+Before attempting to connect or operate this product,please read these instructions completely.
+=== PAGE 2 ===
+ENGLISH VERSION
+CONTENTS
+Page
+PREFACE
+FEATURES
+PRECAUTIONS
+MAJOROPERATING CONTROLS AND THEIR FUNCTIONS
+SYSTEMCONNECTION
+10
+OPERATING PROCEDURE
+11
+MIX/WIPEEFFECT,WIPEMODE
+A.
+11
+B.
+DIGITAL EFFECT
+SUPERIMPOSEEFFECT&BACKCOLOUR
+C.
+16
+FADE CONTROL
+D.
+17
+AUDIOMIXER
+18
+SPECIFICATIONS
+19
+OPTIONALACCESSORIES
+19
+For WJ-AVE5/B
+For U.K.
+ACPOWERCORD CONNECTION
+CAUTION
+The wires in this mains lead are coloured in accordance with
+RISK OF ELECTRIC SHOCK
+the following code.
+Blue:
+Neutral
+Brown:
+Live
+At the colours of the wires in the mains lead of this apparatus
+CAUTION:
+may not correspond with the coloured marking identifying the
+TOREDUCE THE RISK OFELECTRIC SHOCK,DO
+terminals in your plug proceed as follows.
+NOT REMOVE COVER (ORBACK).NO USER SER-
+The wire which is coloured BLUE must be connected to the
+VICEABLE PARTS INSIDE.
+terminal which is marked with the letter N or coloured black.
+REFER SERVICING TO QUALIFIED SERVICE
+The wire which is coloured BROwN must be connected to
+PERSONNEL.
+the terminal which is marked with the letter. L or coloured red.
+This model conforms to the EC directive (for radio interference)
+87/308/EEC.
+The lightning flash with arrowhead
+symbol, within an equilateral triangle,
+This apparatus was produced to BS 800:1987.
+is intended to alert the user to the
+presence of uninsulated "dangerous
+The serial number of this product may be found on
+voltage"withintheproduct's
+enclosure that may be of sufficient
+the bottom of the unit.
+You should note the serial number of this unit in the
+magnitude to constitute a risk of elec-
+space provided and retain this book as a permanent
+tric shock to persons.
+record of your purchase to aid identification in the
+The exclamation point within an
+event of theft.
+equilateral triangle is intended to alert
+the user to the presence of important
+Model No.
+operating andmaintenance (servicing)
+instructions in the literature accompa-
+Serial No.
+nying the appliance.
+WARNING:
+=== PAGE 3 ===
+PREFACE
+The Panasonic WJ-AVE5 Digital AV Mixer is designed for
+This unit includes various functions to do so such as Mixing
+the video or audio signals, Digital effect, Superimpose,Fade
+technology.
+control and much more. A sophisticated audio and video
+program can be completed using this. Digital AV Mixer.
+ENGLISH
+FEATURES
+BUILT-INDIGITALSYNCHRONIZER
+FADEFUNCTION
+This built-in frame synchronizer allows video mixing of
+Fade-in and fade-out of video and video titles can
+any two PAL-standard video sources.
+be accomplishedseparatelyorin combinationto meet
+requirements in video tape production.
+SPECIAL EFFECTS - MOSAIC, PAINT, STILL,
+STROBE
+VIDEOTITLE
+Using the built-in digital memories, speciai video
+The WV-KB12 or WJ-TTL5 Keyboard-type Character
+effects are available for maximum variety in video
+Generator is an optional title producer designed for
+creativity.
+connection to this Digital AV Mixer. It allows quick and
+easy title setting and features an eight-page memory
+SUPERIMPOSE
+for WV-KB12 and ten-page memory for WJ-TTL5 that
+Input signal from A-bus, B-bus and EXT CAMERA can
+will hold titles produced.
+be superimposed onthe picture.
+98WIPEPATTERNSANDJOYSTICKPOSITIONER
+In combination with the wipe pattern buttons, up
+to 98 wipe patterns are available.The joystick
+positioner allows free positioning of the circle,square
+and diamond in combination of the wipe patterns, and
+picture-in-picture. The wipe has three kinds of mode,a
+Normal Wipe,a Soft Wipe and a Border Wipe.
+AUDIOMIXING
+The built-in audio mixer can mix up to four audio
+sources, including a microphone. The Master Volume
+Control is available for the audio mixing.
+-2
+=== PAGE 4 ===
+PRECAUTIONS
+The WJ-AvE5 is a sensitive, high quality instrument and should be regarded as such. Because it is an electrical device, the danger
+of electric shocks exists if it is used carelessly.
+DON'T
+DO'S
+DO not attempt to disassemble the instrument.in order
+Do refer all servicing to qualified service personnel.
+fo prevent electrical shock, do not remove screws or
+covers. There are no user-serviceable parts inside.
+Do not abuse the instrument. Avoid striking, shaking,
+Do handle the instrument with care.
+etc.it could be damaged by improper handling or
+storage.
+Do not use strong or abrasive detergents when
+Do use a dry cloth to clean the instrument when dirty.
+cleaning the instrument body.
+In case the dirt is hard to remove, use mild detergent
+and wipe gently.
+Do not expose the instrument to water or moisture,and
+Do take immediate action if ever the instrument does
+do not operate it in wet areas of it is wet.
+become wet.Turn the power off and refer servicing
+to qualified service personnel. Moisture can damage
+the instrument and also create the danger of electric
+shock.
+× Do not use the instrument in an extreme environment
+Usetheinstrumentunderconditionswhere
+where high temperature or high humidity exist.
+temperatures are within o°c -40°C, and humidity is
+below 90%.
+Important Notice for Source 1and2VideoSignal:
+(1)If the input video signaldoes notmeetwiththe PAL
+(6)Flag waving (top of picturecurls)mayappearwhen
+colour standard or the CCIR B/W standard video signal,
+certain VTR's are used as input signals (due to skew
+this could cause a disturbance of synchronization
+errors) ormayappear due tothecharacteristics of the
+if the signal to noise ratio (S/N) of the input signal is
+(2)
+video monitor (due to AFC time constants).
+very fow, this may be reflected in a low quality picture.
+(3) If the input video signal is very jittery, as in the
+case of poor VTR playback signal, this could cause
+a disturbance in synchronization or colour.
+(4)if the tracking noise is seen on the TV monitor, this
+could cause a disturbance in synchronization or colour
+so that adjust the tracking control of the VTR.
+(5)
+When either a character generator signal (from
+WV-KB12.WJ-TTL5)orcharacters fromakey camera
+(7)The edge of the hardand border wipe in the circle wipe
+is supplied, the edge of the character might become
+mode will be a zigzag. This phenomenon is normal and
+rough as shown below under the certain electronic
+not a sign of failure.
+conditions.
+-3-
+=== PAGE 5 ===
+MAJOR OPERATING CONTROLSAND THEIR FUNCTIONS
+68
+55
+59
+64
+65
+66
+62
+67
+69
+70
+72
+23
+25
+28
+20
+12
+18
+22
+26
+32
+29
+34
+35
+36
+40
+44
+43
+153
+54
+=== PAGE 6 ===
+1.MicrophoneInputJack (MiC)
+This jack is used to connect a microphone with a
+WIPE PATTERNS
+tipring-sieeve or tip-sleeve type phone plug.
+NON
+x4
+POSI
+X16
+MULTI
+MULT1
+MULTI
+2.Title InputConnector (TITLE)
+This connector is used to connect the optional
+Character Generator WV-KB12or WJ-TTL5.
+(1) : Character IN
+(2): Not used
+(3):Ground
+(4): Not used
+TITLE
+(5): Sync out
+(6) : Not used
+Front View
+(7) : Ground
+(8) : +9VOUT
+(9)  : Ground
+(t0) : ID (WV-KB12: Open, WJ-TTL5: Ground)
+Notes:
+When WV-KB12 is used with this unit, the following
+functions of the WV-KB12 are Disabled:
+Stopwatchdisplay
+Titie colour setting
+2)
+3) Title page display
+During scrolling of titles in the smallest charactor
+size using WJ-TTL5, the place where new lines of
+charactor appear will gradually move up from the
+bottom of the screentothemiddleof thescreen.
+Connect the cable of the WV-KB12 or WJ-TTL5
+to the Title input Connector (2) as shown below.
+CharacaterGenerator
+WV-KB12
+WJ-TTL5
+3.PowerON/OFFSwitch(POWERON/OFF)
+Press this switch to turn on the power.The Power
+Indicator (4) tights up when this switch is pressed.
+4.PowerIndicator(POWER)
+5.BackColourSelectionSwitch(BACKCOLOUR)
+This control is used to select the background coiour for
+Mix, Wipe, Superimpose and Video Fader operations.
+One of the following eight background colours can be
+chosen:White,Yellow, Cyan, Green, Magenta, Red,
+Blue and Black. The colour changes by pressing this
+switch.
+P-IN-P
+CUT
+6.WipePatternSelection Switches (WIPEMODE)
+A→B
+in combination of five switches, the following wipe
+patterns can be made as shown in the table. The LED
+CUT-MULTI
+lights when pressed. Please note that the positioning
+of the pattern by operating a Joystick Positioner (54) is
+effective for three patterns marked"p"in the table.
+-5-
+=== PAGE 7 ===
+7. Picture-In-Picture Switch (P-IN-P)
+15.A-bus Strobe ON/OFFSwitch (STROBE)-A
+A 1/4sized ·Picture-in-Picture mode will be obtained
+This switch is used to obtain a strobe effect of the
+by pressing this switch once.The LED lights up.When
+A-bus picture. Pressing this switch once, strobe effect
+this switch is pressed again, a 1/16 sized . Picture
+is applied to the A-bus image and the LED indicator in
+-ln-Picture mode will be obtained.The positioning of
+the switch lights.The time interval of the strobe effect
+the Picture-ln-Picture mode can be operated by the
+can be changed by pressing this switch repeatedly.
+Joystick Positioner (54).When this switch ispressed
+Adjustment is possible fromapprox.0.2 to 1 second
+third time, this mode ends to return to a normal picture
+in five steps. To return to a normal picture, press the
+mode.Then LED lights off.
+switch once more. The LED indicator goes off.
+Notes:
+(1)Whenyou change the Mix/WipeControl (45)from
+16.B-bus Strobe ON/OFF Switch(STROBE)-B
+A to B or B to A in P-iN-P mode, the pictures alter
+This switch is used to obtain a strobe effect of the
+their position from B to A or A to B correspondingly.
+B-bus picture. Pressing this switch once, strobe effect
+When a 1/4 sized or 1/16 sized:picture is
+(2)
+is applied to the B-bus image and the LED indicator in
+positioned to the left edge, the P-IN-P mode may
+the switch lights.The time interval of the strobe effect
+not be completed in the fringe area for some
+television monitor.
+Adjustment is possible from approx. 0.2 to 1 second
+in five steps. To return to a normal picture, press the
+switch once more. The LED indicator goes out.
+17.A-busMosaicON/OFFSwitch (MOSAIC)-A
+This switch is used to obtain a mosaic effect of the
+A-bus picture. Pressing this switch once, a mosaic
+(3) The Strobe andthe Stillwill not function when the
+effect is applied to the A-bus image and the LED
+picture-in-picture mode is used.
+indicator in the switch lights. The mosaic size can
+be changed in four steps by pressing this switch
+8.Multi WipePatternSwitch (MULTI)
+repeatedly.
+When this switch is pressed once, the wiped pattern
+When the mosaic effect is selected, the
+multiplied by four times.And when this switch is
+mosaic effect is not performed in the
+pressed again, the wiped pattern multiplied by sixteen
+left and top edges. It does not indicate
+times.The LED lights up when this mode is selected.
+equipment failure. To return to a normal
+The LED lights off when this switch is pressed three
+picture, press the switch once more. the
+times to return to normal wipe mode.
+LED indicator goes off.
+9. One-WayWipe Switch (ONE-WAY)
+When this switch is pressed, the LED lights up, the
+18.B-bus Mosaic ON/OFFSwitch (MOSAIC)-B
+wiping direction stays same in regardless of changing
+This switch is used to obtain a mosaic effect of the
+the Mix/Wipe Control (45)
+B-bus picture.Pressing this switch once, a mosaic
+effect is applied to the B-bus image and the LED
+10.ReverseWipe Switch (REVERSE)
+indicator in the switch lights.The mosaic size can
+When this switch is pressed, the LED lights up, the
+be changed in four steps by pressing this switch
+position-of the wiped pictures will be laid reversely.
+repeatedly.
+11.A-busDigitalEffectON/OFFSwitch (ON)-A
+When the mosaic effect is selected, the
+This switch is the A-bus ON/OFF switch for the digita!
+mosaic effect is not performed in the
+effects, such as STROBE, STILL, MOSAIC and PAINT.
+left and top edges. It does not indicate
+equipment failure. To return to a normai
+12.B-busDigital EffectON/OFFSwitch(ON)-B
+picture, press the switch once more. the
+This switch is the B-bus ON/OFF switch for the digital
+LED indicator goes off.
+effects, such as STROBE, STILL,MOSAIC and PAINT.
+13.A-bus Still ON/OFF Switch (STILL)-A
+19.A-bus Paint ON/OFF Switch (PAINT)-A
+This switch is used to freeze the A-bus picture.Pressing
+This switch is used to obtain an oil-paint touch effect
+this switch once, the A-bus image will freeze and the
+for the A-bus picture. Pressing this switch once, an oil
+LED indicator in the switch lights. To return to a "ive"
+paint touch effect is applied to the A-bus image and
+picture,press the switch once more. The LED indicator
+the LED indicator in the switch lights. The graduation
+goes off.
+ofpaint effect canbechanged in 4 steps (2 bits to 5
+bits). To return to a normal picture, press the switch
+14.B-bus Still ON/OFF Switch (STILL)-B
+once more. The LED indicator goes off.
+This switchis used to freezethe B-bus picture.Pressing
+this switch once, the B-bus image will freeze and the
+LED indicator in the switch lights. To return to a "ive"
+picture, press the switch once more. The LED indicator
+goes off.
+- 6 -
+=== PAGE 8 ===
+20.B-bus Paint ON/OFF Switch (PAINT)-B
++Normal→NarrowBorder→WideBorder
+This switch is used to obtain an oit-paint touch effect
+→NarowShadow→WideShadow-→DropShadow
+for the B-bus picture. Pressing this switch once, an oil
+paint touch effect is applied to the B-bus image and
+Normal
+Narrow Border
+the LED indicator in the switch lights. The graduation
+Wide Border
+of paint effect can be changed in 4 steps (1 bit to 4
+A-A-A-
+bits) To return to a normal picture, press the switch
+once more. The LED indicator goes off.
+NarrowShadow
+WideShadow
+DropShadow
+21.ReverseSwitch (REVERSE)
+A-AA
+This switch is used to select the polarity of the
+superimposed key signal.
+Original Picture
+Becomes the colour of title
+30. Key Levei Control (KEY LEVEL)
+VIDEQ
+VIDEO
+This control is used to adjust the luminance level of the
+key signal.
+31.A-busRecordingVideoOutputSelection Switch
+(RECVIDEO OUT/A)
+Title
+Original Picture in the title
+Superimposed Picture
+This switch is used to select the A-bus picture as for
+the Recording Video Output signal. The LED lights up
+when this switch is selected.
+22.SuperimposeON/OFFSwitch(ON)
+This isthemasterON/OFFswitchforthe superimpose
+32.B-bus Recording Video Output Selection Switch
+function.
+(RECVIDEOOUT/B)
+This switch is used to select the B-bus picture as for
+When the superimpose effect is selected,
+the Recording Video Output signal. The LED lights up
+the superimpose effect is not performed in
+when this switch is selected.
+the left and top edges. it does not indicate
+equipment failure.
+33.EffectRecordingVideoOutputSelectionSwitch
+(RECVIDEOOUT/EFFECT)
+This switch is used to select the effected signal
+(Superimpose, Mix/Wipe orFade)as for the Recording
+23.ExternalCameraSelectionSwitch (EXTCAMERA)
+Video Output signal, The LED lights up when this switch
+This switch is used to select a external camera as a
+is selected.
+keysignalfor the Superimpose Effect.
+34.ColourSelectionSwitch(BACKCOLOUR)
+24.A-bus Selection Switch (A)
+This switch is used to select the colour for the fade-out
+This switch is used to select a A-bus picture as a key
+mode.The colouris setby the Back Colour Selection
+signalfor the Superimpose. Effect.
+Switch (5).The LED lights up when this switch is
+selected.
+25.B-bus Selection Switch (B)
+This switch is used to select a B-bus picture as a key
+35.ColourSelectionSwitch (WHITE)
+signal for the Superimpose Effect.
+This switch is used to select a white coiour when the
+picture fades out in white. The LED lights up when this
+26.AudioLevelIndicator (AUDIOLEVEL)
+switch is selected.
+These LED indicators show the output level for the left
+and right channels respectively.
+36.Colour SelectionSwitch (BLACK)
+This Switch is used to select a black colour when the
+27.BackColourSwitch (BACKCOLOUR)
+picture fades out in black. The LED lights up when this
+This switch is used to select the cotour of the
+switch is selected.
+superimposed titles chosen by the Back Colour
+Selection Switch (5).
+37.Video Fade Switch (VIDEO)
+When this switch is selected, the picture will be faded
+28. White ColourSwitch (WHITE)
+inor out. The LED lights up when this switch is selected.
+This switch is used to select the colour of the
+superimposed titles as a white colour.
+38.TitleFade Switch (TITLE)
+When this switch is selected,the titlewill befaded in
+29.TitleEffectSwitch(TITLEEFFECT)
+or out. The LED lights up when this switch is selected.
+By depressing this switch, the superimposed titles can
+be changed as folliows:
+=== PAGE 9 ===
+39.FadeLever (IN/OUT)
+50.A-bus Source1SelectionSwitch(SOURCE1)-A
+Moving this lever from OUT to IN, fade-in of the picture
+This switch is used to ailocate the source 1 video signal
+takes place. Fade-out is accomplished by moving the
+to the A-bus input. The LED lights up when this switch
+leverfromINtoOUT.
+is selected.
+40.Audio MasterLevel Control (MASTER,MAX/MIN)
+51.B-busSource1SelectionSwitch(SOURCE1)-B
+This is the overall attenuator for the Audio Mixer.
+This switch is used to allocate the source 1 video signal
+to the B-bus input. The LED lights up when this switch
+41.Microphone Level Control (MIC, MAX/MiN)
+is selected.
+This is the attenuator for the microphone signal fed to
+the Microphone Input Jack (1).
+52.MixModeSelection Switch (MiX)
+When this switch is pressed, the LED lights up, the mix
+42.AuxiliaryAudio Level Controi (AUX, MAX/MiN)
+mode is selected in the MIX/WIPE EFFECT.
+This is the input attenuator for the auxiliary audio signal
+fed to the Auxiliary Audio input Connectors (65) on the
+53.WipeModeSelectionSwitch (WIPE)
+rear panel.
+When this switch is pressed, the LED lights up, the
+wipe mode is selected in the MIX/WIPE EFFECT. By
+43.SourceLevelControl (SOURCE,MAX/MIN)
+pressing this switch, the wipe mode will be changed
+This is the overall attenuatorforthe mixed AUDiO1 and
+as follows:
+AUDiO 2 sound.
+Normai Wipe→BorderWipe
+44. Audio Control (AUDIO,1/2)
+This control is used to balance the mixed audio signal
+-SoftWipe+
+fed to SOURCE 1 (AUDIO 1) input connector and the
+signal fed to SOURCE 2 (AUDIO2) input connector on
+Note:
+the rear panel.
+When the Border Wipe is selected,the colour
+can be added on the border by the Back Colour
+45. Mix/Wipe Contro1 (VIDEO A, B)
+Selection Switch (5).
+In the wipe mode, moving this lever from A to B will
+increase the portion of the B input, and vice versa. In
+54.JoystickPositioner(POSITIONER)
+the mix mode, video images are switched between A
+The position of the wiped pattern such as circle, square
+and B.
+and diamond, which is selected by the Wipe Pattern
+Selection Switch (6) or the Picture-ln-Picture Switch
+46.A-bus Back ColourSelectionSwitch
+(7), can be freely set using this joystick.
+(BACKCOLOUR)
+This switch is used to allocate the back colour signal
+to the A-bus input. The back colour signal can be set
+55.Source1AudioConnectors
+(SOURCE1,AUDIOL/R)
+by the Back Colour Selection Switch (5).The LED lights
+-6dBV/15kohmsaudiosignalsfor theSOURCE1
+up when this switch (46) is selected.
+should be supplied to these input (iN) connectors.
+When the monophonic audio signal is fed to the
+47.B-bus Back Colour Selection Switch
+(BACKCOLOUR)
+L-channel, this signal will be distributed to the
+This switch is used to allocate the back colour signal
+R-channel internally.
+to the B-bus input. The back colour signal can be set
+by the Back Colour Selection Switch (5).The LED lights
+56.Source1Y/CVideoInputConnector
+up when this switch (47) is selected.
+(SOURCE1,Y/CIN)
+The luminance (M) and chroma (C) signals from VTR or
+Note:
+colour TV shoutd be supplied to this connector.
+When the B-bus Back Colour Selection Switch
+Note:
+(47)is selected from the B-bus Source2 Selection
+The Y/C input has a priority over the composite
+Switch (49), the LED on the B-bus Source 2
+input in circuitry.
+Selection Switch (49) blinks.
+WhenboththeY/Cvideosignalandthecomposite
+This blinking tells you that the Soruce 2 picture will
+video signal are supplied to the SOURCE1
+be selected when the B-bus Selection Switch (25)
+connectors at the same time,only Y/C video signal
+is pressed. The same procedure will take place
+goes into the circuit.
+when A-bus or Soruce 1 is used.
+48.A-bus Source2Selection Switch(SOURCE2)-A
+This switch is usedto allocate the source 2 video signa!
+to the A-bus input. The LED lights up when this switch
+is selected.
+49.B-busSource2SelectionSwitch(SOURCE2)-B
+This switch is usedtoallocatethe source 2 video signal
+to the B-bus input. The LED lights up when this switch
+is selected.
+-8-
+=== PAGE 10 ===
+57.Source1VideoInputConnector
+Note:
+(SOURCE 1,COMP.IN)
+1.
+The Y/C input has a priority over the composite
+A1.0 Vp-p/75ohms compositevideo signal should be
+input in circuitry.
+supplied to the input (IN) connector.
+WhenboththeY/Cvideosignalandthecomposite
+Notes:
+video signal are supplied to the External Camera
+(1) If the input signai does not meet the PAL colour
+Input connectors at the same time, only Y/C video
+standard or the CCiR B/W standard, this couid
+signal goes into the circuit.
+2.
+cause synchronization error.
+This input accepts only video camera signal and
+In case the S/N ratio of the input signal is very low,
+(2)
+will not accept VTR playback signal.
+this may reflect to in a low-quality picture.
+(3)
+If the input video signal is very jittery, such as a
+64.CompositeVideoExternalCameraInputConnector
+picture played back on a VTR, synchronization or
+(EXT CAMERAINCOMP.)
+colour error may appear.
+For the key signal in the superimpose mode, this
+connector accepts a 1.0 Vp-p/75 ohms composite
+58.Source1VideoOutputConnector
+video signal. The.external sync is not necessary for
+(SOURCE1,COMP.MONITOR OUT)
+the camera.
+A 1.0Vp-p/75 ohms composite video signai will be
+Note:
+supplied at this connecter for the monitoring purpose
+This input accepts only video camera signal and
+of the Source 1 Video Input signal.
+will not accept VTR playback signal.
+59.Source2AudioConnectors
+65.AuxiliaryAudio Input Connectors (AUXAUDIO IN)
+(SOURCE2,AUDIO L/R)
+Accept6dBv/15kohmsaudiosignalfromanexternal
+--6 dBV/15 kohms audio signals for the SOURCE 2
+audio source, When the monophonic audio signalis fed
+should be supplied to these input (IN) connectors.
+to the L-channel, this signal will be distributed to the
+When the monophonic audio signal is fed to the
+R-channel internally.
+L-channel, this signal will be distributed to the
+R-channel internally.
+66.Recording AudioOutput Connectors
+(AUDIO OUT 1, L/R)
+60. Source 2Y/C Video Input Connector
+-6 dBV/1 kohms audio signals for recording are
+(SOURCE2, Y/C IN)
+supplied at these connectors.
+The luminance (M) and chroma (C) signals from VTR or
+colour TV should be supplied to this connector.
+67.Y/CRecordingVideoOutput Connector
+Note:
+(RECVIDEOOUT1,Y/C)
+The Y/C input has a priority over the composite
+The luminance (M) and chroma (C) signals are obtained
+input in circuitry.
+fromthis connector when compositeorY/C signal is
+When both theY/Cvideosignal and the composite
+supplied to source 1 or 2.
+video signal are supplied to the Source 2
+connectors at the same time, only Y/C video signal
+68.RecordingVideoOutputConnectors
+goes into the circuit.
+(RECVIDEOOUT1,COMP.)
+A 1.0 Vp-p/75 ohm compositevideo signai,as selected
+61.Source2VideoInputConnector
+bytheRecording VideoOutput SelectionSwitches (31),
+(SOURCE2, COMP.IN)
+(32), (33), is provided at these connectors.
+The IN connector accepts a 1.0 Vp-p/75 ohm
+composite video signal
+69.RecordingAudioOutputConnectors
+Notes:
+(AUDIO OUT 2, L/R)
+(1) if the input signal does not meet the PAL colour
+-6 dBV/1 kohms audio signals for recording are
+standard or the CCIR B/W standard, this couid
+supplied at these connectors.
+cause synchronization error.
+(2)
+In case the S/N ratio of the input signail is very low,
+7o.Y/CRecordingVideoOutputConnector
+this may reflect to in a low-quality picture.
+(RECVIDEOOUT2,Y/C)
+(3) If the input video signal is very jittery, such as a
+The luminance (Y) and chroma (C) signals are obtained
+picture played back on a VTR, synchronization or
+from this connector when composite or Y/C signal is
+colour error may appear.
+supplied to source 1 or 2.
+62.Source2VideoOutputConnector
+71.RecordingVideoOutputConnectors
+(SOURCE2,COMP.MONITOR OUT)
+(RECVIDEOOUT2,COMP.)
+A 1.0 Vp-p/75 ohms composite video signal will be
+A 1.0 Vp-p/75ohmcompositevideo signal, as selected
+supplied at this connector for the monitoring purpose
+bytheRecordingVideoOutputSelectionSwitches(31),
+of the Source 2 Video Input signal.
+(32), (33), is provided at these connectors.
+63.Y/CExternalCameraInputConnector
+72.PreviewOutputConnector(PREVIEWOUT)
+(EXT CAMERA IN Y/C)
+A 1.0 Vp-p/75 ohm composite video signal of the
+The luminance (Y) and chroma (C) signal from VTR or
+EFFECT (all effect) image is provided at this connector.
+colour TV should be supplied to this connector.
+73.PowerCord
+-9-
+=== PAGE 11 ===
+SYSTEM CONNECTION
+Caution:
+Keep the POWERON/OFF switch turned OFF while making the connections.
+Connect the coaxial cable with BNC connectors between the video output of theVTR, Video Disc Player,TV Tuner Output or
+VideoCamera andtheSOURCE1 COMP.IN connectorontherearpaneloftheDigital AVMixerorconnectY/C cable (4pin)
+between VTR and the SOURCE1 Y/C Video Input Connector on the rear panel of the Digital AV Mixer.
+2.
+Connect the audio cable with pin plugs between the audio output of the VTR, Video Disk Player, TV Tuner Output or Video
+Camera and the SOURCE1AUDIO IN connectors on therearpanel of the Digital Av Mixer.
+3.
+Connect the coaxial cable or Y/C cable (4 pin) and audio cabie for the SOURCE 2 inputs of the Digital AV Mixer in the same
+manner as steps 1 and 2 above.
+4.
+Connectthe coaxial cable withBNC connectorsbetween the video outputof the external camera (B/W or colourcamera for
+superimposing)and the EXT CAMERA IN connector of the Digital AV Mixer.
+5.
+If the Character Generator WV-KB12 or WJ-TTL5 (sold separately) is used, connect the 10-pin cable connector of the
+Character Generator to the TITLEconnector of the Digital AV Mixer.
+If an auxiliary audio source is required, connect the audio cable with pin plugs between the audio output of the audio source
+(CD player, Tape Recorder or Record Player) and the AUX IN connectors of the Digital AV Mixer.
+connector of the Digital AV Mixer.
+8.
+For previewing the image, connect the coaxial cable with BNC connectors between the PREVIEW OUT connector of the
+Digital AV Mixerand the VIDEo IN connector ofa video monitor.
+For recording,connectthecoaxialcables with BNC connectors (Y/C cable)between the REC VIDEO OUT connectors of the
+Digital AV Mixer and the VIDEO IN connectors of the VTR and Video Monitor.
+10. For recording, connect the audio cable with pin plugs between the REC AUDIO OUT connectors of the Digital AV Mixer and
+the AUDIO IN connectors of the VTR and Video Monitor.
+VTR/Video Disc Player
+Colour TV
+CD Player, etc.
+Video Monitor
+VIDEO
+VIDEO
+AUDIO
+SOURCE1
+AUXAUDIO
+PREVIEWOUT
+Audio Video
+Monitor
+SOURCE2
+REC OUT
+Video Camera
+VIDEO
+AC Adaptor
+VTR
+VIDEO
+AUDIO
+AUDIO
+66
+REC OUT
+VIDEO
+AUDIO
+VTR
+EXT CAMERA IN
+VIDEOOUT
+CharacaterGenerator
+External Camera
+MIC
+WV-KB12
+WJ-TTL5
+SystemConnections
+- 10 -
+=== PAGE 12 ===
+OPERATINGPROCEDURE
+1.
+Make all necessary connections
+Confirm that the LED indicator of the Video Fade
+2.
+Turn ON the Digital AV Mixer and all other equipment
+Switch (37) lights off.
+connected.
+Prepare the script of the program.
+3.
+Operate theMix/Wipe Control (45) from A to B,or vice
+4.
+Prepare all necessary titie cards.
+versa.
+Note:
+Either the title cards with black ietters on white or
+white on black can be used for the superimpose
+function.
+A-bus
+Store all tities to be superimposed in the Character
+Generator WV-KB12/WJ-TTL5 while referring to the
+operating instructions of the WV-KB12/WJ-TTL5.
+SCENE1:INPUTA
+A.MIX/WIPEEFFECT,WIPEMODE
+A-bus
+B-bus
+VIPEMODI
+SCENE1andSCENE2
+MULTI
+B-bus
+REVERSE
+MIX WIPE EFFECT
+SCENE 2 :INPUT B
+WIPEEFFECT
+Press the Effect Recording Video Output Selection
+SOURCE
+BACK
+SOURCE
+Switch (33).
+Press the Wipe Mode Selection Switch (53)
+Select the desired wipe mode from the Wipe Pattern
+Selection Switches (6).
+Refertothepatterntableonpage5forcombination of
+the Wipe Pattern Selection Switches (6)
+50
+48
+46
+49
+52
+5D
+45
+53
+Select the source signal for A-bus and B-bus from the
+SOURCE1,SOURCE2orBACKCOLOUR.
+In case back colour is selected, set the Back Colour
+Selection Switch (5) to the desired colour.
+Press the Effect Recording Video Output Selection
+Switch (33).
+Confirm that the LED indicatior of the Video Fade
+Switch (37) lights off.
+MIXEFFECT
+Operate the Mix/Wipe Control (45) from A to B, or vice
+versa.
+Press the Mix Mode Selection Switch (52).
+Select the source signal for A-bus and B-bus from the
+SOURCE1,SOURCE2orBACKCOLOUR.
+In case back colour is selected, set the Back Colour
+Selection Switch (5) to the desired colour.
+=== PAGE 13 ===
+By sliding the Mix/Wipe Controi (45) to A position in this
+conditions, the inserted picture B will be changed to
+A-buspicture as shown below.
+A-bus
+input A
+Press the Picture-In-Picture Switch (7) again to obtain
+a 1/16 sized picture for insertion.
+A-bus
+B-bus
+Wiped picture
+Thepositionof those1/4or 1/16 sizedpicturecan be
+freely set using a Joystic Positioner (54).
+Notes:
+(1) When a 1/4 or 1/16 sized picture is positioned
+to the left edge, the P-IN-P mode may not be
+performed in the fringe area for some television
+B-bus
+monitor.
+Input B
+P-IN-P WIPE
+3.
+(2)The image of the inserted picture may be slipped
+into two in horizontal depending on the position of
+Press the Effect Recording Video Output Selection
+the inserted picture.
+Switch (33).
+Press the Wipe Mode Selection Switch (53)
+Select the source signal for A-bus and B-bus from the
+SOURCE1,SOURCE2orBACKCOLOUR.
+In case thattheback coiour is selected, setthe Back
+Colour Selection Switch (5) to the desired colour.
+(3) In case that the B-bus picture is inserted in A-bus
+picture and,
+Confirm that the LED indicator of the Video Fade
+1) when A-bus Recording Video Output
+Switch (37) lights off.
+Selection Switch (31) is pressed, only A-bus
+picture will be output.
+Press the Picture-ln-Picture Switch (7).
+2)
+when B-bus Recording Video Output
+When the switch is pressed once and theMix/Wipe
+Selection Switch (32) is pressed, the inserted
+Control (45) is positioned in B,a 1/4 sized B-bus picture
+B-bus picture with black back ground will be
+will be inserted into A-bus picture as shown below.
+output.
+Remark:
+The Strobe and the Still will not function when the
+picture-in-picture mode is used.
+- 12 -
+=== PAGE 14 ===
+6.
+MULTIWIPE
+ONE-WAY WIPE
+Press the Effect Recording Video Output Selection
+When this switch is pressed, the wiping direction stays
+Switch (33).
+same in regardless of the moving direction of the
+Mix/Wipe Control (45).
+Press the Wipe Mode Selection Switch (53).
+Select the source signal for A-bus and B-bus from the
+SOURCE1,SOURCE2or BACK COLOUR.
+In case that the back colour is selected, set the Back
+Colour Selection Switch (5) to the desired colour
+Confirm that the LED indicator of the Video Fade
+Switch (37) lights off.
+Select the desired wipe pattern using the Wipe Pattern
+Selection Switches (6).
+7.
+WIPEMODE
+There is a choice of wipe mode from a Soft wipe or Border
+Then press the Multi Wipe Pattern Switch (8) once to
+wipe.
+obtain a four times of multiplied wiped pattern.
+Press the Wipe Mode Seiection Switch (53) twice to
+obtain a clear/wide edge.A choice of the colour on
+this border edge is available from the Back Colour
+Selection Switch (5).
+Press the Wipe Mode Selection Switch (53) third time
+to obtain a dimmed wiping edge, To return to a normal
+wipe mode, press the Wipe Mode Selection Switch (53)
+If the Multi Wipe Pattern Switch (8) is-pressed again,
+again.
+sixteen times of multiplied wiped pattern will be
+obtained.
+8.
+APPLICATION
+8-1. Cut Wipe
+Press the Effect Recording Video Output Selection
+Switch (33).
+Press the Wipe Mode Selection Switch (53)
+REVERSEWIPE
+5.
+Select the source signal for A-bus and B-bus from the
+SOURCE1, SOURCE2orBACKCOLOUR.
+When this switch is pressed, theposition of the wiped
+In case that the back colour is selected, set the Back
+pictures will be laid reversely.
+Colour Selection Switch (5)to the desired colour.
+Confirm that the LED indicator of the Video Fade
+Switch (37) lights off.
+Do not select any wipe pattern from the Wipe Pattern
+Selection Switches (6).
+Slide the Mix/Wipe Control (45) up and down near
+the center position. The A-bus picture and the B-bus
+picture appear by turns.
+13-
+=== PAGE 15 ===
+Note:
+When the Multi Wipe Pattern Switch (8) is pressed
+twice, a 1/16 sized picture performs the same
+manner.
+Remarks:
+(1)When the B-bus Back Colour Selection Switch
+(47)is selected after the B-bus Source2Selection
+Switch(49),theLED on the B-busSource 2
+8-2. Cut-Multi wipe
+Selection Switch (49) blinks.
+This blinking tells you that the Source 2 picture will
+Press the Effect Recording Video Output Selection
+be selected when the B-bus Selection Switch (25)
+Switch (33).
+is pressed.The sameprocedurewill takeplace
+when A-bus or Source 1 is used.
+Press the Wipe Mode Selection Switch (53).
+(2)
+When the B-bus Still ON/OFF Switch (14) is
+pressed while the B-bus Source 2 Selection
+Select the source signal for A-bus and B-bus from the
+Switch (49) has been selected, B-bus Source 1
+SOURCE1,SOURCE2orBACKCOLOUR.
+Selection Switch (51) will not function.The same
+in case that the back colour is selected, set the Back
+procedure will take place when A-bus or Source
+Colour Selection Switch (5)to the desired colour.
+1 is used.
+Confirm that the LED indicator of the Video Fade
+Switch (37) lights off.
+B. DIGITALEFFECT
+Do not select any wipe pattern from the Wipe Pattern
+Selection Switches (6).
+Press the Multi Wipe Switch (8) once.
+14
+16
+18
+20
+Slide the Mix/Wipe Control (45)from A position to
+DIGTALEFFEC
+B position slowly. The 1/4 sized A-bus picture will
+appeare as shown.
+STROBE
+MOSAIC
+ON
+STEL
+PAIN T
+The following Effects will be mainly explained for A-bus
+picture as a example.
+(1) 
+Press the Mix Mode Selection Switch (52).
+(2) [
+Press A-bus Source 1 Selection Switch (50)
+(3)
+Slide Mix/Wipe Control (45) to A position.
+(4)
+Press the A-bus DigitalEffectON/OFF Switch (11).
+(5)
+Press the Effect Recording Video Output Selection
+Switch (33)
+1. 
+STILL
+Press the A-bus StillON/OFFSwitch(13)onceto
+freeze the picture. The LED lights up.
+- 14 -
+=== PAGE 16 ===
+PAINT
+Press the A-bus Paint ON/OFF Switch (19) to obtain
+an oil-paint touch effect on the picture.
+LIVE
+STILL
+To return to a live picture, press the A-bsu Still ON/OFF
+Switch (13) again. The LED lights off.
+PAINT OFF
+PAINT ON
+(PAINT LEVEL: HIGH)
+STROBE
+2.
+The graduation of the paint can be changed in four
+steps by pressing this switch repeatedly.
+Press theA-busStrobeON/OFFSwitch (15)toobtain
+strobe effects. (This function can be much likened with
+still pictures played in slow motion of 0.2 to 1 second
+intervals.)
+The interval of strobe will be changed by pressing this
+switch as follows.
+LOW
+HIGH
+First time - 0.2 sec., Second time - 0.4 sec., Third
+time -0.6 sec..
+Forth time -0.8 sec., Fifth time - 1.0 sec. (The
+To return to a normal picture, press this switch fifth
+interval isapproximate.)
+time.
+5.
+APPLICATIONS
+5-1.
+Select the A-bus Source 1 Selection Switch (50)and
+The strobe effect will return to a normal, live picture
+the B-bus Source 1 Selection Switch (51).
+when this switch is pressed sixth time.
+Press the Mix Mode Selection Switch (52).
+3.
+MOSAIC
+Press the B-bus Digital EffectON/OFF Switch (12)and
+the B-bus Strobe ON/OFF Switch (16).
+Press the A-bus Mosaic ON/OFF Switch (17)to obtain
+a mosaic effect of the picture.
+Move the Mix/Wipe Control (45) to the center position
+to the obtain an after-image effect.
+LIVE
+Thesize ofthe rectanglescanbe changed in four steps
+by pressing this switchrepeatedly.
+AFTER-IMAGE
+LARGE
+SMALL
+To return to a normal picture, press this switch fifth
+time.
+STROBE
+=== PAGE 17 ===
+5-2.
+(3) Select the background image. Set Mix/Wipe Controi
+(45) to lower position (B) for B-bus image as
+Press the B-bus Mosaic ON/OFF Switch (18) and
+background or upper position (A) for A-bus image as
+adjust the size of the rectangles by pressing the B-bus
+background. The background image can be selected
+Mosaic ON/OFFSwitch (18) repeatedly.
+fromtheSOURCE1,SOURCE2orBACKCOLOURfor
+either position of A-bus or B-bus.
+Press the Wipe Mode Selection Switch (53)
+(4) 9
+Select the keyimage source (theone to be
+Select the Circle or Square wipe using Wipe Pattern
+superimposed)by pressing one of the Superimpose
+Selection Switches (6).
+Source Selection Switches (23), (24),(25).
+Note:
+Operate the Mix/Wipe Control (45) for desired wipe
+Incase the Character Generator is used, connect
+size.
+it to the Title Input Connector (2)
+(5) In case the back colour is to be selected, set the
+Back Colour Switch (27)to thedesired colour or White
+Colour Switch (28).
+Select the colour using Back Colour SelectionSwitch
+(5).
+Caution:
+Do not simultaneously press the BACK COLOUR
+switch for the A-bus (B-bus )and the BACK
+Operate the Joystic Positioner (54)toposition the wipe
+COLOUR switchfor the superimposefunction.
+position on the screen.
+(6)PresstheSuperimposeON/OFFSwitch(22)onceto
+enter the function.
+Remark:
+When the B-bus Back Colour Selection Switch
+(47)is selectedafterthe B-bus Source2Selection
+Switch (49), the LED on the B-bus Source 2
+SelectionSwitch (49)blinks.
+This blinking telis you that the Source 2 picture will
+be selected when the B-bus Selection Switch (25)
+is pressed.The same procedure will take place
+when A-bus or Source 1 is used.
+C.SUPERIMPOSEEFFECT&BACK
+COLOUR
+SUPERIMPOSEBYCAMERA
+25
+28
+30
+Connect the camera with cable to the Composite
+2D
+23
+Video External Camera Input Connector (64) or the
+22
+24
+Y/C ExternalCameraInputConnector(63).
+UPERMPO$EEFFECTC
+Direct the camera at a picture or panel.
+Press ExternalCameraSelectionSwitch(23).
+While observing the image on a video monitor, which
+is connected to the the Preview Output Connector
+WHITE
+(72), adjust the Key Level Control (30) until a clear
+superimposed image is obtained.
+TITLE
+In case the title card is written with white letters on
+CAMERA
+EXT
+EFFECT
+biack, slide the Key Level Control from upper position.
+VIDEO
+(1) Press the Effect Recording Video Output Seiection
+Switch (33).
+TITLE CARD
+(2)  Press either the Mix Mode Selection Switch (52) or the
+Wipe Mode Selection Switch (53).
+-16-
+=== PAGE 18 ===
+In case the title card is written with black on white,
+D.FADECONTROL
+slide the Key Levei Control fromlower position.
+KEY
+LEVEL
+FADECONTROL
+ COLOUR SELECT
+BACK COLOUR
+VIDEO
+34
+TITLE
+WHIT
+35
+TITLE CARD
+Note:
+When theoptionalCharacterGeneratorWV-KB12
+36
+or WJ-TTL5 is only used for the superimpose,
+the Key Level Control (30) will not effect to the
+ino
+superimposing.
+39
+REVERSE EFFECT
+3837
+2.
+Select the polarity of the key signalto be superimposed
+by pressing the Reverse Switch (21).
+Becomes the titie colour
+Original Picture
+(1) Press the Effect Recording Video Output Selection
+Switches (33).
+(2)
+Press either the Mix Mode Selection Switch (52) or the
+VIDEQ
+VIDEO
+Wipe Mode Selection Switch (53)
+Select the source signalfor A-bus and B-bus from the
+SOURCE1,SOURCE2orBACKCOLOUR
+In case that the back cofour is selected, set the Back
+Title
+Original Picture in the title
+Colour Selection Switch (5) to the desired colour.
+Superimposed Picture
+TITLE EFFECT
+3.
+Fading Operation
+If desired, the edge enhancement of the title can
+Select the combination of the switches (37) and (38)
+be obtained by pressing the Title Effect Switch (29)
+whether picture and title are to be faded in and out
+repeatedly.
+or only picture or only title. The following table shows
+The effected picture will be as follows.
+whichbuttonmustbepressed.
+VIDEO
++ Normal -+ Narrow Border -→ Wide Border -
+TITLE
+-+NarrowShadow-+WideShadow-→+DropShadow-
+VIDEO fade
+NO
+TITLE fade
+OFF
+Normal
+Narrow Border
+Wide Border
+A-A-A+
+VIDEO&TITLE fade
+NO
+When the Video Fade Switch (37)is pressed, the display
+NarowShadow
+Wide Shadow
+DropShadow
+monitor has a choice from BACK COLOUR (34) WHITE
+A- A-A
+(35) or BLACK (36).
+In case that the BACK COLOUR has been chosen,
+select the desired colour by the Back Colour Selection
+Switch (5).
+Slide the Fade Lever (39) from IN to OUT, or vice versa.
+Notes:
+(t) The superimposed titles by the Character
+Generatorcan becoloured.Press the Back Colour
+Switch (27) and select the colour by the Back
+Colour Selection Switch (5).
+(2)
+When the White Colour Switch (28) is pressed
+for the superimposed titles by the Character
+Generator, the edge of the characters can be
+coloured by the Back Colour Selection Switch (5).
+- 17 
+=== PAGE 19 ===
+The following is a block diagram depicting the circuitry of
+the audio section.
+AUDIO
+SOURSE
+SOURCE10
+AUDIO1
+L.R
+MAX
+REC
+OUT
+Fade-out
+Fade-in
+MIN
+L.R
+SOURCE 2 0
+AUDIO2
+L.R
+MASTER
+AUX
+AUX
+AUDI0
+L.R
+MAX
+MIN
+MIC
+MIC
+OUT
+(MONO)
+MAX
+MIN
+Back
+Colour
+•White
+·Black
+To record the SOURCE 1 audio signal, set the Audio
+Controi (44) to the end position of "Audio1" and adjust
+the audio level by operating the Source Level Control
+OUT
+(43).
+Tomix the SOURCE 1 and SOURCE2 audio signals,
+adjust the Audio Control (44)
+E.AUDIOMIXER
+To mix the auxiliary audio signal for recording, adjust
+the Auxiliary Audio Level Control (42).
+AUDIO MIXER
+MASTER
+AULIO
+To mix the microphone signal for recording, adjust the
+Microphone Level Control (41).
+SOURCE
+To fade in or fade out the audio signal, adjust the Audio
+Master Level Control (40).
+44)
+43)
+42)
+40
+-18-
+=== PAGE 20 ===
+SPECIFICATIONS
+Source Input:
+X2 (SOURCE 1and SOURCE2)
+Video Input:
+1.0 Vp-p/75ohms PALcomposite signal, BNCconnectors
+Y/C input:
+Y signal; 1 Vp-p, C signal; 0.3 Vp-p, 75 ohms, Mini DIN 4 pin connector
+Audio input:
+6 dBV/15 kohms, pin jack (Left and Right)
+External Camera input:
+1.0 Vp-p/75 ohms CCIR or PALcomposite signal, BNC connector × 1
+Recording Output:
+X2 (REC OUT 1 and REC OUT 2)
+Video Output:
+1.0 Vp-p/75ohms, PALcomposite signal, BNC connectors
+Y/C Output:
+Y signal; 1 Vp-p, C signal; 0.3 Vp-p 75 ohms, Mini DIN 4 pin connector
+Audio Output:
+-6 dBV/1 kohms, pin jack (left and Right)
+Preview Video output:
+1.0 Vp-p/75ohms, PAL composite signal, BNC connector × 1
+Monitor Output:
+X2 (MONITOR OUT1and MONITOR OUT 2) 1.0 Vp-p/75 ohmS,
+PAL composite signal, BNC connector.
+External Sound Input:
+MiC Input (mono):
+-60 dB/600 ohms, unbalanced, tip-ring-sleeve type phono jack × 1
+AUX Input:
+6 dBV/15 kohms, pin jacks (Left and Right)
+Character (TiTLE) Input:
+10-pin connector × 1foroptional Character Generator WV-KB12 or WJ-TTL5
+Effects:
+Video:
+Stili, Strobe, Mosaic, Paint, Mix, Wipe, Superimpose, Fade-in/out
+Audio:
+Mix, Fade
+Back Colours:
+White, Yellow, Cyan, Green, Magenta, Red, Blue, Black
+Wipe Patterns:
+98 patterns
+Others:
+P-IN-P, MULTI, ONE-WAY, REVERSE
+Gain:
+Unity (Video)
+Signal-to-noise Ratio (Typical):
+Video: 45 dB (Composite), 45 dB (Y/C)
+Audio: 60 dB
+Power Source:
+240 AC, 50 Hz for WJ-AVE5/A and WJ-AVE5/B; 220V AC 50 Hz for WJ-AVE5/G
+Power Consumption:
+13W
+Ambient Temperature:
+0°- 40°℃
+Ambient Humidity:
+Less than90%
+Dimensions:
+Weight:
+2.8 kg
+Weight and dimensions indicated the approximate.
+Specifications are subject to change without notice.
+OPTIONAL ACCESSORIES
+Character GeneratorWV-KB12, WJ-TTL5
+-19 -
+=== PAGE 21 ===
+DEUTSCHE AUSGABE
+(GERMANVERSION)
+INHALT
+VORWORT
+21
+AUSSTATTUNGSMERKMALE
+21
+VORSICHTSMASSNAHMEN
+22
+WICHTIGEBEDIENUNGSELEMENTEUND IHREFUNKTIONEN
+23
+SYSTEMANSCHLUSS
+29
+HANDHABUNG
+30
+MISCH-/UBERBLENDUNGSEFFEKTUBERBLENDUNGSMODUS
+30
+DIGITAL-EFFEKTE
+33
+MEHRFACHBELICHTUNG UND HINTERGRUNDFARBE
+35
+EIN-UND AUSBLENDEN
+36
+AUDIO-MIXER
+37
+TECHNISCHE DATEN
+38
+WAHLWEISES ZUBEHOR
+38
+DEUTSCH
+Bescheinigung des Herstellers/lmporteurs
+CAUTION
+Hiermit wird bescheninigt, dals der/die/das
+Digitaf-AV-Mischpult, WJ-AVE5
+RISK OF ELECTRIC SHOCK
+DO NOT OPEN
+(Gerat, Tvp, Bezeichnung)
+In Ubereinstimmung mit den Bestimmungen der
+WARNUNG:
+VFG 1046/1984
+NOCH
+DECKEL
+RUCKPLATTE
+WEDER
+(Amtsblattverfugung)
+ABNEHMEN,
+DIE
+UM
+GEFAHREINES
+funkentstort ist.
+ELEKTRISCHEN SCHLAGS ZU VERMEIDEN.DAS
+Der Deutschen Bundespost wurde das Inverkehrbringen dieses Gerates
+GERAT ENTHALT KEINE BAUTEILE, DIE VOM
+KUNDEN GEWARTETWERDENKONNEN.
+der Bestimmungen eingeraumt.
+Panasonic Deutschland GmbH
+Name des Herstellers/lmporteurs
+Das Blitzzeichen mit Pfeil im gleichsei-
+tigen Dreieck soll den Benutzer auf das
+Dieses Modell entospricht der EG-Vorschrift (fur
+Vorhandensein von nichtisolierter"ge-
+Funkstorungsschutz)87/308/EG.
+fahrlicher Spannung" innerhalb des Ge-
+hauses hinweisen, die so gro sein
+Die Fabriknummerdieses Gerates istauf dessen Bo-
+kann, das sie Gefahr eines elektrischen
+denabdeckung angegeben.
+Schlags darstellt.
+Sie soliten die Fabriknummer dieses Gerates in den da-
+fur vorgesehenen Raum eintragen und diese Anleitung
+Das Ausrufezeichen im gleichseitigen
+als Kaufsunterlage aufbewahren, um im Falle eines
+Dreieck soll den Benutzer auf wichtige
+Diebstahls die ldentifizierung zu erleichtern.
+Bedienungs-und Wartungsanweisun-
+gen in den Unterlagen hinweisen, die
+Modellnummer
+dem Gerat beiliegen,
+Fabriknummer
+WARNUNG:
+UM DIE GEFAHR VON BRAND ODER STROMSCHLAG ZU VERHUTEN, DIESES GERAT WEDER REGEN
+NOCH FEUCHTIGKEITAUSSETZEN.
+- 20 -
+=== PAGE 22 ===
+VORWORT
+Das Digital-AV-Mischpult WJ-AVE5 von Panasonic wurde
+Diese Einheit enthalt verschiedene Funktionen fur das
+fur die Reproduktion der Videobilder mit Hife von
+Mischen der Video- und Audiosignale, Digitaleffekte,
+Mehrfachbelichtung, Auf- und Abblenden usw.
+Digital-Verarbeitungstechnologie entwickelt.
+Ein
+fortschrittliches Audio- und Video-Programm kann unter
+Verwendung dieses Digital-AV-Mischpultes erstelt werden.
+AUSSTATTUNGSMERKMALE
+EINGEBAUTERDIGITAL-SYNCHRONISIERER
+AUF-UNDABBLENDFUNKTION
+eingebauteBild-Synchronisierer
+Dieser
+erlaubt
+Auf- und Abblenden von Bild und Videotiteln konnen
+Bildmischung von zwei PAL-Standard Bildquellen.
+separat oder in Kombination ausgefeuhrt werden,
+wie es eben den Anorderungen der Videoproduktion
+SPEZIALEFFEKTE - MOSAIK, GEMALDE,
+entspricht.
+STANDBILD,STROBOSKOPEFFEKT
+Im eingebauten Digitalspeicher stehen spezieile
+VIDEOTITEL
+Videoeffekte fuir ein Maximum an Videokreativitat zur
+Der Zeichengenerator WV-KB12 oder WJ-TTL5 ist ein
+Verfugung.
+im Handel erhaitlicher Titelgenerator, der zum AnschluB
+an dieses Mischpult entwickelt wurde.Er erlaubt
+EINBLENDEN
+schnelles und einfaches Titelsetzen und beinhaltet ein
+Das Eingangssignal von den A- und B-Eingangen
+achtseitiges Memory (WV-KB12)oder ein zehnseitiges
+sowie von der externen Kamera konnen in das Bild
+Memory (WJ-TTL5) fur das Speichern der erzeugten
+eingeblendet werden.
+Titel.
+98UBERBLENDMUSTERUNDFREIE
+POSITIONSWAHL
+In Kombination mit den Uberblendmuster-Tasten
+stehen bis zu 98 Uberblendmuster zur Verfugung.
+Der Joystick erlaubt freies Setzen des Kreises, des
+Quadrats und der Raute in Kombination mit den
+Uberblendmustern. Das Uberblendmuster steht in drei
+Betriebsmodi zur Verfugung, einem normalen, einem
+weichen und einem Grenzüberblendmuster.
+TONMISCHUNG
+Der eingebaute Tonmischer kann bis zu vier Tonquellen,
+einschlieBlich Mikrofon,zusammenmischen.
+Der
+Hauptlautstarkeregler dient fur die Tonmischung.
+- 21 -
+=== PAGE 23 ===
+VORSICHTSMASSNAHMEN
+Das Mischpult WJ-AvE5 ist ein technisch hochqualitatives Produkt und solte als solches behandelt werden.Da es ein elektrisches
+Gerat ist,bestehtbeiunachtsamer Handhabung die Gefahrvon elektrischen Schlagen.
+KEINESFALLS
+Das Gerat darf keinesfalls auseinandergenommen
+Uberlassen Sie alle Wartungsarbeiten geschultem
+werden. Da die Gefahr besteht, einen elektrischen
+Fachpersonal.
+Schlag zu erhalten, durfen weder Schrauben och
+Abdeckungenabgenommenwerden.
+Im Inneren
+befinde sich keinerlei Teile, die vom Benutzer gewartet
+werdenkonnen.
+Falsche
+Vermeiden Sie Schlage undStoBe.
+Behandeln Sie das Gerat sorgfaltig.
+Handhabung und Lagerugkonnen
+das
+Gerat
+beschadigen.
+Verwenden Sie keinesfalls starke oder scheuernde
+Zum Reinigen des Gerates ist ein trockenes Tuch zu
+Mittel zur Reinigung des Gerategehauses.
+verwenden. Bei hartnackigem Schmutz hift ein mildes
+WaschmittelundsanftesReiben.
+Setzen Sie das Gerat weder Regen noch Feuchtigkeit
+Wenn das Gerat naB geworden ist, so ist sofort ein-
+aus und versuchen Sie nicht, es in feuchter Umgebung
+zugreifen. Schalten Sie das Gerat aus und iberlassen
+zu betreiben.
+Sie die Wartung qualifiziertem Wartungspersonai.
+Feuchtigkeitkann das Gerat beschadigenund einen
+elektrischen Schlagverursachen.
+Betreiben Sie das Gerat nicht unter extremen
+Das Gerat bei Temperaturenbetreiben,diezwischen
+Umweltbedingungen mit hohen Temperaturen oder
+0°C und +40°C liegen. Die Luftfeuchtigkeit muB unter
+hoher Luftfeuchtigkeit.
+90%betragen.
+WichtigeHinweisefurSignal derVideoprogrammquellen1und2:
+(1) Falls das Videoeingangssignal nicht dem PAL-Farb-
+(6) Flattern (Oberkante des Bildes verdreht sich) kann
+stadard oder dem CCIR B/W Standardvideosignal ent-
+vorkommen, wenn gewisse VTRs als Eingangssignale
+spricht, kann dies eine Storung der Synchronisierung
+verwendet werden (aufgrund von Schraglauf), oder
+verursachen.
+kann aufgrund der Eigenschaften des Videomonitors
+Falls der Rauschabstand (S/N) des Eingangssignais
+(2) 
+(AFC-Zeitkonstante)auftreten.
+sehr niedrig ist, kann sich dies in einer mangelhaften
+Bildqualitatbemerkbar machen.
+(3)
+Falls das Video-Eingangssignal sehr zittert, wie z.B.
+bei VTR-Wiedergabe, kann dies Storungen bei der
+Farbsynchronisierung verursachen.
+(4)
+Wenn Spurlagestorungen auf dem Bildschirm des
+Monitor-Fernsehgerates zu sehen sind,konnen
+moglicherweise
+Synchronisierungs- und Farbstorungen verursacht
+(7) Die Kanten einer Uberblendung im Kreisiber-
+werden; daher den Spurlageregler des Videorecorders
+blendungsmodus konne zickzack erscheinen.Dies ist
+entsprechend einstellen.
+Wenn entweder ein Zeichengeneratorsignal (von
+jedoch normal und stellt keine Storung dar.
+(5)
+WV-KB12 oder WJ-TTL5) oder Zeichen von einer
+Tastenkamera geliefert werden,konnen die Kanten der
+ZeichenunterbestimmtenelektronischenBedingungen
+unscharf werden, wie in der unten gezeigten Abbildung.
+- 22 -
+=== PAGE 24 ===
+WICHTIGEBEDIENUNGSELEMENTEUNDIHREFUNKTIONEN
+69
+64
+66
+69
+72
+13
+28
+25
+30
+12
+20
+16
+10
+22
+24
+27
+26
+32
+29
+50
+48
+46
+49
+53
+39
+54
+52
+41
+40
+-23
+=== PAGE 25 ===
+Mikrofon-Eingangsbuchse (MiC)
+Diese Buchse dient fur den Anschiu eines Mikrofons.
+Uberbiendmuster
+NON
+2. Titel-Eingangsstecker (TITLE)
+x4
+POSI
+x16
+MULTI
+MULTI
+HierkannderalsSonderzubehor
+erhaltliche
+MULTI
+Zei-chengenerator
+WV-KB12
+oder
+WJ-TTL5
+angeschiossen werden.
+(1): Zeichen EIN
+(2) : Nicht verwendet
+(3) : Erdung
+(4): Nicht verwendet
+TITLE
+(5): Synchron-Ausgang
+(6): Nic ht verwendet
+(7): Erdung
+Vorderansicht
+(8):+9VAUS
+(9), : Erdung
+(10) : ID (WV-KB12: offen, WJ-TTL5 Erdung)
+Hinweise:
+dasModellWV-KB12
+Wenn
+dieser
+Einheitverwendetwird,dannkonnendie
+folgenden Funktionen des Modells WV-KB12 nicht
+verwendet werden:
+1)Stoppuhranzeige
+Titelfarbeneinstellung
+2)
+3)Titeiseitenanzeige
+Wahrend des Durchrollens von Titeln mit der
+kieinsten ZeichengroBe unter Verwendung des
+Modells WJ-TTL5, wird die Stelle, an der die
+nneuen Zeichenzeilen erscheinenn langsam von
+der Unterseite des Bildschirms bis zur Mitte des
+Bildschirms zunehmen.
+SchlieBen Siedas Kabel des
+WV-KB12
+oder_WJ-TTL5wie.unten..gezeigt
+an
+den
+Titel-Eingangssteckverbinder (2)an.
+Montagebasis fur Zeichengenerator
+WV-KB12
+WJ-TTL5
+3.Strom-Ein/Aus-Schalter(POWERON/OFF)
+Diesen Schalterdricke, um die Stromversorgung
+einzuschalten.Wenn dieser Schalter'gedruckt ist,
+leuchtet die Netzstrom-Kontrolleuchte (4)auf.
+Netzstrom-Kontrolleuchte (POWER)
+5.Hintergrund-Farbwahlschalter (BACK COLOUR)
+Dieser Regler wird fur die Wahi der Hintergrundfarbe
+fur MIX,WIPE,SUPERIMPOSE und VIDEo FADER
+Operationen verwendet.Eine der folgenden acht
+Hintergrundfarben kannn gewahit werdenn:WeiB,
+Gelb, Zyan, Grun, Magenta, Rot, Blau und Schwarz. Die
+Farbe wird durch Druicken dieses Schalters geandert.
+Bild-in-Bild
+6.Uberblendmuster-Wahlschalter (WIPEMODE)
+Durch Kombination von funf Schaltern konnen die in
+Schnitt
+der folgenden Tabelle dargestelten Uberblendmuster
+A→B
+gewahit, werden.Die Leuchtdiode des jeweils
+gedrickten Schalters leuchtet auf. Die Position der drei
+Multi-Schnitt
+in der Tabelle mit "p" bezeichneten Uberbiendmuster
+kann mit Hilfe des Joystick (54) eingestellt werden.
+-24 -
+=== PAGE 26 ===
+Biid-in-Bild-Schalter (P-IN-P)
+7.
+15.AStrobe-Ein/Aus-Schalter(STROBE)-A
+Diesen Schalter einmal drucken, um auf den 1/4
+Dieser Schalter wird fur den Strobe-Effekt des
+Bild-in-Bitd-Modus zu schalten.
+Die Leuchtdiode
+ABildesverwendet.
+Den Schalter
+einmal
+leuchtet auf.Wird der Schalter nochmals gedruckt,
+drucken, wodurch der Strobe-Effekt des A Bildes
+dann wird auf den 1/16 Bild-in-Bild-Modus geschaltet.
+erhalten wird und die Leuchtdiode in dem Schalter
+Die Position des Bildes kann mit dem Joystick (54)
+aufleuchtet.Das Zeitintervall des Strobe-Effekts kann
+eingestelt werden.Wen dieser Schaiter ein drittes Mal
+durch aufeinanderfolgendes Driicken dieses Schalters
+gedruckt wird, dann wird auf de normalen Bildmodus
+geandert werden.,Die Einstellung ist von O,2 bis 1
+zuruckgekehrt und die Leuchtdiode erlischt.
+Sekunde infunf Schritten moglich. Um auf das normale
+Hinweise:
+Bild zuruckzukehren, den Schalter nochmais betatigen,
+(1) Wenn Sie den Misch/Uberblendhebel (45) in dem
+wodurch die Leuchtdiode erlischt.
+Bild-in-Bild-Modus von A auf B oder von B auf A
+andern, dann wechseln die Bilder ihre Position von
+16.BStrobe-Ein/Aus-Schalter(STROBE)-B
+B auf A bzw. von A auf B.
+Dieser Schalter wird fur den Strobe-Effekt des
+BBildesverwendet.
+Wenn1/4 oder 1/16 Bildan der linken Kante
+DenSchaltereinmal
+angeordnet ist, dann kann der Bild-in-Bild-Modus
+drucken, wodurch der Strobe-Effekt des B Bildes
+imRandgebiet bei manchen Fernsehmonitoren
+erhalten wird und die Leuchtdiode in dem Schalter
+nicht vollstandig sein.
+aufleuchtet. Das Zeitintervalldes Strobe-Effekts kann
+durch aufeinanderfolgendes Drucken dieses Schalters
+geandert werden. Die Einstellung ist von 0,2 bis 1
+Sekunde in funf Schritten moglich. Um auf das normale
+Bild zurickzukehren, den Schalter nochmals betatigen,
+wodurch die Leuchtdiode erlischt.
+17. A Mosaik-Ein/Aus-Schalter (MOSAIC)-A
+Dieser Schalter wird fur den Mosaik-Effekt des
+ABildesverwenndet.
+DieseSchaltereimal
+drucken, wodurch der Mosaik-Effekt des A Bildes
+Benutzung
+erhalten wird und die Leuchtdiode in dem Schalter
+Bei
+der
+(3)
+Bild-in-Bild-Betriebsart
+aufleuchtet. Die Mosaik-GroBe kann in vier Schritten
+sindStroboskopeffekt
+spun
+Standbild
+nicht
+durchaufeinanderfolgendes Drucken dieses Schalters
+funktionsfahig.
+geandert werden.
+8.
+Multi-Uberblendmusterschalter (MULTI)
+Wenn.dieser Schalter einmal gedruckt wird, wird
+Wenn der Mosaik-Effekt gewahlt wird,
+das Uberblendungsmuster vervierfacht.
+Durch
+dann wird der Mosaik-Effekt an der
+nochmaliges Drucken wird das Uberblendungsmuster
+linken und oberen Kante nicht ausgefuhrt
+versechzehnfacht.Wenn dieser Modus gewahit ist,
+Dies weist jedoch auf keine Storung des
+leuchtet die Leuchtdiode auf. Wird der Schalter ein
+Gerates hin.Den Schalter nochmals
+drittes Mal gedrickt, dann erlischt die Leuchtdiode
+drucken,um auf ein normales Bild
+und es wird auf den normalen Uberbledungsmodus
+zuruckzukehren; die Leuchtdiode erlischt.
+zuruckgekehrt.
+Ein-Weg-Uberblendungsschalter (ONE-WAY)
+18.B Mosaik-Ein/Aus-Schalter (MOSAIC)-B
+9.
+Wenn dieser Schalter gedruckt wird, leuchtet die
+Dieser Schalter wird fur den Mosaik-Effekt des
+BBildes verwenndet.
+Leuchtdiode auf ,und die Uberblendungsrichtung
+DieseSchalter eimal
+bieibt gleich, unabhangig von der Einstellung des
+drucken, wodurch der Mosaik-Effekt des B Bildes
+erhalten wird und die Leuchtdiode in dem Schaiter
+Misch/Uberblendhebels (45).
+aufleuchtet. Die Mosaik-GroBe kann in vier Schritten
+durchaufeinanderfolgendes Drucken dieses Schalters
+10.Umkehr-Uberblendungsschalter(REVERSE)
+geandert werden.
+Wenn dieser Schalter gedruckt wird, .leuchtet die
+Leuchtdiode auf und die Position des uberblendeten
+Wenn der Mosaik-Effekt gewahlt wird,
+Bildes wird umgekehrt.
+dann wird der Mosaik-Effekt an der
+linken und oberen Kante nicht ausgefuhrt.
+11. ADigital-Effekt-Ein/Aus-Schalter(ON)-A
+Dies weist jedoch auf keine Storung des
+Dieser Schalter ist der A Ein/Aus-Schalter fur die
+Gerates hin.Den Schalter nochmals
+Digital-Effekte wie STROBE,'sTILL,MOSAIC und
+drucken,,um aufein normales Bild
+PAINT.
+zuruckzukehren; die Leuchtdiode erlischt.
+12.BDigital-Effekt-Ein/Aus-Schalter(ON)-B
+Dieser Schalter ist der B Ein/Aus-Schalter fur die
+19.A Gemälde-Ein/Aus-Schalter (PAINT)-A
+Digital-Effekte wie STROBE,'STILL,MOSAIC und
+Dieser
+Schalter
+wird
+verwendet,
+um
+einen
+PAINT.
+Gemaldeeffekt fur das A Bild zu erhalten. Den Schalter
+einmal druicken, wodurch der Gemaldeeffekt fur das A
+13. A Standbild-Ein/Aus-Schalter (STILL)-A
+Bild erhaiten wird und die Leuchtdiode in dem Schalter
+Dieser Schalter wird verwendet,.um das A Bild
+aufleuchtet.,Die Graduierung_des Gemaldeeffekts
+einzufrierenn. Den Schalter einmal drucken, um das Bild
+kann in 4 Schritten (2 Bit bis 5 Bit) geandert werden.
+einzufrieren, wobei die Leuchtdiode in dem Schalter
+Um auf einnormales Bild zuruckzukehren, den Schalter
+aufleuchtet. Um auf ein "Live"-Bild zuruickzukehren,
+nochmals betatigen; die Leuchtdiode erlischt.
+den Schalter nochmals betatigen; die Leuchtdiode
+erlischt.
+14.
+BStandbild-Ein/Aus-Schalter(STILL)-B
+Dieser Schalter wird verwendet, um das B Bild
+einzufrieren. Den Schalter einmal dricken, um das Bild
+einzufrieren, wobei die Leuchtdiode in dem Schalter
+aufleuchtet.Um auf ein "Live"-Bild zuruickzukehren,
+den Schalter nochmals betatigenn; die Leuchtdiode
+erlischt.
+25-
+=== PAGE 27 ===
+20.B Gemalde-Ein/Aus-Schalter(PAINT)-B
+DieserSchalter
+wird
+verwendet,
+um
+einen
+Gemaldeeffekt fur das B Bild zu erhalten. Den Schaliter
+einmai drucken, wodurch der Gemaldeeffekt fur das B
+Normal → Schwache Umradung → Starke Umrandung
+Bild erhalten wird und die Leuchtdiode in dem Schalter
+aufleuchtet.Die Graduierung des Gemaldeeffekts
+kann in 4 Schritten (1 Bit bis 4 Bit) geandert werden.
+Schwache Umradung
+Normal
+Starke Umrandung
+Um auf ein normales Bild zuruckzukehren, den Schalter
+nochmals betatigen; die Leuchtdiode erlischt.
+AA-A
+21.Umkehrschalter(REVERSE)
+Dieser Schalter wird verwendet, um die Polaritat des
+uberlagerten Tastensignals zu wahlen.
+SchmalerSchatten
+Breiter Schatten
+Abgeloster Schatten
+A-A-A
+Originalbild
+Wird Farbe des Titels
+VIDEQ
+VIDEO
+30.Pegelregler (KEY LEVEL)
+Dieser
+Regierwirdfur
+die
+Einstellung
+des
+Uberlagertes Titelbild
+Helligkeitspegels des Tastensignals.
+Originalbild in dem Titel
+31.AAufnahme-Videoausgangs-Wahischalter
+(RECVIDEOOUT/A)
+Dieser Schaiter wird verwendet, um das A Bild als
+22.Ein/Aus-SchalterfurMehrfachbelichtung (ON)
+das Aufnahme-Videoausgangssignal zu wahlen.Wenn
+Dies ist der Ein/Aus-Hauptschalter fur die Funnktion
+dieser Schalter gewahit wird, leuchtet die Leuchtdiode
+der Mehrfachbelichtung.
+in dem Schalter auf.
+Wenn der Uberlagerungseffekt gewahit
+32.BAufnahme-Videoausgangs-Wahlschalter
+wird, wird dieser nicht an dem linken und
+(RECVIDEOOUT/B)
+oberen Rand durchgefuhrt.Dies ist votlig
+Dieser Schalter wird verwendet, um das B Bild als
+normal und-bedeutet nicht, daB bei dem
+das Aufnahme-Videoausgangssignal zu wahlen.Wenn
+Gerat eine Storung vorliegt.
+dieser Schalter gewahlt wird, ieuchtet die Leuchtdiode
+in dem Schalter auf.
+23.WahlschalterfurexterneKamera
+33.Effektaufahme-Videoausgangs-Wahlschalter
+(EXT CAMERA)
+(RECVIDEOOUT/EFFECT)
+Dieser Schalter wird verwendet, um eine externe
+Dieser Schalter wird verwendet, um das Effektsignal
+Kamera als Tastensignal fur den Mehrfachbelichtungs-
+(Superimpose,Mix/WipeoderFade)alsdas
+effekt zu verwenden.
+Aufnahme-Videoausgangssignal zu wahien.
+Wenn
+dieser Schalter gewahitwird, leuchtetdie Leuchtdiode
+24.AWahlschalter(A)
+in demSchaiterauf.
+Dieser Schalter wird verwendet, um ein A Bild als
+Tastensignal fur den Mehrfachbelichtungseffekt zu
+34.Farbwahlschalter(BACKCOLOUR)
+verwenden.
+Dieser Schalter wird verwendet, um die Farbe fur den
+Ausblendmodus zu wahlen.Die Farbe wird von dem
+25. BWahlschalter(B)
+Hintergrundfarben-Wahlschalter(5)eingestellt.Wenn
+Dieser Schalter wird verwendet, um ein B Bild als
+dieser Schalter gewahtt wird, leuchtetdie Leuchtdiode
+Tastensignal fur den Mehrfachbelichtungseffekt zu
+in dem Schaiter auf.
+verwenden.
+35.Farbwahlschalter (WHITE)
+26.Audiopegelannzeige(AUDIOLEVEL)
+Dieser Schalter wird verwendet, um die Farbe WeiB
+Diese LED-Annzeigen zeigen den Ausgangspegel des
+zu wahlen, wenn das Bild in weiB ausgeblendet
+linkenbzwrechten Kannals an.
+wird.Wenn dieser Schalter gewahit wird, leuchtet
+die Leuchtdiode in dem Schalter auf.
+27.Hintergrundfarbenschalter(BACKCOLOUR)
+Dieser Schalter wird verwenndet, um die mit dem
+36.Farbwahlschalter (BLACK)
+Hintergrund-Farbwahischalter (5) gewahite Farbe fur
+Dieser Schalter wird verwendet, um die Farbe Schwarz
+den ubertagerten Titel zu wahlen.
+zu wahlen, wenn das Bild in schwarz ausgeblendet
+wird.Wenn dieser Schalter gewahit wird, leuchtet die
+28. WeiBfarbschalter (WHITE)
+Leuchtdiode in dem Schalter auf.
+Mit diesem Schalter wird die Farbe WeiB als Farbe des
+uberlagerten Titels gewahlt.
+37.Video-Einblendschalter(VIDEO)
+Wenn dieser Schalter gewahit wird, wird das Bild ein-
+29.SchalterfurTiteleffekte (TITLEEFFECT)
+oder ausgeblendet, wobei die Leuchtdiode in dem
+DurchDruckendiesesSchalters
+die
+konnen
+Schalteraufleuchtet.
+überblendeten Titet wie folgt abgeandert werden:
+38. Titel-Einblendschalter (TITLE)
+Wenn dieser Schalter gewahit wird, wird der Titel
+ein-oder ausgeblendet, wobei die Leuchtdiode in dem
+Schalteraufleuchtet.
+-26 -
+=== PAGE 28 ===
+39.Ein-/Ausblendhebel (iN/OUT)
+49.B-Quelle-2-Wahlschalter(SOURCE2)-B
+Diesen Hebel von OUT auf IN bewegen, um das Bild
+Dieser Schalter wird verwendet, um das Quelle-2
+einzublenden. Wird der Hebel von IN auf OuT bewegt,
+Videosignal dem B Eingang zuzuordnen. Wenn dieser
+dann wird das Bild ausgeblendet.
+Schalter gewahlt wird, leuchtet die Leuchtdiode in dem
+Schalterauf.
+40.Audio-Hauptpegelregler (MASTER, MAX/MIN)
+Dies ist der Gesamtlautstarkeregler fur die Audio-
+50.A-Quelle-1-Wahlschalter(SOURCE 1)-A
+Mischstufe.
+Dieser Schalter wird verwendet, umdas Quelle-1
+Videosignal dem A Eingang zuzuordnen. Wenn dieser
+41.Mikrofonpegelregler (MIC,MAX/MIN)
+Schalter gewahit wird, ieuchtet die Leuchtdiode in dem
+Diesistder Lautstarkeregler furdasan
+der
+Schalter auf.
+Mikrofoneingangsbuchse (1) eingespeiste Mikrofon-
+signal.
+51.B-Quelle-1-Wahlschalter(SOURCE1)-B
+Dieser Schalter wird verwenndet, um das Quelle-1
+42.Hilfslautstarkeregler(AUX,MAX/MIN)
+Videosignal dem B Eingang zuzuordnen. Wenn dieser
+Dies ist der Eingangs-Lautstarkeregler fur die
+Schaiter gewahlt wird, leuchtet die Leuchtdiode in dem
+Hilfs-Audiosignale, die durch die AUX AUDiO IN Buchse
+Schalter auf.
+(65)a der Geraterickseite kommen.
+52.Mischmodus-Wahlschalter (MiX)
+43.Pegelregler(SOURCE,MAX/MIN)
+Wenn dieser Schalter gedrickt wird, leuchtet die
+Dies ist der Gesamtlautstarkereglerfurden gemischten
+Leuchtdiode in dem Schalter auf und der Mischmodus
+AUDIO 1undAUDIO2Ton.
+von MIX/WIPE EFFECT wird gewahit.
+44.Tonregler(AUDIO,1/2)
+53.Uberblendmodus-Wahischalter (WIPE)
+Wenn dieser Schalter gedruckt wird,
+Dieser Regler dient fur die Balance der gemischten
+leuchtet
+Tonsignale,die anden,SOURCE 1 (AUDIO1)
+die Leuchtdiode in demSchalter auf_und der
+Uberblendmodus_vonMIX/WIPEEFFECT.
+und SOURCE 2 (AUDiO 2)Eingangsstecker an der
+wird
+Gerateruckseite eingespeistwerden.
+gewahlt.Durch Drucken dieses Schalters wird der
+Uberblendmodus wie folgt geandert:
+45. Misch-/Uberblendregler (VIDEOA,B)
+In dem Uberblendmodus wird durch Bewegung dieses
+Hebels von A nach B der Teil des B-Eingangs erhoht,
+und umgekehrt.In dem Mischmodus werden die
+Videobilder zwischen A und B vertauscht.
+46.A-Hintergrundfarben-Wahischalter
+Hinweis:
+(BACKCOLOUR)
+Dieser Schalterwird verwendet, um das Hinter-
+Wenn die Grenzuberblendung gewahlt wird,
+dann kann die Farbe der
+grundfarbsignal dem,A-Eingang zuzuordnen.
+Das
+Grenze mitdem
+Hintergrundfarbsignalkann mitdem Hintergrundfarben-
+Hintergrundfarben-Wahischaiter (5)eingestellt
+Wahlschalter (5)eingestellt werden:
+Wenn dieser
+werden.
+Schalter (46) gewahit ist, leuchtet die Leuchtdiode in
+dem Schalterauf.
+54.Joystick(POSITIONER)
+Die mit Hilfe des Uberblendmuster-Wahlschalters (6)
+47.B-Hintergrundfarben-Wahischalter
+oder Bild-in-Bild-Schalters (7) gewahlte Uberblend-
+(BACKCOLOUR)
+muster, wie z.B. ein Kreis, Quadrat oder eine Raute,
+Dieser Schalter'wird verwendet, um das Hinter-
+kannmit mit Hilfe dieses Joysticks frei gesetzt werden.
+grundfarbsignal dem B Eingang zuzuordnen.
+Das
+Hintergrundfarbsignal kann mit dem Hintergrundfarbe-
+55.Quelle-1-Audio-Stecker(SOURCE1,AUDIOL/R)
+Wahlschalter (5)eingestellt werden.,
+Wenn dieser
+6dBV/15kOhmAudiosignale furSOURCE1 sind
+Schalter (47) gewahit ist, leuchtet die Leuchtdiode in
+an diese Eingangsstcker (iN) zu liefern.,Wenn ein
+demSchalterauf.
+Mono-Sigaian dem linken Kanal eingespeist wird, dann
+Zur Beachtung:
+wird dieses intern auch an den rechten Kanal geliefert,
+Wenn der B-Hintergrundfarben-Wahischalter (47)
+auf den B-Eingang eingestellt wird, blinkt die
+56.Quelle-1Y/CVideo-Eingangsstecker
+Leuchtdiode im B-Quelle-2-Wahlschalter (49).
+(SOURCE1Y/CIN)
+Durch
+Das Luminanzsignal (Y)und das Chromasignal (C)von
+dieses Blinken wird darauf aufmerksam gemacht,
+einem Videorecorder oder Ferbfernseher werden an
+daB beim Drucken des B-Eingangswahlschalters
+diesen Steckergeliefert.
+(25) das Quelle-2-Bild Gewahlt wird. Der gleiche
+Hinweis:
+Vorgang wird bei Benutzung des A-Eingangs oder
+Der Y/C-Eingag
+hatVorrang
+über
+den
+der Quelle 1 ausgefuhrt.
+Komposit-Eingang.
+Wenn das Y/C-Videosignal und das Komposit-
+48.A-Quelle-2-Wahlschalter(SOURCE2)-A
+VideosignalgleichzeitigandieSOURCE1Stecker
+Dieser Schalter wird verwendet, um das Quelle-2
+angelegt werden, wird nur das Y/C-Videosignal in
+Videosignal dem A Eingang zuzuordnen. Wenn dieser
+den Schaltkreis eingespeist.
+Schalter gewahit wird, ieuchtet die Leuchtdiode in dem
+Schalter auf.
+27
+=== PAGE 29 ===
+57.Quelle-1-Video-Eingangsstecker
+Hinweis:
+(SOURCE1,COMP.iN)
+Der Y/C-Eingag hat Vorrang uber den Komposit-
+An diesen Eingang (IN) ist ein 1,0 Vs-s/75 Ohm
+Eingang.
+Komposit-Videosignal einzuspeisen.
+Wenn das Y/C-Videosignal und das Komposit-
+Hinweis:
+Videosignal gleichzeitig an Eingangsstecker fur
+(1) Falls das Eingangs-Videosignal nicht dem PAL-
+externe Kamera angelegt werden, wird nur das
+Farbstandard oder dem CCiR Schwarz/WeiB-
+Y/C-Videosignal in den Schaltkreis eingespeist.
+2.
+Standard entspricht, kann dies eine Storung der
+Dieser Eingang nimmtnurdasVideo-Kamerasignal
+Sychronisation zur Folge haben.
+nicht aber das Videorecorder-Wiedergabesignal
+Falls der Rauschabstand des Eingangssignals
+(2)
+an.
+sehr niedrig ist, kann dies in einem schlechten
+Bild reflektiert werden.
+64.Komposit-Video-Eingangssteckerfurexterne
+Falls das Video-Eingangssignal flackert, wie z.B.
+(3)
+Kamera(EXT CAMERAINCOMP.)
+im Fall von Videorecorder-Bildwiedergabe, kann
+Fur das Tastensignal in dem Uberblendungsmodus
+dies eine Storung der Synchronisation oder der
+nimmt dieser Stecker ein1,0 Vs-s/75Ohm Komposit-
+Farbe zur Folge haben.
+Videosignal an. Die externne Synchronisierung ist fur
+die Kamera nicht erforderlich.
+58.Quelle-1-Video-Ausgangsstecker
+Hinweis:
+(SOURCE1,COMP.MONITOROUT)
+Dieser Eingang nimmt nurdas Video-Kamerasignal
+Fur die Uberwachung des Quelle-1 Video-Eingangs-
+nicht aber das Videorecorder-Wiedergabesignal
+signais wird an diesem Ausgang ein 1,0 Vs-s/75Ohm
+an.
+Komposit-Videosignalausgegeben.
+65.Audio-Hilfseingangsstecker(AUX AUDIOIN)
+59.Quelle-2Audio-Stecker(SOURCE2,AUDIOL/R)
+Dieser nimmt-6dB/15kOhm Audiosignale von
+einer externenAudioquelleentgegen.
+Die --6 dBV/15kOhm Audiosignale fur SOURCE 2
+Wenn ein
+sind an diesen Eingangen (IN) einzuspeisenn. Wenn
+Mono-Audiosignal an dem linken Kanal eingespeist
+ein Mono-Audiosignal an dem linken Kanaleingespeist
+wird, dann wirddieses Sigalintern auchandenrechten
+wird, dann wird dieses intern auch an den rechten
+Kanal ubertragen.
+Kannal angelegt.
+66.Audioaufnahme-Ausgangsstecker
+60.Quelle-2Y/CVideo-Eingangsstecker
+(AUDIOOUT1,L/R)
+(SOURCE2,Y/CIN)
+Zur Aufnahme werden an diese Stecker -6 dBv/1
+Das Luminanzsignal (Y) und das Chromasignai (C) von
+kOhm Audiosignale geliefert.
+einem Videorecorder oder Ferbfernseher werden an
+diesen Stecker geliefert.
+67.Y/CVideoaufnahme-Ausgangsstecker
+Hinweis:
+(RECVIDEOOUT1,Y/C)
+Der Y/C-Eingag hat Vorrang uber den Komposit-
+Das Luminanzsignal (M)und das Chromasignal (C)
+werden von diesem Stecker erhalte,
+Eingang.
+wenn ein
+Wenn das Y/C-Videosignal und das Komposit-
+Komposit-oderY/C-SignalanQuelle-1oder2geliefert
+Videosignal gleichzeitig an die SOURCE2 Stecker
+wird.
+angelegt werden, wird nur das Y/C-Videosignal in
+den Schaltkreis eingespeist.
+68.Videoaufnahme-Ausgangsstecker
+(RECVIDEOOUT1,COMP.)
+61.Quelle-2Video-Eingangsstecker
+Ein 1,o Vs-s/75 OhmKomposit-Videosignal, wiemit
+(SOURCE2,COMP.IN)
+den Ausgangs-Wahlschaltern fur Videoaufnahme (21),
+Der Eingang immt ein '1,o Vs-s/75 Ohm Komposit-
+(32), (33) gewahlt, wird an diese Stecker geliefert.
+Videosignal an.
+Hinweis:
+69.Audioaufnahme-Ausgangsstecker
+(1) Falis das,Eingangs-Videosignai,nicht dem
+(AUDIOOUT2,L/R)
+PAL- Farbstandardoder dem CCIR Schwarz/
+Zur Aufnahme werdenn an diese Stecker --6 dBV/t
+WeiB-Standard entspricht,kann dies eine Storung
+kOhm Audiosignale geliefert.
+der Sychronisation zur Folge haben.
+(2)
+Falls der Rauschabstand des Eingangssignals
+70.Y/CVideoaufnahme-Ausgangsstecker
+sehr niedrig ist, kann dies in einem schlechten
+(RECVIDEOOUT2,Y/C)
+Bild reflektiert werden.
+Das Luminanzsignal (M)und das Chromasignal (C)
+Falls das Video-Eingangssignal flackert, wie z.B.
+(3)
+werden von diesen Steckern erhalten,wenn ein
+im Fall von Videorecorder-Bildwiedergabe, kann
+Komposit-oderY/C-Signal an Quelle-1 oder2 geliefert
+dies eine Storung der Synchronisation oder der
+wird.
+Farbe zur Folge haben.
+71.Videoaufnahme-Ausgangsstecker
+62.Quelle-2Video-Ausgangsstecker
+(REC VIDEOOUT2,COMP.)
+(SOURCE2,COMP.MONITOROUT)
+Ein 10 Vs-s/75 Ohm Komposit-Videosignal, wie es
+Ein 1,0 Vs-s/75 Ohm Komposit-Videosignal wird
+mit den Ausgangs-Wahischaltern fur Videoaufnahme
+an diesen Stecker angelegt, um das Quelle-2
+(31), (32), (33) gewahit wurde, wird an diesen.Steckern
+Video-Eingangssignal zu uberwachen.
+ausgegeben.
+63.Y/CEingangssteckerfurexterneKamera
+72.Ausgangs-Uberwachungsstecker
+(EXT CAMERA IN Y/C)
+(PREVIEWOUT)
+Das Luminanzsignai (M) und das Chromasignal (C)
+Andiesen Stecker wird ein 1,0Vs-s/75Ohm
+von einem S-VHs Videorecorder oder Ferbfernseher
+Komposit-Videosignal des EFFECT- (Gesamteffekt-)
+werden an diesen Stecker geliefert.
+Bildes geliefert.
+73.Netzkabel
+-28 -
+=== PAGE 30 ===
+SYSTEMANSCHLUSS
+Vorsicht:
+Lassen Sie den Netzschalter (POWER ON/OFF)auf OFF gedreht, solage Sie Aschlusse vornehmen.
+SchlieBen Sie das Koaxialkabelmit den BC Steckern zwischen dem Videoausgang des Videorekorders, Video-Plattenspielers,
+Fernsehgerates oder der Videokamera und SOURCE 1 COMP. IN auf der Ruckseite des Digital-AV-Mischpultes bzw. ein
+Y/C-Kabel(4-Stift)zwischenVTRundSOURCE1Y/CanderRuckseitedes Digital-AVMischpultesan.
+2.
+SchlieBen Sie ein Audiokabel mit Stiftsteckern zwischen dem Audioausgang des Videorekorders, Video-Plattenspielers,
+Fernsehgerates oder der Videokamera und SOURCE1AUDIO IN auf der Ruckseite des Digitali-AV-Mischpuites an.
+3.
+SchlieBen Sie das Koaxialkabel oder Y/C-Kabel (4 Stifte) und das Audiokabel fur die SOURCE 2 Eingange des
+Digital-AV-Mischpuites in der gleichen Weise wie oben in Schritt 1 und 2 beschrieben an.
+SchlieBen SiedasKoaxialkabelmit den BNC Steckern zwischen dem Videoausgang der externen Kamera (Schwarz/WeiB-
+oder Farbkamera fur Mehrfachbelichtung)und EXT CAMERA IN am Mischpult an.
+5.
+10-Stift-Kabelsteckerdes Zeichengenerators an TITLE des Mischpultes an.
+6.
+Ist eine Audio-Hifsquelle erforderlich, schlieBen Sie das Audiokabel mit den Stiftsteckern zwischen dem Audioausgang der
+Audioquelle (CD-Spieler, Cassettenrecorder oder Plattenspieler) und AUx IN am Mischpult an.
+7.
+Falls erforderlich, schlieBen Sie das Mikrofonkabelan den Mic Eingang des Mischpultes an.
+8.
+Zum Uberwachendes Bildes schieBen Siedas Koaxialkabel mit den BNC Steckern zwischenPREVIEW OUTam Mischpult
+und VIDEO IN am Video-Monitor an.
+9.
+Zur Aufnahme schlieBen Sie die Koaxialkabel mit BNC Steckern (Y/C-Kabel) zwischen REC VIDEOOUT am Mischpult und
+VIDEO IN des Videorekorders und Monitors an.
+10.
+Zur Aufnahme schlieBen Sie das Audiokabel mit Stiftsteckern zwischen REC AUDIO OUT des Mischpults und den Steckern
+AUDIO IN des Videorekorders und des Monitors an.
+Videorekorder/
+Farbmonitor
+Videoplattenspieler
+CD-Spieler usw.
+Videomonitor
+or
+VIDEO
+VIDEO
+AUDIO
+SOURCE1
+AUXAUDIO
+PREVIEW OUT
+Jopnv
+Videomonitor
+SOURCE2
+Videokamera
+REC OUT
+VIDEO
+Netzgerat
+Videorekorder
+VIDEO
+AUDIO
+AUDIO
+RECOUT
+VIDEO
+AUDIO
+Videorekorder
+EXTCAMERA IN
+VIDEOOUT
+Zeichengenerator
+Externe Kamera
+MIC
+WV-KB12
+WJ-TTL5
+Systemanschlusse
+ 29 -
+=== PAGE 31 ===
+HANDHABUNG
+Nehmen Sie alle erforderlichen Anschlusse vor.
+Darauf achten, daB die Leuchtdiode des Video-
+Schalten Sie das Digital-AV-Mischpult und alle anderen
+2.
+Einblendschalters (37)aufleuchtet.
+daran angeschlossenen Gerate ein.
+Bereiten Sie Ihr Programmscript vor.
+3.
+Den Misch/Uberblendungshebel(45)von A auf B
+Bereiten Sie alle erforderlichen Titel vor.
+4.
+schieben, oder umgekehrt.
+Hinweis:
+ZumMehrfachbelichtenkonnen sowohi schwarze
+Titelkarten auf WeiB als auch weiBe auf Schwarz
+benutzt werden:
+5.
+Speichern Sie alle Titei zur Mehrfachbelichtung
+imZeichengenerator
+WV-KB12/WJ-TTL5unter
+Beachtung der Bedienungsanleitung des WV-KB12/
+WJ-TTL5.
+SZENE t: EINGANG A
+A.MISCH/UBERBLENDUNGSEFFEKT,
+UBERBLENDUNGSMODUS
+A&B
+SZENE 1 und SZENE 2
+WIPEMODE
+MULTI
+SZENE 2: EINGANG B
+MIXWIPEEFFECT
+YIDEO
+UBERBLENDUNGSEFFEKT
+Den Effektaufahme-Videoausgangs-Wahlschalter (33)
+driuicken.
+Den Uberblendungsmodus-Wahlschalter (53) drijcken.
+SOURCE
+SOURCE
+COLOUR
+BACK
+WIPE
+Den gewinschten Uberblendungsmodus. wahlen,
+indem einer der Uberblendungsmuster-Wahlschalter
+(6) gedruckt wird.
+Falis ein anderens Uberblendungsmuster gewinscht
+wird, siehe Tabelle der Uberblendungsmuster auf Seite
+15 fur die Kombination der Schalter (6).
+50
+48
+DasQuelle-SignalfurAundBausSOURCE1,SOURCE
+49
+53
+52
+2 oder BACK COLOURauswahlen.
+Falls Hintergrundfarbe gewahlt wird, den Hinter-
+grundfarben-Wahlschalter (5) auf die gewinschte
+Farbe einstellen.
+Den Effektaufahme-Videoausgangs-Wahlschaiter (33)
+drucken.
+Darauf achten, daB die Leuchtdiode des Video-
+Einblendschaiters (37)aufleuchtet.
+MISCHEFFEKT
+Den Misch/Uberblendungshebel (45) von A auf B
+schieben, oder umgekehrt.
+Den Mischmodus-Wahlschaiter (52) drucken.
+DasQuele-SignalfurAund Baus SOURCE1,SOURCE
+2oderBACKCOLOURauswahlen.
+Falls die Hintergrundfarbe gewahlt wird, den Hinter-
+grundfarben-Wahischalter (5) auf die gewinschte
+Farbe einstellen.
+- 30 -
+=== PAGE 32 ===
+Wird unter dieser Bedingung der Misch-/Uber-
+blendungshebel (45) auf Position A geschoben, dann
+wird das eingesetzte Bild B gemaB Abbildung zu einem
+A Bild geandert.
+Eingang A
+Den Bild-in-Bild-Schalter (7) nochmals drucken, um das
+eingesetzte Bild auf 1/16 GroBe einzustellen.
+A&B
+Uberbiendetes Bild
+Die Position des 1/4 oder 1/16 Bildes kann mit dem
+Joystick (54)freigesetzt werden.
+Hinweise:
+(1) Wenn ein 1/4 oder 1/16 Bild am linken Rand
+positioniert ist, dann wird bei manchen Fern-
+sehmonitoren im Randbereich der Bild-in-Bild-
+Modus nicht durchgefuhrt.
+Eingang B
+Bild-in-Bild-Uberblendung
+Das eingesetzte Bild kann je nach seiner Position
+horizontal in zwei Halften verschoben werden.
+Den
+Effektaufnahme-Videoausgangs-Wahlschalter
+(33) drucken.
+Den Uberblendmodus-Wahlschalter (53) drucken
+DasQuelle-SignaifurAundBausSOURCE1,SOURCE
+2oderBACKCOLOURauswahlen.
+Falls die Hintergrundfarbe gewahit wird, den Hinter-
+grundfarben-Wahlschalter (5) auf die gewinschte
+(3) Falls das B Bild in das A Bild eingesetzt wird und
+Farbe einsteilen.
+1) wenn der A Videoaufnahmeausgang-Wahl-
+Darauf achten, daB die Leuchtdiode des Video-
+schalter (31) gedruckt wird, dann wird nur
+das A Bild ausgegeben.
+Einblendschalters (37)aufleuchtet.
+2)
+wenn der B Videoaufnahmeausgang-Wahl-
+Den Bild-in-Bild-Schalter (7) druicken.
+schalter (32) gedruckt wird, wird das ein-
+Wenn der Schalter einmal gedruickt wird und der
+gesetzte B Bild mit schwarzem Hintergrund
+Misch/Uberblendungshebel (45)auf B gestellt ist, dann
+ausgegeben.
+wird ein B Bild mit 1/4 GroBe in das A Bild eingesetzt,
+wie es nachfolgend dargestellt ist.
+Anmerkung:
+Benutzung
+Bei
+der
+Bild-in-Bild-Betriebsart
+sind
+Stroboskopeffekt
+Standbild
+und
+nicht
+funktionsfahig.
+-31-
+=== PAGE 33 ===
+MULTI-Uberblendung
+ONE-WAY-Uberblendung
+Den Effektaufahme-Videoausgangs-Wahischalter (33)
+Wenn dieser Schaiter gedruckt wird, dann bleibt die
+drucken.
+Uberblendungsrichtung gleich, unabhangig von der
+Richtung, in der der Misch/Uberblendungshebel (45)
+Den Uberblendungsmodus-Wahischalter (53)drucken.
+geschoben wird.
+Das Quelle-Signalfur AundBaus SOURCE 1,SOURCE
+2oderBACK COLOURauswahlen.
+Falls die Hintergrundfarbe gewahit wird, den Hinter-
+grundfarben-Wahischalter (5) auf die gewinschte
+Farbe einstellen.
+Darauf achten, daB die Leuchtdiode des Video-
+Einblendschaiters (37)aufleuchtet.
+Dasgewinschte
+Uberblendungsmustermitden
+Uberblendungsmuster-Wahlschaltern (6)wahlen.
+UBERBLENDUNGSMODUS
+Im Uberblendungsmodus kann zwischen einer weichen
+Danach den Mehrfach-Uberblendungsmusterschalter
+Uberblendung und einer Grenzberblendung 'gewahlt
+des
+(8)drucken,
+Vierfache
+um
+das
+Uber-
+werden.
+blendungsmusters zu erhalten.
+Den Uberblendungsmodus-Wahischalter (53)zweimal
+drucken, um eine klare/breite Kante zu erhalten.
+DieFarbedieserGrenzkantekannmitdem
+Hintergrundfarben-Wahischalter (5)gewahlt werden.
+Diesen Schalter (53) ein drittes Mal drucken, um eine
+abgeblendete Uberblendungskante zu erhalten. Um auf
+den normalen Uberblendungsmodus zuruckzukehren,
+Wird dieser Schalter (8) nochmals gedruckt, dann
+diesen Schalter (53) nochmals drucken.
+wird das Sechzehnfache des Uberblendungsmusters
+erhaiten.
+8.Anwendung
+8-1. Schnitt-Uberblendung
+Den Effektaufahme-Videoausgangs-Wahischalter (33)
+drucken.
+Den Uberblendungsmodus-Wahlschalter (53) drucken.
+DasQuelle-SignalfurAundBausSOURCE1,SOURCE
+5.REVERSE-Oberblendung
+2oderBACKCOLOURauswahlen.
+Wenn Hintergrundfarbe gewahlt wird, den Hinter-
+Wenn dieser Schalter gedruckt wird, werden die
+grundfarben-Wahlschaliter (5) auf die gewinschte
+uberblendeten Bilder umgekehrt angeordnet.
+Farbe einstellen.
+Darauf achten, daB die Leuchtdiode des Video-
+Einblendschalters(37)aufleuchtet.
+Mit den Uberblendungsmustern-Wahischaltern (6) kein
+Uberblendungsmusterwahlen.
+Den Misch-/Uberblendregler (45) in der Nahe der
+Mittelstellung nach oben oder unten schieben.
+Die
+A-und B-Eingangsbilder erscheinen abwechseind.
+~32-
+=== PAGE 34 ===
+Hinweis:
+Wenn der Mehrfach-Uberblendungsschalter (8)
+zweimal gedruckt wird, dann wird der gleiche
+Vorgang mit einem Bild der 1/16 GroBe ausgefuihrt.
+AB
+Anmerkungen:
+(1) Wenn der B Hintergrundfarben-Wahlschalter (47)
+von demB Quelle-2Wahischalter (49)gewahlt
+wird, dann blinkt die Leuchtdiode an dem B
+8-2. Schnitt-Mehrfach-Uberblendung
+Quelle-2 Wahischalter (49).
+Dieses Blinken weist darauf hin, daB das Quelle-2
+Den Effektaufahme-Videoausgangs-Wahlschalter (33)
+Bild gewahit wird, wenn der B Ein/Aus-Schalter
+drucken.
+(25) gedruckt wird. Der gleiche Vorgang tritt
+sinngemaB ein, wenn A oder Quelle-1 verwendet
+Den Uberblendungsmodus-Wahischalter (53) druicken.
+wird.
+(2)
+Wenn
+der BStiibild-Ein/Aus-Schalter (14)
+DasQuelle-SignalfurAundBausSOURCE1,SOURCE
+gedruickt wird und B Quelle-2 Wahlschalter (49)
+2oderBACKCOLOURauswahlen.
+gewahlt wurde, dann funktioniert der B Quelle-1
+Wahlschalter (51) nicht. Der gleiche Vorgang tritt
+Falls die Hintergrundfarbe gewahlt wird, den Hinter-
+grundfarben-Wahlschalter (5) auf die gewinschte
+sinngemaB ein, wenn A oder Quelie-1 verwendet
+Farbe einstellen.
+wird.
+Darauf achten, daB die Leuchtdiode des Video-
+Einblendschalters (37)aufleuchtet.
+B.DIGITAL-EFFEKTE
+Mit den Uberblendungsmustern-Wahlschaltern (6) kein
+Uberblendungsmusterwahien.
+12
+14
+18
+Den Mehrtach-Uberblendungsschalter
+20
+(8)
+einmal
+drucken.
+DIG TAL EFFI
+Den Misch/Uberblendungshebei (45) von Position A
+langsam auf Position B schieben.
+Das 1/4A Bild
+erscheint nun gemaB Abbidung.
+YIDER
+CON
+STLL
+MOSAIC
+$TROBE
+PAINT
+to
+Diefoigenden Effekte werden ats Beispielhauptsachlich fur
+ein A Bild erlautert.
+(1)
+Den Mischmodus-Wahlschalter (52) drucken.
+(2)
+DenAEingangswahischalter (50)drucken.
+(3)
+Den Misch/Uberblendungshebel (45) auf Position A
+schieben.
+(4)
+Den Digital-Effekt-Ein/Aus-Schalter (11) drücken.
+(5)
+Den Effektaufahme-Videoausgangs-Wahlschalter (33)
+drucken.
+1.
+STILLBILD
+Den Stillbild-Ein/Aus-Schalter (13) einmal dricken, um
+das Bild einzufrieren. Die Leuchtdiode leuchtet auf.
+- 33 -
+=== PAGE 35 ===
+GEMALDE
+Den A Gemalde-Ein/Aus-Schalter (19) einmal drucken,
+damit das Bild einen Gmalde-Effekt erhalt.
+LIVE
+STILLBILD
+Um im Film fortzufahren, drucken Sie erneut den
+GEMALDE AUS
+Die Leuchtdiode
+Stillbild-Ein/Aus-Schalter(13).
+GEMALDE EIN
+erlischt.
+(GEMALDEPEGEL: HOCH)
+DieAbstufungdes Gemalde-Effektskann invierStufen
+STROBE
+2.
+geandert werden, indem dieser Schalter wiederholt
+gedruckt wird.
+Dricken Sie Strobe-Ein/Aus-Schalter (15), um den
+Strobe-Effekt zu erhalten. (Diese Funktion kann sehr
+ahnlich sein mit Stillbilidern, die in Zeitlupe mit einem
+Intervall von 0,2 bis 1 Sekunde abgespielt werden.)
+Das Strobe-lntervall wird durch Dricken dieses
+Schalters wie folgt eingestellt.
+NIEDRIG
+HOCH
+Einmal - 0,2 sek., zweimal - 0,4 sek., dreimal - 0,6
+sek.
+Viermal - O,8 sek., funfmal - 1, sek. (Zeit ist nur
+ungefahr)
+Um wieder ein normales Bild zu erhalten, diesen
+Schalter ein funftes Mal drucken.
+5.
+ANWENDUNGEN
+5-1.
+Wahlen Sie den A Quelle-1 Wahlschalter (50) und den
+Um wieder ein normales Live-Bild zu erhalten, den
+B Quelle-1 Wahischalter (51).
+Schaiter ein sechstes Mal druicken.
+Dricken Sie den Mischmodus-Wahischalter (52).
+Drucken Sie den B Digital-Effekt-Ein/Aus-Schalter (12)
+3.
+MOSAIK
+und den B Strobe-Ein/Aus-Schalter (16).
+Drucken Sie den A Mosaik-Ein/Aus-Schalter (17)
+einmal, damit Sie den Mosaik-Effekt ins Bild bekommen.
+Verschieben SiedenMisch/Uberblendungshebel(45)in
+die Mitteiposition, um einen Nachbild-Effekt zu erhalten.
+LIVE
+Die MosaikgroBe kann in
+vier Schritten durch
+dieses
+wiederholtes Drucken
+Schalters geandert
+werden.
+NACHBILD
+GROSS
+KLEIN
+Damit Sie wieder ein normales Bild erhalten, drucken
+Sie diesen Schalter ein fuinftes Mal.
+STROBE
+=== PAGE 36 ===
+5-2
+(1) Dricken Sie den Effektaufahme-Videoausgangs-
+Druicken Sie den B Mosaik-Ein/Aus-Schaiter (18)
+Wahlschalter (33).
+und stellen Sie die MosaikgroBe durch wiederholtes
+(2)
+Drucken dieses Schalters ein.
+Dricken Sie den Mischmodus-Wahlschalter (52) oder
+den Uberbelndmodus-Wahlschaiter (53).
+(3)
+Drucken Sie den Uberblendungsmodus-Wahlschalter
+Wahlen, Sie das Hintergrundbild.Stellen Sie den
+(53)
+Misch/Uberblendregler (45) auf die untere Position (B)
+mit B Bild als Hintergrund oder auf die obere Position
+Wahlen Sie das Kreis- oder Rechteckmuster mit den
+(A) mit A Bild als Hintergrund. Das Hintergrundbild kann
+Uberblendungsmuster-Wahischaltern (6).
+aus SOURCE1, SOURCE2oder BACK COLOURfur
+jede Position von A oder B gewahlt werden.
+Betatigen Sie den Misch/Uberblendungshebel (45) fur
+(4)
+die gewinschte UberblendngsgroBe.
+Wahlen Sie die Tastenbildquelie (die die mehrfach
+belichtet werden soll) durch Dricken einer der
+Mehrfachbelichtungsquellen-Wahlschaiter(23),(24),
+(25).
+Hinweis:
+Wird der Zeichengenerator verwendet, diesen
+an
+den
+Titelgenerator-Eingangsstecker
+(2)
+anschlieBen.
+(5)FallsBACK
+COLOUR
+gewahitwerdensoll,
+den Hintergrundfarben-Wahlschaiter (27) auf die
+Betatigen Sie den Joystic (54), um die Uberblend-
+gewunschte Farbe oder ein weiBes Bild (28) einstellen.
+position auf dem Bildschirm zu setzen.
+Die Farbe mit dem Hintergrundfarben-Wahischalter (5)
+wahlen.
+Vorsicht:
+Dricken Sie nicht gieichzeitig den BACK COLOUR
+Schalter fur den A (B) und den BACK COLOUR
+Schalter fur die Mehrfachbelichtung.
+(6) Drucken Sie den Mehrfachbelichtungs-Ein/Aus-
+Schalter (22) einmal, um diese Funktion zu aktivieren.
+Anmerkungen:
+(1) Wenn der B Hintergrundfarben-Wahlschalter (47)
+von dem B Quelle-2 Wahlschalter (49) gewahlt
+wird, dann blinkt die Leuchtdiode an dem B
+C.MEHRFACHBELICHTUNGUND
+Quelle-2 Wahlschalter (49).
+Dieses Blinken weist darauf hin, daB das Quelle-2
+HINTERGRUNDFARBE
+Bild gewahlt wird, wenn der B Ein/Aus-Schalter
+(25) gedrickt wird. Der gleiche Vorgang tritt
+sinngemaB ein, wenn A oder Quelle-1 verwendet
+25
+30
+28
+23
+wird.
+22
+24
+MehrfachbelichtungdurchKamera
+BELEC
+Das Kabel der Kamera an den Komposit-Video
+EingangssteckerfurexterneKamera (64)oderdenY/C
+Eingangssteckerfur externe Kamera (63)anschlieBen.
+WHITE
+Die Kamera auf ein Bild oder eine Tafel richten.
+Den Wahlschalter fiur externe Kamera (23) drucken.
+Wahrend Sie das Bild auf einem Videomonitor
+EXT
+REVERSE
+CAMERA
+EFFECT
+TITLE
+beobachten, der an den Uberwachungs-Ausgangs-
+stecker(72)angeschlossenist,stellenSie
+denPegelregler(30)ein,bisSieeinklares
+29
+mehrfachbelichtetesBilderhalten
+Falls der Titel mit weiBen Buchstaben auf Schwarz
+geschrieben wurde, den Pegelregler von der oberen
+Positionnach unten schieben.
+KEY
+VIDEO
+TITELKARTE
+- 35 -
+=== PAGE 37 ===
+Falls der Titel mit schwarzen Buchstaben auf WeiB
+D.EIN-UNDAUSBLENDEN
+geschrieben wurde, den Pegelregler von der unteren
+Position nachoben schieben.
+KEY
+FADECONTROL
+13437
+COLOUR SELECT
+VIDEO
+BACK COLOUR
+VIDEO
+TITLE
+WHITE
+TITELKARTE
+Hinweis:
+BLACK
+Wenn zum Mehrfachbelichten der im Handel
+36
+erhaltliche Zeichengenerator WV-KB12 oder
+WJ-TTL5 verwendet wird, den Pegelregler (30)
+DUT
+auf seine untere Position stellen.
+39
+UMKEHREFFEKT
+2.
+3837
+Wahlen Sie die Polaritat des Tastensignals,das
+mehrfachbelichtet werden solt, durch Druck auf den
+Umkehrschalter (21)
+(1) Den Effektaufahme-Videoausgangs-Wahlschaliter (33)
+Originalbild
+Wird die Titelfarbe
+drucken.
+(2)
+DenMischmodus-Wahlschaiter(52)oder
+den
+Uberblendungsmodus-Wahlschalter (53)drucken.
+VIDEQ
+VIDEO
+Das Quelle-SignalfurAundBaus SOURCE1,SOURCE
+2 oder BACK COLOUR auswahlen.
+Falls Hintergrundfarbe gewahlt wird, den Hinter-
+grundfarben-Wahlschalter (5) auf die gewuinschte
+Farbe einstellen.
+Tite!
+Originalbild im Titel
+Mehrfachbelichtetes Bild
+Ein-/Ausblendvorgang
+3.
+Titel-Effekt
+Die Kombination der Schalter (37) und (38) einstellen,
+Falls gewinscht, wahien Sie die Titeiumrandung durch
+je nach dem ob das Bild und der Titel ein- und
+wiederholte Betatigung des Titeleffektschalters (29).
+auszublenden sind oder nur das Bild bzw. der Titel.
+Die folgende Tabelle zeigt an, welche Tasten gedrickt
+Normat→ Schwache Umradung→ Starke Umrandung-
+werden missen.
+ Schmaler Schatten → Breiter Schatten → Abgeloster Schatten
+VIDEO
+TITLE
+Umrandung
+Normal
+Starke Umrandung
+VIDEO
+EinblendenAusblenden
+A-A-A-
+TITLE
+AusblendenEinblenden
+Einblenden
+VIDEO&TITLE
+Einblenden
+Schatten
+StarkerSchatten
+AbgelosterSchatten
+Wenn mit dem ViDEO Schalter (37) gedrickt wird, dann
+A-A-A
+kann fur den Monitor die Hintergrundfarbe (34) WeiB
+(35) oder Schwarz (36) gewahit werden.
+Falls Hintergrundfarbe gewahit wurde, die gewinschte
+Farbe mit dem Hintergrundfarben-Wahischalter (5)
+einstellen.
+Hinweise:
+Den Ein-/Ausblendhebel (39) von IN auf OUT schieben,
+Zeichengenerator
+(1) Die
+einem
+von
+oder umgekehrt.
+dargestellten mehrfachbelichteten Titel konnen
+in Farbe wiedergegeben werden.
+Dazuden
+Hintergrundfarbenschalter (27) drucken und die
+Farbe mitdem Hintergrundfarben-Wahischalter (5)
+wahien.
+(2)
+Wenn der WeiBfarbschalter (28) fur einen
+von einem Zeichengenerator eingegebenen Titel
+gedrickt wird, dann kann die Umrandung der
+Buchstaben mit Hilfe des Hintergrundfarben-
+Wahischalters (5) in Farbe dargestellt werden.
+- 36 -
+=== PAGE 38 ===
+Nachfoigend
+ist
+das
+Blockschaltbild
+des
+Audio-Schaltkreises dargestellt.
+BALANCE
+SOURCE10
+AUDIO
+AUDIO1
+L.R
+MAX
+REC
+OUT
+MIN
+Ausbienden
+SOURCE20
+Einblenden
+AUDIO2
+L.R
+MASTER
+AUX
+AUX
+AUDIO
+L.R
+MAX
+MIN
+MIC
+MIC
+(MONO)
+OUT
+MAX
+MIN
+Hinter-
+grund-
+farbe
+WeiB
+Um das SOURCE 1 Audiosignal aufnehmen zu
+Schwarz
+konnen, stellen Sie den Audioregler (44) auf die
+Anschlagposition"Audio 1"und stellen die Lautstarke
+OUT
+mit dem Lautstarkeregler (43) ein.
+Zum Mischen der SOURCE 1 und SOURCE 2
+Audiosignale stellen Sie den Audioregler (44) ein.
+Zum Mischen des Audio-Hilfssignals fur die Aufnahme
+E.AUDIO-MIXER
+stellen Sie den AUX-Lautstarkeregler (42) ein.
+Zum Mischen der Mikrofonsignale zur Aufnahme stellen
+AUDIO MIXER
+AUDIO
+MASTER
+Sie den MIC-Lautstarkeregler (41) ein.
+Zum Ein- und Ausblenden der Audiosignale bedienen
+SOURCE
+Sie den MASTER Lautstarkeregier (40).
+43
+42
+40
+-37 
+=== PAGE 39 ===
+TECHNISCHE DATEN
+Quelleneingang:
+x2 (SOURCE1 und SOURCE2)
+Videoeingang:
+1,o Vs-s, 75 Ohm, PAL Komposit-Signal, BNC-Stecker
+Y/C-Eingang:
+Y-Signal: 1 Vs-s; C-Signal: 0,3 Vs-s, 75 Ohm, Mini DIN 4-Stift Stecker
+Audioeingang:
+-6 dBV/15kOhm, Cinch-Buchsen (links und rechts)
+ExternerKameraeingang:
+1,0Vs-s/75Ohm, CCIRoderPALKomposit-Signal,BNC-Stecker
+Aufnahmeausgang:
+x2 (REC OUT 1 und REC OUT 2)
+Videoausgang:
+1,oVs-s/75Ohm,PALKomposit-Signal,BNC-Stecker
+Y/C-Ausgang:
+Y-Signal: 1 Vs-s; C-Signal: 0,3 Vs-s, 75 Ohm, Mini DiN 4-Stift Stecker
+Audioausgang:
+-6 dBV/1 kOhm Cinch-Buchsen (links und rechts)
+Video-Uberwachungsausgang:
+1,o Vs-s/75 Ohm, PAL Komposit-Signal, BNC-Stecker x 1
+Monitorausgang::
+x2 (MONITOR OUT 1 und MONITOR OUT 2) 1,0 Vs-s/75 Ohm,PAL
+Komposit-Signal,BNC-Stecker
+Externer Toneingang:
+MIC Eingang (mono):
+-60 dB/600 Ohm, asymmetrisch, Ringkopf-Manschettenstecker, Phonobuchse
+AUX Eingang:
+6 dBV/15 Ohm, Cinch-Buchsen (inks und rechts)
+Zeichen- (TITLE) Eingang:
+10-Stift-Stecker x 1 fur optionalen Zeichengenerator WV-KB12 oder WJ-TTL5
+Effekte:
+Video:
+Stilibild, Strobe, Mosaik, Gemaide, Mischen, Uberblenden, Mehrfachbelichten,
+Ein/Ausblenden
+Audio:
+Mischen, Abblenden
+Hintergrundfarben:
+WeiB, Gelb, Zyan, Grin, Magenta, Rot, Blau, Schwarz
+Uberbiendmuster:
+98 Muster
+Sonstiges:
+P-IN-P, MULTI, ONE-WAY, REVERSE
+Verstarkung:
+Einheit (Video)
+Rauschabstand:
+Video: 45 dB (Komposit), 45 dB (Y/C)
+Audio: 60 dB
+Stromversorgung:
+Wechselstrom240 V, 50 Hz fur WJ-AVE5/A und WJ-AVE5/B;
+Wechselstrom220V,50HzfurWJ-AVE5/G
+Leistungsaufnahme:
+13W
+Zul. Umgebungstemperatur:
+0°bis 40°C
+Luftfeuchtigkeit:
+Weniger als 90%
+MaBe:
+420(B) × 70(H) × 280(T) mm
+Gewicht:
+2,8 kg
+Gewichte und MaBe sind ungefahre Angaben.
+Anderungen vorbehalten.
+WAHLWEISES ZUBEHOR
+Zeichengenerator WV-KB12,WJ-TTL5
+- 38 -
+=== PAGE 40 ===
+VERSION FRANCAISE
+(FRENCH VERSION)
+CONTENU
+PREFACE
+CARACTERISTIQUES
+40
+PRECAUTIONS
+41
+PRINCIPALESCOMMANDES.ETLEURSFONCTIONS
+42
+CONNEXIONDU SYSTEME
+48
+PROCEDED'OPERATION
+49
+A.
+MODEDEMODULATIOND'IMAGE,D'EFFETDEMELANGEUR/MODULATION
+49
+B.
+EFFETSNUMERIQUES
+52
+C.
+EFFET DE SURIMPRESSION ET COULEUR D'ARRIERE-PLAN
+54
+D.
+COMMANDEDEFONDU ENCHAINE
+55
+MELANGEURAUDIO
+56
+SPECIFICATIONS
+57
+ACCESSOIRESENOPTION
+57
+CAUTION
+RISK OF ELECTRIC SHOCK
+DO NOT OPEN
+Cet appareil est conforme aux prescriptions de la
+ATTENTION:
+directive 87/308/C.E.E.(concernant les interférences
+POUR EVITER TOUT RISQUED'ELECTROCUTION,
+radio).
+LE COUVERCLE (OU LEPANNEAU ARRIERE) NE
+DOIT JAMAISETREDEMONTE.AUCUNE PIECE
+DESTINEE A L'UTILISATEUR SE TROUVE A
+La Sociéte PANASONIC-FRANCE,importateur du
+L'INTERIEUR DE L'APPAREIL. CONFIER LES
+materiel MATSUSHITA-JAPON déclare que cet
+REGLAGES ET LES REPARATIONS A UN DEPAN-
+appareil est conforme aux prescriptions dela directive
+NEURPROFESSIONNEL.
+87/308/C.E.E.modifieepar laDirective82/499/CEE.
+L'éclair a extrémite fléchéeplacé dans
+un triangle équilateral est destine a atti-
+rer I'attention de I'utilisateur sur la pre-
+sence d'une "tension potentionelle-
+Le numéro de série de I'appareil se trouve sur la pla-
+ment dangereuse" et non isolee se
+que de fond.
+trouvant dans les limites du coffret de
+Nous vous conseillons de relever le numero de serie
+I'appareil dont la puissance est suffi-
+de votre appareil dans I'espace réserve ci-dessous et
+sante pour constituer un risque impor-
+de conserver precieusement votre notice d'instruc-
+tant d'électrocution.
+tions en tant que justificatif d'achat aux fins d'identi-
+fication en cas de vol.
+Le point d'exclamation place dans un
+triangle équilateral sert a attirer I'atten-
+No. de modéle
+tion de I'utilisateur sur des instructions
+de fonctionnement et d'entretien (de
+No. de série
+depannage)a caractere important dans
+la brochure qui accompagne I'appareil.
+AVERTISSEMENT:
+NE JAMAIS EXPOSER CETAPPAREILALA PLUIE NI LELAISSER DANS UN LIEU HUMIDE
+ 39 --
+=== PAGE 41 ===
+PREFACE
+Le melangeur audio/videonumeriqueWJ-AVE5 de
+Cet appareil est dote de diverses fonctions telles le
+Panasonic est concu pour la reproduction d'images vidéo
+mélange des signaux audio ou video, I'effet numerique,
+utilisant une technologie de traitement numerique.
+la surimpression,le fondu enchaine par exemple.Un
+programme audio et video sophistique peut etre realise
+avec le mélangeur audio/video numerique.
+CARACATERISTIQUES
+SYNCHRONISEURDENUMERIQUEINTEGRE
+FONCTIONDEFONDUENCHAINE
+Le synchroniseur de trame integre permet le melange
+Lefondu enchaine videoetdes titres video estpossible
+video de deux sources video de systeme PAL
+séparementoudansn'importequellecombinaisonpour
+standardise.
+repondre a toutes les exigences dans la production de
+bande video.
+EFFETS SPECIAUX - MASAIQUE,PERINTURE,
+CONTINU,STROBOSCOPIQUE
+TITREVIDEO
+Avec la memoire de numerique integree, des effets
+Le generateur de caractere de type a clavier WV-KB12
+vidéospeciauxsontaccessiblespour
+offrir un
+ou WJ- TTL5 est un producteur de titre acessible en
+maximum de variete dans la creativite video.
+option et construit pour etreconnecte a ce melangeur
+SURIMPRESSION
+facile et comporte une mémoire de 8 pages pour le
+Les signaux d'entree des bus A, bus B et EXT CAMERA
+WV-KB12 et de 10 pages pour le WJ-TTL5 qui garde
+peuvent etre surimpressiones sur 'image.
+les titres produits.
+98MODELESDEMODULATIONET
+POSITIONNEURAINTERRUPTEURATIGE
+FRANCAISE
+En combinaison avec les touches de modeles
+de modutation d'image, 98 modeles de modulation
+d'image maximum sont possibles.Le positionneur
+a commutateur a tige permet le positionnement
+libre circulaire,carre et en losange des modeles
+de modulation d'image et de I'image dans 'image.
+La modulation dimage est dotee de trois modes,
+modulation normale, modulation douce et modulation
+de bord.
+MELANGEAUDIO
+Le melangeur audio integre peut melanger quatre
+sources audio maximu, dont un microphone.Un
+commutateur principal est équipe pour permettre le
+melange audio.
+- 40 -
+=== PAGE 42 ===
+PRECAUTIONS
+Le WJ-AVE5 est un instrument sensible de haute qualite et doit etre traite comme tel. Etant donne quil s'agit d'un dispositif
+CEQU'ILNEFAUTPASFAIRE
+CEQU'ILFAUTFAIRE
+N'essayez pas de demonter I'appareil vous-meme.
+Confieztouteslesreparationsaupersonnelde service
+Pour eviter de recevoir des decharges électriques,
+agree.
+n'enlevez pas les vis ou les couvercles.L'appareil
+ne renferme aucune piece reparable par I'utlisateur.
+Faites attention a votre appareil.Evitez les chocs,
+Manipulez I'appareil avec soin.
+les secousses,etc.l pourrait etre endommagepr un
+maniement ou un entreposage impropres.
+xN'utitisez pas de detergent abrasif oufort pournettoyer
+Utilisez un chiffon sec pour nettoyer Pappareil quand i
+le boitier de I'appareil.
+est sale. S'il est trop sale, utilisez un detergent doux et
+essuyez doucement.
+xL'appareil ne doit pas recevoird'eau ouetre expose
+Si I'appareil est mouille, agissez immediatement.
+a I'humidite.Ne le faites pas fonctionner dans les
+Coupez Ialimentation et portez I'apreil chez un
+reparateur agree.
+endroits mouilles ou s'il est mouille.
+L'humidite peut endommager
+I'appareil et provoquer un risque de decharge
+électrique.
+× N'utilisez pas Iappareil dans unendroit ou la temprature
+Utilisez I'appareil dans une plage de temperature allant
+est tres forte.
+de 0°C a 40° avec une humidité inferieure a 90%.
+Remarqueimportantepourlesignalvideodessources1et2:
+(1) Si le signal d'entree video ne correspond pas au signal
+(6) Une ondulation (deformation du haut de I'image) peut
+vidéo standard couleur PAL ou N/B CCiR, il peut se
+apparaitreavec I'utilisationdecertainsmagnetoscopes
+produire une erreur de synchronisation.
+(a cause d'erreur due a la mise en travers de la bande)
+(2)
+Si le rapport signal-bruit (S/B) d'entree est tres bas,
+ou a cause des caracteristiques du moniteur video
+I'image peut étre de qualite mediocre.
+(doesauxconstantesdetempsCAF).
+(3)
+Site signal d'entree video esttres instabiecomme dans
+lecas d'un mauvais signalde lecture dumagnetoscope,
+il peut se produire une erreur de synchronisation ou de
+couleur.
+(4)
+Si le parasite de luminosite apparait sur le moniteur
+de telévision, il peut y se produire une erreur dans
+la synchronisation ou la couleur aussi, regiez la
+commande de luminosite sur le magnetoscope.
+(5)
+Lorsqu'aucun des signaux de generateur de caractere
+(7) L'extremite de la modulation contrastee de bord en
+(en provenance de WV-KB12 ou WJ-TTL5) ou des
+mode de modulation circulaire sera un zigzag.Ce
+caracteres de la camera cle ne sont fournis, le
+phenomene est normal et n'est pas un signe de defaut.
+contour du caractere peut deveir flou comme indique
+ci-dessous dans certaines conditions électriques.
+41
+=== PAGE 43 ===
+PRINCIPALESCOMMANDESETLEURSFONCTIONS
+6D
+68
+55
+58
+59
+69
+62
+64
+66
+72
+73
+13
+25
+28
+30
+20
+10
+12
+14
+22
+24
+27
+26
+50
+48
+46
+49
+39
+52
+54
+53
+-42
+=== PAGE 44 ===
+1.Prise d'entree de microphone (MIC)
+Cette prise est utilisee pour raccorder un microphone
+WIPE PATTERNS
+avec une fiche phone a douille a bague et pointe ou a
+douille a pointe.
+NON
+x4
+POSI
+x16
+MULTI
+MULTI
+MULTI
+Connecteur d'entree de titre (TiTLE)
+2.
+Ce connecteur estutilise pour.raccorderle generateur
+de caractere WV-KB12 ou WJ-TTL5 en option.
+(1) : Entree (IN) de caractere
+(2): Non utilisé
+(3): Terre
+(4):Non utilisé
+TITLE
+(5): Sortie synchronisee
+(6): Non utilise
+(7): Terre
+Front View
+(8): Sortie (OUT) +9 V
+(9): Terre
+(i0) : ID (WV-KB12: ouvert, WJ-TTL5: terre)
+Remarques:
+Lorsque le WV-KB12 est utilise en meme temps
+que cet appareil, les fonctions suivantes du
+WV-KB12 sont annulees.:
+1)Affichagede chronometre
+2)Reglage de couleur de titre
+3)Affichagede page de titre
+Durant le defilement sur ecran des titres dans la
+plus petite taile de caracteres avec le WJ-TTL5,
+I'emplacementoulesnouvelleslignesde
+caracteres apparaitront bougera progressivement
+a partir du bas de I'ecran vers le milieu de celui-ci.
+Raccordez le cable du WV-KB12ou du WJ-TTL5
+au connecteur d'entree de titre (2), comme
+repréesente ci-dessous.
+Generateur de caractere
+WJ-TTL5
+WV-KB12
+EEEE
+3.Interrupteurd'alimentation (POWERON/OFF)
+Appuyez sur cette touche pour mettre I'appareil sous
+tension.L'indicateur d'alimentation (4) s'allume quand
+lecommutateurestenfonce.
+4.Indicateurdalimentation (POWER)
+5.Selecteurde couleur d'arriere-plan
+(BACKCOLOUR)
+Cette commande sert a sélectionner la couleur
+d'arriere-plan lors des operations de melange (MiX),
+de modulation.d'image (WIPE).,desurimpression
+(SUPERIMPOSE) et de fondu video (VIDEO'FADER).
+L'une des huit 'couleurs d'arriere-plan suivante est
+selectionnable:blanc,jaune, cyan, vert,magenta,
+rouge, bleu et noir. Appuyez sur ce sélecteur pour
+changer de couleur.
+P-IN-P
+6.Sélecteurs de modeles de modulation d'image
+(WIPEMODE)
+CUT
+A→B
+En combinaison avec cing sélecteurs,les modeles
+de modulation d'image suivants peuvent etre realises
+comme indique sur le tableau.,La DEL s'ailume a
+CUT-MULTI
+la pressionVeuillez noter que le positionnement du
+modele par positionneur a commutateura tige (54) est
+réalisabie pour les trois modeles marques "p"sur le
+tableau.
+- 43-
+=== PAGE 45 ===
+Selecteur d'image dans I'image (P-IN-P)
+14.InterrupteurON/OFFd'image fixedubusB
+Vous obtiendrez le mode image dans I'image d'1/4 de
+(STILL)-B
+la dimension normale en appuyant sur ce selecteurune
+Cet interrupteur est utilise pour geler I'image du bus
+fois. La DEL saliume. En appuyant sur le selecteur
+B. Si vous appuyez dessus une fois, I'image du bus
+a nouveau, le mode image dans l'image d'1/16 de la
+A deviendra fixe et I'indicateur a DEL sera allume
+dimension normale sera appele. Le positionnement du
+sur I'interrupteur. Pour revenir a une image "animee",
+mode image dans Iimage peut etre determine par le
+appuyez a nouveau sur Il'interrupteur. L'indicateur a
+positionneur a commutateur a tige (54). Lorsque vous
+DEL s'éteint.
+appuyez pour la troisieme fois surce selecteur,lemode
+se termine et P'image revient au mode normaf. La DEL.
+15.InterrupteurON/OFFde stroboscopiedubusA
+s'éteint alors.
+(STROBE)-A
+Remarques:
+Cet interrupteur est utilise pour obtenir la stroboscopie
+(1) Lorsque vous changez la position du levier de
+de I'image de bus A. Si vous appuyez une fois dessus
+melange/modulation (45) de A a B ou de B a A en
+vous obtenez un effet stroboscopique sur Iimage de
+mode image dans I'image, les images changent de
+bus A tandis que F'indicateur a DEl sera allume sur
+position de A a B ou de B a A en fonction de la
+I'interrupteur.L'intervalle de temps pour enregistrer
+commande.
+le déroulement d'un mouvement peut étre modifie en
+Quand une image d'1/4 ou d'1/16 de dimension
+(2)
+appuyant surcet interrupteur en sequence. Lefeglage
+est positionnee dans le coin gauche superieur,te
+est realisable dans une plage de 0,2 a 1 seconde
+mode image dans Il'image peut etre irréalisable a
+en cing increments. Pour re4venir a I'image normale,
+cause de la zone limite de propagationsur certains
+appuyez a nouveau sur I'interrupteur. L'indicateur a
+moniteurs de television.
+DEL s'éteint.
+16.InterrupteurON/OFFdestroboscopiedubusB
+(STROBE)-B
+Cet interrupteurestutilisepourobtenirlastroboscopie
+de I'image de bus B. Si vous appuyez une fois dessus,
+vous obtenez un effet stroboscopique sur Iimage de
+bus B tandis que I'indicateur a DEL sur l'interrupteur
+sera allume.L'intervalle de temps pour enregistrer
+le déroulement d'un mouvement peut etre modifie en
+eppuyant sur cet interrupteur en sequence. Le reglage
+est réalisable dans une plage de O,2 a 1 seconde en
+(3) Les fonctions de stroboscopie et d'image fixe ne
+cing increments.Pour revenir a I'image normale,appyez
+seront pas valides en meme temps que le mode
+a nouveau sur I'interrupteur. L'indicateur a DEL s'eteint.
+image dans I'image.
+17.InterrupteurON/OFFde mosaiquedubusA
+Selecteur de modeles de modulation d'image
+multiples (MULTI)
+(MOSAIC)-A
+Cet interrupteur est utilise pour obtenir un effet de
+Lorsque vous appuyez une fois sur ce sétecteur, les
+modeles de modulation d"image sont multipliés par
+mosaique sur l'image de bus A. En appuyant une fois sur
+quatre. Et si vous appuyez a nouveau, les modeles de
+cet interrupteur, on obtient alors un effet de mosaique
+modulation d'image sont multiplies par seize. La DEL
+sur I'image du bus A tandis que Il'indicateur a DEL sur
+s(allume quand le mode est selectionne. Elle s'eteint
+I'interrupteur sera allume. La taille de la mosaique peut
+lorsque ie selecteur est enfoncé trois fois en mode
+etre agrandie quatre fois en appuyant en sequence sur
+normal de modulation d'image.
+cet interrupteur.
+Commutateurdemodulationd'imagednasunsens
+L'effet de mosaique selectionne n'est
+(ONE-WAY)
+pas realise sur les bords gaucheet
+Lorsque vous appuyez sur ce commutateur,la DEL
+superieur.Il ne s'agit pas d'une panne
+s'allume et la direction de modulation d'image reste
+de I'équipement.Pour revenir a I'image
+identique sans tenir compte du changement de
+normale,appuyezanouveausur
+le
+directiondu commande de melange/modulation (45)
+sélecteur. L'indicateur a DEL s'éteint.
+10. Commutateur de modulation d'image en inversion
+(REVERSE)
+18.InterrupteurON/OFFdemosaiquedubusB
+Lorsque vous appuyez sur ce commutateur, la diode
+(MOSAIC)-B
+s'allume, la position des images modulees s'effectuera
+Cet interrupteur est utilise pour obtenir un effet de
+dans le sens inverse.
+mosaique sur I'image de bus B. En appuyant sur cet
+11.InterrupteurON/OFFd'effetnumeriquedubusA
+interrupteur une fois on obtient un effet de mosaique
+(ON)-A
+sur I'image du bus B tandis que I'indicateur a DEL. sur
+il s'agit de I'interrupteur de mise en/hors systeme du
+I'interrupteur sera allume. La taille de la mosaique peut
+bus A des effets numeriques tels la stroboscopie,
+I'image fixe, fa mosaique et ta peinture (STROBE, STILL,
+cet interrupteur.
+MOSAIC, PAINT).
+L'effet de mosaique selectionne n'est
+12.InterrupteurON/OFFdeI'effetnumeriquedubusB
+pas realise sur les bords gauche et
+(ON)-B
+superieur.Il ne s'agit pas d'une panne
+Il s'agit de I'interrupteur de mise en/hors systeme du
+de r'equipement.Pour revenir a I'image
+bus B des effets numeriques tels la stroboscopie,
+normale,appuyez a,nouveausur le
+I'image fixe,la mosaique et la peinture (STROBE, STILL,
+sélecteur. L'indicateur a DEL s'éteint.
+MOSAIC, PAINT).
+13.InterrupteurON/OFFd'imagefixedubuxA
+(STILL)-A
+Cet interrupteur est utitise pour geler I'image du bus
+ASi vous appuyez dessus une fois, I'image du bus
+A deviendra fixe et I'indicateur a DEL sera allume
+sur t'interrupteur. Pour revenir a une image“animee"
+appuyez a nouveau sur Il'interrupteur. L'indicateur a
+DEL s'éteint.
+-44-
+=== PAGE 46 ===
+19.InterrupteurON/OFFdepeinturedubusA
+28.Sélecteurde couleur blanche (WHITE)
+(PAINT)-A
+Ce commutateurestutilise pour selectionner la couleur
+Cet interrupteur est utilise pour obtenir un effet de
+blanche comme couleurdes titresde surimpression.
+peinture a I'huile sur l'image du bus A En appuyant
+une fois sur ce commutateur, un effet de peinture
+29. Sélecteur d'effet de titre (TITLE EFFECT)
+a huile est applique a I'image du bus A tandis que
+Sivous appuyez sur ce selecteur,les titres
+l'indicateur a DEL sera allume sur I'interrupteur. La
+surimpressiones changeront dans I'ordre qui suit:
+nuanc d'effet de peinture a I'huile peut étre modifiee
+en quatre incréments (de 2 bit a 5 bits) Pour revenir
+a limage normale, appuyez a nouveau sur le selecteur.
+Normal → Bord fin → Bord epais 
+L'indicateur a DEL s'eteint.
++ Ombre fine→ Ombre epaisse→ Ombredecaleevers lebas
+20. Interrupteur ON/OFF de peinture du bus B
+Normal
+Bord fin
+Bord epais
+(PAINT)-B
+A-A-A-
+Cet interrupteur est utilise pour obtenir un effet de
+peinture a I'huile sur I'image du bus B. En appuyant
+une fois sur ce commutateur, un effet de peinture
+a huile est applique a limage du bus B tandis que
+Ombre decalee
+I'indicateur a DEL sera allume sur I'interrupteur. La
+Ombreépaisse
+Ombre fine
+vers le bas
+nuance d'effet de peinture a I'huile peut étre modifiee
+en quatre incréments (de 1 bit a 4 bits). Pour revenir
+A-A-A
+a I'image normale, appuyez a nouveau sur le selecteur.
+L'indicateur a DEL s'eteint.
+21.0
+Commutateurd'inversion(REVERSE)
+Cecommutateurestutilise pour selectionner la polarite
+du signal fondamental de surimpression.
+Image originale
+Devient la couleur du titre
+30.Commandes de niveau fondamental (KEY LEVEL)
+Cette commande est utilisée pour régler le niveau de
+luminance du signal fondamental.
+31.Selecteur de sortie video d'enregistrement
+VIDEO
+VIDEO
+de bus A (REC VIDEOOUT/A)
+Ce Sélecteur est utilisé pour choisir I'image de bus A
+quand au signal de sortie video d'enregistrement. La
+DEL s'allume quand ce sélecteur est utilise.
+32.Selecteur de sortie video d'enregistrement
+Image surimpressionee de
+Image originale dans ie titre
+debusB(RECVIDEOOUT/B)
+titre
+Ce selecteur est utilise pour choisir limage de bus B
+quand au signal de sortie vidéo d'enregistrement. La
+DEL s'allume quand ce sélecteur est utilise.
+22.InterrrupteurON/OFFdesurimpression(ON)
+Il s'agit de l'interrupteur principal ON/OFF de lafonction
+33.Selecteurde sortie video d'enregistrement d'effet
+de surimpression.
+(RECVIDEOOUT/EFFECT)
+Ce Sélecteur est utilisépour choisir le signal
+Lorsqu'un effet de surimpression est
+d'effet(surimpression,melangeur/modulationou
+sélectionne, I'effet de surimpression ne
+fondu enchaine) quand au signal de sortie video
+se produit pas sur les bords gauche et
+superieur. li ne s'agit pas d'une panne de
+d'enregistrement d'effet. La DEL s'allume quand ce
+sélecteur est utilise.La DEL s'allume quand ce
+I'eequipement.
+sélecteur est utilisé.
+34. Selecteurde couleur(arriere-plan)
+23.Selecteurdecameraexterne (EXTCAMERA)
+(BACKCOLOUR)
+Cet interrupteur est utilisé pour selectionner une
+Ce Sélecteur est utilisé pour choisirla couleur du mode
+camera externe comme signai fondamental de l'effet
+de fermeture enfondu. La couleurest déterminee par le
+de surimpression.
+selecteur de couleur d'arriere-plan (5). La DEL s'allume
+quand ce selecteur est utilise.
+24.Selecateurde busA (A)
+Cet interrupteur est utilise pour sélectionner I'image
+35. Sélecteur de couleur (blanc) (WHITE)
+de bus A comme signal fondamental de I'effet de
+Ce selecteur est utilise pour choisir la couleur blanche
+surimpression.
+quand lafermeture enfondu de I'image est blanche.La
+DEL s'allume quand ce selecteur est utilise.
+25. Selecteur de bus B (B)
+36.Sélecteur de couleur (noir) (BLACK)
+de bus B comme signalfondamental de I'effet de
+Ce selecteur est utilise pour choisir la couleur noire
+surimpression.
+quand la fermeture de fondu de I'image est noire. La
+DEL sallume quand ce selecteur estutilisé.
+26.Indicateurdeniveauaudio (AUDIOLEVEL)
+Ces indicateurs a DEt montrent le niveau de sortie des
+canaux gauche et droit respectivement.
+27.Selecteur de couleur d'arriere-plan
+(BACKCOLOUR)
+Ce selecteurestutilisepour selectionnerlacouleurdes
+titres de surimpressionchoisie avec le commutateurde
+sélection de couleur d'arriere-plan (5).
+-45-
+=== PAGE 47 ===
+37.Selecteur d'ouvertureen fondu video (VIDEO)
+48.Selecteurde source2 (SOURCE2)debusA
+Lorsque ce seiecteur est sélectionne, Iimage apparait
+Ce selecteur est utilise pour affecter le signal video de
+progressivement. La DEL s'allume quand ce seiecteur
+source 2 a I'entrée de bus A. La DEL s'allume lorsque
+est utilise.
+ce sélecteur est utilise.
+38. Sélecteur d'ouverture en fondu de titre (TITLE)
+49.Selecteurde source2(SOURCE2)debusB
+Lorsque ce selecteur est selectionne, le titre apparait
+Ce sélecteur est utilisé pour affecter le signal video de
+progressivement. La DEl. s'allume quand ce seiecteur.
+source 2 a I'entrée de bus B. La DEL sallume lorsque
+est utilise.
+ce selecteur est utilisé.
+39,Levierde fondu enchaine (IN/OUT)
+50.Selecteurde source 1 (SOURCE1)debusA
+Lorsque ce levier est deplace de OuT_vers IN,
+Ce Selecteur est utilise pour affecter le signal video de
+I'apparitionprogressivede Iimage se produit.Dememe,
+source 1 a I'entrée de bus A. La DEL s'aliume lorsque
+la disparition progressive est réalisee en deplacant le
+ce selecteur est utilise.
+levier de IN vers OUT.
+51.Selecteurdesource1 (SOURCE1)debusB
+40.Commande de niveau principal audio
+Ce sélecteur est utilise pour affecter le signal video de
+(MASTER,MAX/MIN)
+source 1 a I'entree de bus B. La DEL s'aliume lorsque
+il s'agit de I'attenuateur general pour le melangeur
+ce selecteur est utilise.
+audio.
+52.Sélecteur de mode de melange (MiX)
+41.Commandedeniveaudemicro (MIC,MAX/MIN)
+Lorsque ce selecteur lest enfoncé, la DEL s'allume,le
+H s'agit de I'attenuateur pour le signal audiode
+mode MIX est selectionne dans MIX/WIPE EFFECT.
+microphone alimente aux connecteurs d'entree AUDiO
+53.
+IN (65) au panneau arriere.
+Selecteurde mode de modulationd'image (WiPE)
+Lorsque ce selecteur est enfonce, la DEL s'allume, ie
+42.Commande de niveau auxiliaire (AUX,MAX/MIN)
+mode WIPE est selectionne dans MIX/WIPE EFFECT.
+Il s'agit de I'attenuateur pour le signal audio auxiliaire
+Enappuyantsur ceselecteur,Il'imageestmoduleedans
+alimente aux connecteurs AUx AUDIO IN (65) au
+I'ordre suivant:
+panneauarriere.
++ Modulation normale→ Modulation de bordure
+43.Commandedeniveaudesource
+(SOURCE,MAX/MIN)
+Modulation douce 
+il s'agit de Fattenuateur general pour AUDlO 1 melange
+et le son AUDIO 2.
+Commandeaudio (AUDIO,1/2)
+Remarque:
+44.
+modulation
+Lorsque
+la
+debordure
+Cette commande est utilisee pour equilibrer le signal
+est
+séelectionnee, il est possible de colorer la bordure
+audio melange alimente au connecteur d'entree de
+SOURCE1(AUDIO1) et le signal alimente au
+avec le sélecteur de couleur d'arriere-plan (5).
+connecteur d'entrée de SOURCE 2 (AUDIO 2) au
+54.Positionneuracommutateuratige (POSITIONER)
+panneau arriere.
+La position du modele de modulation d'image (6) ou
+45.Commandedemelangeur/modulation
+par le sélecteur d'image dans t'image (7) peut se faire
+jibrement avec un interrupteur a tige.
+(VIDEO A, B)
+Le deplacement du levier de A aB dans ie mode de
+55.Connecteursaudiosource1
+modulation d'image augmente la portion de I'entree B
+(SOURCE1,AUDIO L/R)
+et vice-versa.Dans le mode melangeur, les images
+Les.signauxaudio6dBV/15kohms pour la
+vidéo sont commutees entre A et B.
+SOURCE1doivent etre appliqués a ces connecteurs
+46. Selecteurde couleurd'arriere-plande busA (BACK
+d'entree (IN), Lorsqu'un signal audio monophonique est
+alimente au canal gauche, ce signal sera distribue
+COLOUR)
+Ce sélecteur est utilisé pour affecter un signal de
+interieurement au canal droit.
+couleur d'arriere-plan a 'entree de lbus A. Le signal de
+couleur d'arriere-plan a I'entree de bus A. Le signal de
+56.Connecteurd'entreevideoY/Csource1
+couleur d'arriere-plan peut etre régle par le sélecteur
+(SOURCE1,Y/CIN)
+de couleur d'arriere-plan (5). La DEL s'allume lorsque
+Les signaux de luminance (Y) et de chrominance (C)
+ce selecteur (46) estutilise.
+en provenance dumagnetoscope ou duteléviseuren
+couleur sontfournis a ce connecteur.
+47.Selecteur de couleur d'arriere-plian de bus B
+Remarque:
+(BACKCOLOUR)
+L'entreeY/Capriorite surI'entreecompositedans
+Ce selecteur est utilise pour affecter un signal de
+le circuit.
+couleur d'arriere-plan a I'entree de bus B. Le signal de
+Quandle signalvideo et le signal video composite
+couleur d'arriere-plan peut etre regle par le selecteur
+sontdélivrés aux connecteursde la SOURCE1au
+de couleur d'arriere-plan (5). La DEL s'allume lorsque
+mememoment, seul le signal video Y/C entre dans
+ce selecteur (47) estutilisé.
+le circuit.
+Remarque:
+Lorsque le sélecteur de couleur noire du bus B
+(47)est seiectionne depuisle selecteurde source
+2 du bus B (49), la DEL sur le sélecteur de source
+2 du bus B clignote.
+Le clignotement vous avertit que 'I'image de
+la source 2 sera séiectionnee lorsque vous
+appuierez sur le selecteur de bus B (25).Cette
+procedure est valable lorsque le bus A our la
+source 1 est utilise.
+- 46 -
+=== PAGE 48 ===
+57.Connecteur d'entree video source1
+64.Connecteur d'entree de la camera externe
+(SOURCE 1,COMP.IN)
+videocomposite (EXT CAMERAINCOMP.)
+Un signal video compsoite de 1,o Vcc/75 ohms doit
+Pour le signal fondamental en mode de surimpression,
+etre delivre au connecteur d'entree (IN).
+ce connecteur accepte un signal video composite de
+Remarques:
+1,0Vcc/75ohms.La synchronisationexternen'estpas
+(1) Si le signal d'entree video ne correspond pas au
+necessairepour la camera.
+signal video standard couleur PAL ou N/B CCiR, il
+Remarque:
+peut se produire une erreur de synchronisation.
+Cette entree n'accepte que le signal de
+Si le rapport signal-bruit (S/B) d'entree est tres
+(2)
+camera video mais pas le signal de lecture de
+bas, I'image peut etre de qualite mediocre.
+magnetoscope.
+(3)
+Si le signai d'entree video est tres instable
+comme iorsque P'image est reproduits sur un
+65. Connecteurs d'entree audio auxiliaire
+magnetoscope, il peut se produire une erreur de
+(AUXAUDIOIN)
+synchronisation ou de couleur.
+Accepte un signal audio -6 dBV/15 kohms en
+provenance d'une source audio externe. Lorsqu'un
+58.Connecteur de sortie video source1
+signal audio monophinique est alimente au canal G, ce
+(SOURCE1,COMP.MONITOROUT)
+signal sera distribue interieurement au canal D.
+Un signal video composite de1,0 Vcc/75ohmssera
+delivre a ce connecteur dans une intention de controle
+66.Connecteurs de sortie audio d'enregistrement
+du signal d'entree video de la source 1.
+(AUDIO OUT 1, L/R)
+Les signaux audio de -6, dBV/1 kohm pour
+59. Connecteurs audio source2
+I'enregistrement sont alimentes a ces connecteurs.
+(SOURCE2,AUDIOL/R)
+Les signaux audio-6 dBv/15kohms pour la
+67.Connecteurde sortie video d'enregistrement Y/C
+SOURCE 2 doivent etre appliques a ces connecteurs
+(RECVIDEOOUT1,Y/C)
+d'entree (IN), Lorsqu'un signal audio monophonique est
+Les signaux de luminance (M) et de chrominance (C)
+alimente au canai gauche, ce signal sera distribue
+sont obtenus a partir de ce connecteur lorsque le
+interieurement au canal droit.
+signlai Y/C ou composite est alimente a la source1
+ou 2.
+60.Connecteur d'entree videoY/C source2
+(SOURCE2,Y/CIN)
+68.Connecteurs de sortie video d'enregistrement
+Les signaux de luminance (Y) et de chrominance (C)
+(RECVIDEOOUT1,COMP.)
+enprovenance dumagnetoscope ou duteleviseur en
+Un signalvideo composite de 1,0Vcc/75 ohms,
+couleur sontfournis a ce connecteur.
+sélectionne par lesseiecteurs de sortievideo
+Remarque:
+d'enregistrement (31), (32), (33), est delivre a ces
+L'entreeY/C a priorite sur I'entree compositedans
+connecteurs.
+le circuit.
+Quand le signal video et le signal video composite
+69.Connecteurs de sortie audio d'enregistrement
+sont delivres aux connecteurs de la SOURCE2 au
+(AUDIOOUT2, L/R)
+meme moment, seul le signal video Y/C entre dans
+Les signaux audio de -6, dBV/1 kohm pour
+le circuit.
+I'enregistrement sont alimentes a ces connecteurs.
+61.Connecteur d'entree vidéo source2
+70.Connecteur de sortie video d'enregistrement Y/C
+(SOURCE2,COMP.IN)
+(RECVIDEOOUT2,Y/C)
+Le connecteur tN accepte un signal vidéo composite
+Les signaux de luminance (M) et de chrominance (C)
+de 1,0 Vcc/75 ohms.
+sont obtenus a partir de ce connecteur lorsque le
+Remarques:
+signal Y/C ou composite est afimente a la source 1
+(1) Si le signal d'entree video ne correspond pas au
+ou2.
+signal video standard couleur PAL ouN/B CCIR, il
+peut se produire une erreur de synchronisation.
+71. Connecteurs de sortie video d'enregistrement
+(2)
+Si le rapport signal-bruit (S/B) d'entree est tres
+(REC VIDEOOUT2,COMP.)
+bas, Iimage peut etre de qualite mediocre.
+Un signal video composite de 1,oVcc/75ohms,
+(3)
+Si te signai d'entree video est tres instable
+selectionne par les selecteurs de sortievideo
+comme lorsque Iimage est reproduits sur un
+d'enregistrement (31), (32), (33), est delivre a ces
+magnetoscope, il peut se produire une erreur de
+connecteurs.
+synchronisation ou de couleur.
+72.Connecteur de sortie d'image-temoin
+62.Connecteur de sortie video source2
+(PREVIEWOUT)
+(SOURCE2,COMP.MONITOROUT)
+Unsignaivideo.composite_de_1,0.Vcc/75.ohms
+Un signal video compositede 1,o Vcc/75ohms sera
+dimage de tous les effets (EFFECTS) est delivré a
+delivré a ce connecteur dans une intention de controle
+ce connecteur.
+du signal d'entree video de la source 2.
+73.Cordond'alimentation
+63.Connecteur d'entrée de camera externe Y/C
+(EXT CAMERA IN Y/C)
+Les signaux de luminance (M) et de chrominance (C)
+en provenance du magnetoscope oudu televiseur en
+couleur sont fournis a ce connecteur.
+Remarque:
+1.
+L'entree Y/C a priorite sur'entree composite dans
+le circuit.
+Quand le signal video et le signal video composite
+sont delivres aux connecteurs de la SOURCE 2
+au meme moment, seul le Isignal video Y/C entre
+dans le circuit.
+2.
+Cette entree n'accepte que le signal de
+camera video mais pas le signal de lecture de
+magnetoscope.
+- 47 -
+=== PAGE 49 ===
+CONNEXIONSDUSYSTEME
+Precaution:
+L'interrupteur d'alimentation POWER ON/OFF doit etre hors tension (OFF) pendant ia procedure des connexions.
+1.
+Raccordez le cable coaxial avec les connecteurs BNC entre la sortie video dumagnetoscope, du lecteur de disque video,
+la sortie du syntoniseur de televiseur ou de la camera video et le connecteur SOURCE 1 COMP.IN sur la camera video et
+le connecteur SOuRCE1 COMP.IN sur lepanneau arriere dumelangeur audio/video numerique ouraccordez le cableY/C
+(a 4 broches) entre le magnetoscope et le connecteur d'entree video SOURCE 1 Y/C sur le panneau arriere du melangeur
+audio/vidéo numerique.
+2.
+Raccordez ie cable audio avec la prise a broches entre la sortie audio du magnetoscope, du lecteur de disque video, la sortie
+du syntoniseur de televiseur ou de la camera et le connecteur SOURCE 1 AUDIO IN sur le panneau arriere du melangeur
+audio/video numerique.
+3.
+Raccordez le cable coaxial ou le cable (a quatre broches) et le cable audio pour les entrees de la SOURCE 2 du melangeur
+audio/video numerique de la meme maniere qu'aux phases 1.et 2 ci-dessus.
+4.
+Raccordez le cable coaxial avec les connecteurs BNC entre la sortie video de la camera externe (camera N/B ou couleur
+pour surimpression) et le connecteur EXT CAMERA iN du melangeur audio/video numerique.
+5.
+Si vous utilisez le generateur de caractere WV-KB12 ou WJ-TTL5 (vendu separement),raccordez le connecteur de cable a
+6.
+Si la source audio auxiliaire est requise,raccordez le cable audio avec la prise a broches entre la sortie audio de la source
+audio (leceur CD,tecteur decassette ou iecteur de disques)et les connecteurs AUx IN dumelangeuraudio/video numerique.
+7.
+Si necessaire,raccordez le cable de microphone avec une fiche phone a douilleabagu et pointe oude typea douille a pointe
+au connecteur d'entre MiC du melangeuraudio/videonumerique.
+8.
+Pour visualiser Il'image temoin, raccordez le cable coaxial avec les connecteurs BNC entre le connecteur PREVIEW OuT du
+melangeur audio/video numerique et le connecteur ViDEO IN d'un moniteur video.
+9.
+Pour enregistrer,raccordezle cable coaxial avec les connecteurs BNC (cableY/C)entreles connecteurs REC ViDEOOUT
+du melangeur audio/video numerique et les connecteurs VIDEo iN du magnetoscope et du moniteur video.
+10.
+Pour enregistrer, raccordez le cable audio avec la prise a broches entre les connecteurs REc AUDiO OUT du melangeur
+audio/video numerique.
+Magnetoscope/lecteur de
+Televiseur
+Lecteur de disque
+audionumerique
+couleur
+disque video
+Moniteur video
+VIDEO
+or
+VIDEO
+AUDIO
+G (L)
+D (R)
+SOURCE1
+AUX AUDIO
+PREVIEWOUT
+Moniteur
+audio video
+SOURCE2
+Camera video
+REC OUT
+VIDEO
+Adaptateur CA
+Magnetoscope
+VIDEO
+AUDIO
+AUDIO
+REC OUT
+VIDEO
+AUDIO
+EXT CAMERA IN
+Magnetoscope
+VIDEOOUT
+Generateur de caractere
+Camera externe
+MIC
+WV-KB12
+WJ-TTL5
+Connexionsdusysteme
+- 48 -
+=== PAGE 50 ===
+PROCEDED'OPERATION
+Procédez a toutes les connexions necessaires.
+1.
+L'indicateur a DEL du selecteur de fondu vidéo (37) doit
+Mettre le melangeur audio/video numerique sous
+2.
+etre éteint.
+tension (ON)ainsi'que tous les autres appareils
+raccordes.
+Actionnez le commande de melangeur/modulation (45)
+Preparez le scenario du programme.
+3.
+de A vers B et vice-versa.
+4.
+Preparez toutes les cartes de titre necessaires.
+Remarque:
+Les cartes de titre avec lettres noires sur fond
+blanc ou avec lettres blanches sur fond noir
+Bus A
+peuvent etre utitisees en surimpression.
+5.
+Mémorisez tous les titres a surimprimer dans le
+generateur de caractere WV-KB12/WJ-TTL5 en
+consultant le mode d'emploi du WV-KB12/WJ-TTL5.
+SCENE 1: ENTREEA
+A.MODEDEMODULATION
+D'IMAGE,D'EFFETDEMELANGEUR/
+MODULATION(ModeWIPE,
+MIX/WIPEEFFECT)
+Bus A et bus B
+SCENE1et SCENE2
+IPEMODE
+MULTI
+Bus B
+SCENE 2: ENTREE B
+MIX WIPEEFFECT
+2.
+EFFETDEMODULATIOND'IMAGE
+Appuyez
+sur
+sélecteur
+sortie
+le
+de
+video
+d'enregistrement d'effet (33).
+Appuyez sur le selecteur de mode de modulation
+SOURCE
+SOURCE
+d'image (53).
+COLOUR
+BACK
+WIPE
+Choisissez le mode de modulation d'image desire des
+selecteurs de modele de modulation d'image (6).
+Referez-vous autableau desmodeies page 43 pourles
+combinaisons de selecteurs de modeles de modulation
+d'image (6).
+Sélectionnez le signal de source du bus A et du bus B
+50
+46
+delaSOURCE1,laSOURCE2ouBACKCOLOUR.
+49
+Si foptioncouleurd'arriere-planestchoisie,
+53
+52
+45
+positionnez le selecteur de couleur d'arriere-plan (5)
+sur la couleur desiree.
+L'indicateur a DEL du sélecteur de fondu vidéo (37) doit
+de
+Appuyezsur
+leseélecteur
+sortie
+video
+etre éteint.
+d'enregistrement d'effet (33).
+Actionnez le commande de melangeur/modulation (45)
+de A vers B et vice-versa.
+EFFET DE MELANGE (MIX)
+Appuyez sur le selecteur de mode de melange (52).
+Selectionnez le signal de source du bus A et du bus B
+delaSOURCE1,laSOURCE2ouBACKCOLOUR
+Si I'option couleurd'arriere-plan est choisie,
+positionnez le sélecteur de couleur d'arriere-plan (5)
+sur la couleur desirée.
+49-
+=== PAGE 51 ===
+Lorsque vous faites passer le selecteur surla position
+A dans cette condition, la taille de Iimage B inseree
+est inversee avec celle de i'image du bus A, comme
+representesurIl'llustration.
+Bus A
+Entree A
+Appuyez a nouveau sur le selecteur d'image dans
+1'image (7)pour obtenir une image d"/16 de format
+a insérer.
+Bus Aet bus B
+Image modulee
+La position des images d'1/4 ou d'1/16 de format peut
+etreregleelibrementavec lepositionneura interrupteur
+a tige (54).
+Remarques:
+(1)Lorsqu'une imaged'1/4 ou d'1/16de format est
+placee contre ia bordure gauche, le mode image
+dans I'image peut etre invalide dans la zone
+Bus B
+marginal de certains moniteur de television.
+Entree B
+MODULATION IMAGE DANS L'IMAGE (P-IN-P)
+(2) L'image inséree peut
+surleselecteurdesortievideo
+Appuyez
+étre divisee en deux
+d'enregistrement d'effet (33).
+horizontalementselon
+position de I'image
+inseree.
+Appuyez sur le selecteur de mode de modulation
+d'image (53).
+Selectionnez le signal de source du bus A et du bus B
+delaSOURCE1,la SOURCE2ouBACKCOLOUR.
+Si I'option couleur d'arriere-plan est choisie,
+positionnez le selecteur de couleur d'arriere-plan (5)
+sur la couleur désiree.
+L'indicateur a DEL du selecteur de fondu video (37) doit
+(3)Dans le cas ou I'image de bus B est inseree dans
+etre éteint.
+I'image de bus A et,
+1) torsquelesélecteur desortievidéo
+Appuyez sur le sélecteur d'image dans I'image (7).
+d'enregistrement de bus A (31) est enfonce
+Lorsque le selecteur est enfonce une fois et
+seule Il'image du bus A sera sortie.
+2)
+lorsquelesélecteurdesortie
+lecommande demelangeur/modulation (45)est
+video
+positionne sur B, une image de bus B d"/4 de format
+d'enregistrement de bus B (32) est enfonce,
+I'image de bus B inseree sur arriere-plan noir
+sera insere dans I'image de bus A comme represente
+sur I'illustration.
+sera sortie.
+Remarque
+Les fonctions de stroboscopie et d'image fixe ne
+seront pas valides en meme temps que le mode
+image dans I'image.
+50
+=== PAGE 52 ===
+ModulationMULIPLE (MULTIWipe)
+6.ModulationUNILATERALE(ONEWAY)
+Appuyezsurlesélecteur
+video
+de
+sortie
+Lorsque ce selecteur est enfonce, la direction de
+d'enregistrement d'effet (33).
+modulation reste identique quelle que soit la direction
+de deplacement du levier de melangeur/modulation.
+Appuyez sur le selecteur de mode de modulation
+dimage (53).
+Sélectionnez le signal de source du bus A et du bus B
+delaSOURCE1,ia SOURCE2ouBACK COLOUR.
+Si t'option couleurd'arriere-planest choisie,
+positionnez le sélecteur de couleur d'arriere-plan (5)
+sur la couleur desiree.
+L'indicateur a DEL du selecteur de fondu video (37) doit
+étreéteint.
+Choisissez le modele de modulation dimage desire a
+t'aide du selecteur de modele de modulation d'image
+(6).
+7.
+MOREDEMODULATION(WIPE)
+Il ya un choix de modulations d'image allant de la modulation
+douce a la modulationde bordure.
+Puis, appuyez une fois sur le sélecteur de modele
+Appuyez deux fois sur le selecteur de mode de
+de modulation multiple (8) pour obtenir un modele de
+moduiation(53)pourobtenirunebordureannulee/large.
+modulation multiplie par quatre.
+Un choix de couleur pour la bordure est disponible a
+partir du selecteur de couleur d'arriere-plan (5).
+Appuyez sur le selecteur (53) une troisieme fois pour
+obtenir une bordure attenuee. Pour revenir au mode
+normal de modulation,appuyez sur ce selecteur (53) a
+nouveau.
+8.
+Si le sélecteur (8)estsélectionne a nouveau,unmodele
+Application
+de modulation multiplie par seize est affiche.
+8-1.Modulation de coupure
+sur
+le
+selecteur
+Appuyez
+sortie
+de
+video
+d'enregistrement d'effet (33).
+Appuyez sur le sélecteur de mode de modulation
+d'image (53).
+Selectionnez le signal de source du bus A et du bus B
+delaSOURCE1,laSOURCE2ouBACKCOLOUR
+Si I'option couleur d'arriere-plan est choisie,
+ModulationINVERSE
+5.
+positionnez le sélecteur de couleur d'arriere-plian (5)
+surla couleur désirée.
+Lorsque ce selecteur est enfoncé, la position des
+images modulees est inversee.
+L'indicateur a DEL du sélecteur defondu video (37) doit
+etre éteint.
+Ne choisissez pas de modele de modulationa partir du
+selecteur de modele de modulation (6).
+Faireglisser le levier demelange/modulation (45) vers
+lehaut et le bas pres de la position centrale.L'image
+de bus A et P'image de bus B apparaitront a tour de role.
+-51-
+=== PAGE 53 ===
+Remarque:
+Lorsque le seiecteur de modulation multiple (8) est
+pressé 2 fois, une image d'1/16 de format est alors
+réalisee.
+AB
+Observations:
+(1) Lorsque le selecteur de couleur d'arriere-plan de
+bus B (47)est choisie avec le sélecteur de source
+2 de bus B (49), la DEL sur le seiecteur de source
+8-2. Modulation de coupures multiples
+2 de bus B (49) clignote.
+Ce clignotement indique que r'image de la source
+sortie
+video
+lesélecteur
+2 sera selectionnee quand I'interrupteur ON/OFF
+Appuyezsur
+d'enregistrement d'effet (33).
+du bus B (25)est enfonce. La meme procédure se
+produit quand la source 1 de bus A est utilisee.
+(2)
+Appuyez sur le selecteur de mode de modulation
+Lorsque rinterrupteur ON/OFF de gel du bus B
+d'image (53)
+(14) est enfoncé quand le sélecteur de source 2
+de bus B (49) a éte choisi, le selecteur de source
+Sélectionnez le signal de source du bus A et du bus B
+1debus B (51)ne fonctionnera pas.Lameme
+delaSOURCE1,taSOURCE2ouBACKCOLOUR.
+procedure se produit quand la source 1 ou le bus
+Si I'option couleur d'arriere-plan est choisie,
+Aest utilise.
+positionnez le seiecteur de couleur d'arriere-plan (5)
+sur la couleur desiree.
+L'indicateur a DEL du sélecteur de fondu video (37)doit
+B.EFFETSNUMERIQUES
+etre éteint.
+Ne choisissez pas de modele de modulation a partir du
+19
+sélecteur de modele de modulation (6).
+20
+Appuyez une fois sur le selecteur de modulation
+multiple (8).
+Faitesglisser
+doucementle
+commande
+de
+melangeur/modulation (45) de la position Avers B.Une
+image de bus A d'1/4 de format apparaitra comme
+represente sur I'llustration.
+CON
+STILA
+MOSAIC
+STROBE
+PAINT
+Les effets suivants sont expliques pour Pimage du bus A en
+tant qu'exemple.
+(1)
+Appuyez sur le sélecteur de mode de mélangeur (52).
+(2)
+Appuyez sur le sélecteur d'entree de bus A (50).
+(3)
+Faites glisser le commande de melangeur/modulation
+(45) sur la position A.
+(4)
+Appuyez surF'interrupteurON/OFFd'effetsnumeriques
+(11).
+sortie
+(5)
+Appuyezsurlesélecteur
+de
+video
+d'enregistrement d'effet (33).
+IMAGEFIXE (STILL)
+Appuyez sur I'interrupteur ON/OFF de gel du bus B (13)
+une fois pour geler l'image. La DEL s'allume.
+52
+=== PAGE 54 ===
+4.PEINTURE (PAINT)
+Appuyez sur l'interrupteur ON/OFF de peinture (19)
+pour obtenir un effet de touche de peinture a I'huile sur
+I'image.
+ANIME
+FIXE
+Pour revenir a une image animee, appuyez sur
+I'interrupteur ON/OFF de gel du bus B (13) a nouveau.
+La DEL's'eteint.
+EFFETDEPEINTURE
+EFFETDEPEINTUREENSYSTEME
+HORS SYSTEME
+(NIVEAU PEINTURE ELEVE)
+La graduation de I'effet de peinture peut etre changee
+EFFETSTROBOSCOPIQUE(STROBE)
+par quatre fois en appuyant autant de fois sur
+I'interrupteur.
+Appuyez sur I'interrupteur ON/OFF de stroboscopie
+(15) pour obtenir des effets stroboscopiques. (Cette
+fonction peut étre encore mieux apréciee avec des
+images gelees decomposees en mouvements lents a
+intervalles de 0,2 a 1 seconde.
+L'intervalle de stroboscopie change en appuyant sur
+cet interrupteur comme suit.
+BAS
+ELEVE
+Premiere fois - 0,2 s, deuxieme fois - 0,4 s,
+troisieme fois - 0.6 s.
+Pour revenir a I'image normale, appuyez sur cet
+Quatrieme fois - 0.8 s, cinquieme fois - 1,0 s. (la
+interrupteur une cinquieme fois.
+duree est approximative).
+5.
+APPLICATIONS
+5-1
+Sélectionnez le sélecteur de source 1 de bus A (50) et
+le selecteur de source1 Ibus B (51).
+L'effet stroboscopique reviendra au mode normal,
+Appuyez sur le selecteur de mode de melangeur (52)
+l'image animee, quand cet interrupteur est presse une
+sixieme fois.
+Appuyez sur I'interrupteur ON/OFFd'effet numeprique
+de bus B (12) et sur 'interrupteur ON/OFF d'effet
+stroboscopique (16).
+3.
+MOSAIQUE
+Deplacezle commande demelangeur/modulation (45)
+Appuyez sur I'interrupteur ON/OFF de mosaique (17)
+sur la position centrale pour obtenir un effet de
+pour obtenir un effet d'image en mosaique.
+remanence.
+ANIME
+La dimension des rectangles peut étre agrandie
+quatre fois en appuyant le meme nombre de fois sur
+'interrupteur.
+REMANENCE
+GRANDEMOSAIQUE
+PETITEMOSAIQUE
+Pour revenir a I'image normale, appuyez sur cet
+interrupteurune cinquieme fois.
+STROBOSCOPIE
+53
+=== PAGE 55 ===
+de
+sortie
+Appuyez
+sur
+le
+sélecteur
+(1)
+5-2
+video
+Appuyez surlinterrupteur ON/OFF de mosaique de bus
+d'enregistrement d'effet (33).
+B (18) et reglez la tailie des rectangles en appuyant sur
+(2)
+I'interrupteur (18) le nombre de fois necessaire.
+Appuyez sur le selecteur de mode de modulation
+d'image (53).
+Sélectionnez limage d'arriere-plan.
+(3)
+Appuyez sur le selecteur de mode de modulation
+Positionner le
+d'image (53).
+commande demélangeur/modulation (45)sur la
+position la plus basse (B)pouravoir I'image du bus Ben
+Avec le selecteur de mode de modulation d'image,
+arriere-plan ou la position la plus elevee (A)pouravoir
+choisissez la modulation circulaire ou carree (6).
+I'image du bus A en arriere-plan. L'image darriere-plan
+peut etre sélectionnee a partir de la SOURCE 1, la
+Actionnezlecommandedemelangeur/modulation (45)
+SOURCE2ou BACK COLOUR surlapositionbusAou
+pour obtenir la taille de modulation desiree.
+bus B au choix.
+(4)
+Selectionnez la source I'image fondamentale (celle a
+surimprimer) en appuyant sur I'un des selecteurs de
+source de surimpression (23), (24), (25).
+Remarque:
+Si vous utilisez le generateur de caractere,
+raccordez-le sur le connecteur d'entree de titre
+(2),
+(5)
+Lorsque vous desirez obtenir la fonction BACK
+Actionner le positionneur a interrupteur a tige (54)pour
+COLOUR, reglez le seiecteur de couleur d'arriere-plan
+determiner la position de modulation sur I'écran.
+(27) sur la couleur desiree ou Iimage blanche (28).
+Choisissez la couieur en utilisant le selecteur BACK
+COLOUR (5),
+Precaution:
+N'appuyez pas simulitaneement sur le selecteur
+BACK COLOUR (27) pour le bus A (bus B) et sur
+lesélecteurBACKCOLOURpourla fonctionde
+surimpression.
+(6) Appuyez sur IinterrupteurON/OFFde surimpression
+(22) une fois pour entrer la fonction.
+Observation:
+Lorsque le selecteur de couleur d'arriere-plan de
+C.EFFETDESURIMPRESSIONET
+bus B (47)est choisie avec le sélecteur de source
+COULEURD'ARRIERE-PLAN
+2 de bus B (49), ia DEL sur le selecteur de source
+2 de bus B (49) clignote.
+Ce clignotement indique que f'image de la source
+28
+23
+25
+2 sera selectionnée quand I'interrupteur ON/OFF
+du bus B (25) est enfonce. La meme procédure se
+22
+24
+27
+produit quand la source 1 de bus A est utilisee.
+OLOUR
+1.
+Surimpressionparlacamera
+Raccorder par cable la camera et le connecteur
+d'entree de camera externe de video composite (64)
+ou le connecteur d'entréedecaméraexterne Y/C (63).
+Dirigez la camera sur une image ou un panneau.
+TITLE
+Appuyez sur I'interrupteur ON/OFF EXT CAMERA (23).
+Totut en observant I'image sur le moniteur video, qui
+est raccorde au connecteur de sortie de visualisation
+29
+dimage-temoin (72), reglez le niveau fondamental
+(30) jusqu'a ce qu'une image claire surimprimee soit
+obtenue.
+Lorsque vous écrivez une carte de titre en lettres
+blanches sur arriere-plan noir,faites glisser la
+commande de niveau fondamental a la position
+superieure.
+LEVEL
+KEY
+VIDEO
+CARTE DE TITRE
+=== PAGE 56 ===
+Lorsque vous ecrivez une carte detitre en lettres noires
+D.COMMANDEDEFONDUENCHAINE
+sur arriere-plan blanc, faites glisser la commande de
+niveau fondamental a la position inferieure.
+3FADECONTROL
+KEY
+LEVEL
+COLOUR SELECT
+VIDEO
+BACK COLOUR
+34
+VIDEO
+TITLE
+35
+CARTE DE TITRE
+BLACK
+Remarque:
+36
+Lorsque le generateur de caractere WV-KB12 ou
+WJ-TTL5 en option est utilise seulement pour la
+OUT
+surimpression, reglez le niveau fondamental (30)
+au plus bas.
+39
+3837
+2.
+EFFETINVERSE (REVERSE)
+Selectionnez la polarite du signal fondamental a
+surimpressionner en appuyant sur le commutateur
+d'inversion (21).
+(1)Appuyezsurlesélecteur
+sortie
+de
+video
+Image originale
+Devient la couleur du titre
+d'enregistrement d'effet (33).
+(2)
+Appuyez sur le selecteur de mode de modulation
+d'image (53).
+VIDEQ
+VIDEO
+(3) Choisissez le signal de source pour le bus A et le
+bus Bapartir de SOURCE 1, SOURCE 2 ou de BACK
+COLOUR.
+Lorsque vous optez pour la couleur d'arriere-plan,
+regler le sélecteur decouleur d'arriere-plan sur la
+Image surimpressionnee de
+image originale dans le titre
+titre
+couleur désirée.
+Effet de titre
+3.
+Fondu enchaine
+Lorsque vous le desirez, vous pouvez renforcer les
+Choisir la combinaison des selecteurs (37) et (38) selon
+bords d'un titre en appuyant piusieurs fois sur le
+que I'image et le titre seront ouverts ou fermes en
+commutateur d'effet de titre (29)
+fondu ou que seule I'image ou seul le titre le seront. Le
+L'effet sur I'image sera comme represente ci-dessous.
+tableau suivant indique les selecteurs a utiliser.
+VIDEO
++Normale→ Board fin → Bord epais →
+TITRE
++Ombre fine→Ombreepaisse→Ombredecalee
+Fondu VIDEO
+NO
+vers le bas
+OFF
+Fondu de TITRE
+NO
+Bord fin
+Normal
+Bord epais
+A-A-A-
+ON
+Fondu VIDEO et TITRE
+NO
+Lorsque VIDEO (37) est enfoncé, le moniteur offre le
+Ombredecalee
+choix entre BACK COLOUR (34), WHITE (35) ou BLACK
+Ombre fine
+Ombre epaisse
+vers le bas
+(36).
+A-A-A
+Si BACK COLOURa éte selectionnee, choisirla couleur
+desiree avec le selecteur de couleur d'arriere-plan (5).
+Faites glisser le levier de fondu (39) de IN vers OUT et
+vice-versa.
+Remarque:
+(1) Les titres surimpressionnes par le generateur de
+caracterepeuvent étre colorées.
+Appuyez sur
+le commutateur de couleur d'arriere-plan (27) et
+choisissesla couleuravec le sélecteurde couleur
+d'arriere-plan (5).
+(2)
+Lorsquevous appuyez sur le commutateur
+decouleurblanche(28)pourlestitres
+surimpressionnes par le generateur de caractere,
+le bord des caracteres peut étre colore avec le
+selecteur de couleur d'arriere-plan (5).
+- 55 -
+=== PAGE 57 ===
+L'illustration suivante représente le schema synoptique du
+circuit de la secion audio.
+BALANCE
+AUDIO
+SOURCE10
+AUDIO1
+L.R
+MAX
+REC
+MIN
+L.R
+SOURCE20
+AUDIO2
+L.R
+Permeture
+Ouverture
+MASTER
+en fondu
+en fondu
+AUX
+AUX
+AUDI0
+I MAX
+L.R
+MIN
+MIC
+MIC
+(MONO)
+MAX
+OUT
+MIN
+Couleur
+darriere-
+plan
+Pour enregistrer ie signal audio de SOURCE 1, regiez
+Blanc
+la commande audio (44) sur la position finaleAudio 1"
+Noir
+et reglez le niveau audio en actionnant la commande
+de levier de source (43).
+ino
+Pourmelanger les signaux audio de la SOURCE1et
+de ia SOURCE 2, reglez la commande audio (44)
+Pour melanger le signal audio auxiliaire pour
+E.MELANGEURAUDIO
+I'enregistrement, reglez la commande de niveau Aux
+(42).
+AUDIOMIXER
+AUDIO
+MASTER
+Pour melanger le signal de microphone lors de
+I'enregistrement, reglez la commande de niveau MiC
+SOURCE
+(41).
+Pour ouvrir ou fermer en fondu le signal audio,reglez la
+commande de niveau principal (MASTER) (40).
+44
+43
+42
+4D
+40
+- 56 -
+=== PAGE 58 ===
+FICHETECHNIQUE
+Entrée de source:
+X2 (SOURCE 1et SOURCE2)
+Entree video:
+1,oVcc/75ohms,signalcompositePAL,connecteursBNC
+Entree Y/C:
+Signai Y; 1 Vcc, signal C; 0,3 Vcc,75 ohms, mini connecteur DiN a 4 broches
+Entree audio:
+6 dBV/15 kohms, prise a broche (gauche, droite)
+Entree camera externe:
+1,0Vcc/75ohms,signalcompositeCCIRouPAL,connecteur BNC×1
+Sortie d'enregistrement:
+X2 (REC OUT 1 et REC OUT2)
+Sortie video:
+1,oVcc/75ohms,signal compositePAL,connecteursBNC
+Sortie Y/C:
+Signal Y; 1 Vcc, signal C; 0,3 Vcc,75ohms,mini connecteur DiN a 4 broches
+Sortie audio:
+--6 dBV/1 kohms, prise a broche (gauche, droite)
+Sortie video d'image-temoin:
+1,0 Vcc/75 ohms, signal composite PAL, connecteur BNC ×f
+Sortie moniteur:
+×2 (MONITEUROUT1etMONITEUROUT2)1,0Vcc/75ohms, signalcomposite
+PAL, connecteur BNC
+Entree sonore externe:
+Entree MIC (mono):
+-60 dBV/600 ohms,asymetrique, prise phono du type douille-bague-pointe ×1
+Entree AUX:
+-6dBV/15kohms,priseabroche (gauche,droite)
+Entrée de caractere (TITRE):
+Connecteur a 10 broches ×1 pour le generateur de caractere WV-KB12 ou
+WJ-TTL5 en option
+Effets:
+Video:
+Image fixe, stroboscopie,mosaique, peinture a I'huile, melangeur, modulation
+d'image, surimpression, ouverture/fermeture en fondu
+Audio:
+Mélangeur, fondu enchaune
+Couleurs d'arriere-plan:
+Blanc, jaune, cyan, vert, magenta, rouge, bleu, noir
+Modeles de modulation d'image:
+98modeles
+Autres:
+P-IN-P, MULTI, ONE-WAY, REVERSE
+Gain:
+Unité (video)
+Rapport signal/bruit (typique):
+Video: 45 dB (Composite), 45 dB (Y/C)
+Audio: 60 dB
+Alimentation:
+240 V secteur,50 Hz pour le WJ-AVE5/A et le WJ-AVE5/B, 220 V secteur, 50
+Hz pourleWJ-AVE5/G
+Consommation:
+13W
+Temperature ambiante:
+0°-40°C
+Humidite ambiante:
+Inferieure a 90%
+Dimensions:;
+420(L) × 70(H) × 280(P) mm
+Poids:
+2,8 kg
+Lepoids et lesdimensions sont approximatifs.
+Sous réserve de modifications sans preavis.
+ACCESSOIREENOPTION
+Générateur de caractere WV-KB12,WJ-TTL5
+- 57 -
+=== PAGE 59 ===
+VERSIONE ITALIANA
+(ITALIAN VERSION)
+SOMMARIO
+Pagina
+PREFAZIONE
+59
+CARATTERISTICHE
+59
+PRECAUZIONI
+60
+COMANDIELORO FUNZIONI
+61
+CONNESSIONIDELSISTEMA
+67
+PROCEDUREDIFUNZIONAMENTO
+68
+A.
+EFFETTO MIX/WIPE,MODO WIPE
+68
+B.
+EFFETTO DIGITALE
+EFFETTODISOVRAPPOSIZIONEECOLOREDIFONDO
+C.
+73
+CONTROLLODIDISSOLVENZA
+D.
+74
+E.
+MIXERAUDIO
+75
+DATITECNICI
+76
+ACCESSORIOPZIONALI
+76
+La Societa PANASONIC ITALIA S.pA, importatrice di questo
+CAUTION
+prodotto, dichiara che questo apprarecchio e conforme alle
+RISK OF ELECTRIC SHOCK
+disposizioni della direttiva C.E.E./87/308 (D.M.13 aprile 1989)
+DO NOT OPEN
+li punto esclamativo allinterno del
+triangolo equilatero e inteso ad avver-
+AVVERTIMENTO:
+tire I'utente della presenza di importanti
+PER EVITARE IL PERICOLD DI SCOSSE NON
+istruzioni sull'uso e la manutenzione
+TOGLIERE IL COPERCHIO (O LA PARTE POSTE-
+(servizio) nella pubblicazione che
+RIORE).ALL'INTERNO NON CI SONO PARTI CHE
+RICHIEDONO L'INTERVENTO DELL'UTENTE.
+accompagna I'apparecchio.
+PER QUALSIASI RIPARAZIONE RIVOLGERSI A
+PERSONALE TECNICO QUALIFICATO.
+Il numero di serie di questo apparecchio si trova sul
+coperchio inferiore dello stesso.
+H fulmine con punta a freccia all'interno
+E buona norma scrivere il numero di serie dell'appa-
+del triangolo equilatero e inteso ad
+recchio acquistato nello spazioprevistoqui sotto,in
+avvertire I'utente della presenza
+modo da avere sempre la possibilita di identificarlo ra-
+allinterno dell'apparecchio di una"ten-
+pidamente in ogni evenienza.
+sione pericolosa" non isolata d'am-
+ITALIANO
+piezza sufficiente a costituire un peri-
+Numero di modello:
+colo di scossa elettrica.
+Numero di serie:
+ATTENZIONE:
+PER EVITAREPERICOLID'INCENDIO EDANNI,NON ESPORREQUESTO APPARECCHIO.ALLA PIOG-
+GIA O ALL'UMIDITA.
+- 58 -
+=== PAGE 60 ===
+PREFAZIONE
+QuestoMixerAVDigitaleWJ-AVE5Panasoniceprogettato
+A tale scopo, quest aparecchio'e dotato di varie funzioni,
+per la riproduzione delle immagini video con fimpiego della
+come il mixaggio dei segnali video o audio, I'effetto digitale,
+tecnologia d'elaborazione digitale.
+la sovrapposizione, la dissolvenza, e tante altre.
+Questo Mixer Av Digitale permette una sofisticata
+programmazione audio e video.
+CARATTERISTICHE
+SINCRONIZZATOREDEIDIGITALE
+FUNZIONEFADE
+INCORPORATO
+La dissolvenza in apertura e in chiusura del video
+Questo sincronizzatore dei digitale incorporato
+e dei titoli puo essere operata separatamente o in
+permette il mixaggio video di due qualunque sorgenti
+combinazione, secondo i requisiti di produzione del
+video di standard PAL.
+nastro video.
+EFFETTISPECIALI- MOSAICO,PITTURA,FERMO
+TITOLOVIDEO
+IMMAGINE,STROBO
+Questo Mixer Av Digitale e progettato per il
+La memoria dei digitale incorporata permette di usare
+colegamento del Generatore di Caratteri WV-KB12
+effetti video speciali per la massima varieta della
+o WJ-TTL5, di tipo a tastiera, opzionali. Esso permette
+creativita video.
+la creazione veloce e facile dei titoli ed e dotato di
+una memoria di otto pagine per il WV-KB12 e di dieci
+SOVRAPPOSIZIONE
+pagine per il WJ-TTL5, per la preservazione dei titoli.
+li segnale d'ingresso dal bus A, bus B o telecamera
+esterna puo essere sovrapposto alle immagini.
+98FORMEWIPEEPOSIZIONATOREDEL
+JOYSTICK
+In combinazione coniselexionatoridelle formetendina,
+sono disponibili fino a 98 forme wipe, 1l posizionatore
+del joystick permette il posizionamento libero del
+cerchio, quadrato e diamante in combinazione delle
+forme tendina, I'immagine nellimmagine. Il wipe ha tre
+tipi di modi: normale, morbido e laterale.
+MIXAGGIOAUDIOL
+Ilmixer audio incorporato puo miscelare fino a quattro
+sorgenti di suono, microfono compreso. Per il mixaggio
+audio e disponibile controllo generale di volume.
+- 59 -
+=== PAGE 61 ===
+PRECAUZIONI
+ll WJ-wVE5 e uno strumento sensibile di alta qualita,chedeve esseretrattato come tale.Essendo unapparecchio elettrico,c'e
+pericolo di scosse se non viene usato correttamente.
+COSEDANONFARE
+COSE DA FARE
+NONcercare di smontare I'apparecchio.Per evitare le
+Perqualsiasi riparazionerivolgersia personaletecnico
+scosse, non togliere le viti o i coperchi. Allinterno non
+qualificato.
+ci sono parti riparabili dall'utente.
+Evitare di urtarlo,
+× Non maitrattare I'apparecchio.
+Maneggiario sempre con cura.
+scuoterlo,ecc.Trattandolo o immagazzinandolo male
+si potrebbe danneggiarlo.
+× Per pulire il corpo dellapparecchio, non usare detersivi
+Quando e sporco, pulirlo usando un panno asciutto.
+fortio abrasivi.
+Se lo sporco e difficile da togliere, usare un detersivo
+leggero e trofinars delicatamente.
+Non esporre I'apparecchio all'acqua o al bagnato,e
+Provvedere immediatamente se 'apparecchio diventa
+non farlo funzionare in posti bagnati o se e bagnato.
+bagnato.Spegnerlo immdiatamente e rivolgersi a
+personale tecnico qualificato per la riparazione.
+bagnato puo danneggiarlo e creare pericoli di scosse.
+× Non usare I'apparecchio dove ci sono temperature
+Usarlo in condizioni di temperatura comprese nella
+estreme oumidite eccessiva.
+gamma da 0°c - 40°C, e con un'umidita inferiore al
+90%.
+Avvisoimportanteriguardoal segnalevideodellesorgenti1e2:
+Se il segnale d'ingresso video non risponde a quello
+(1)
+(6) Lo slittamento (distorsione della parte superiore delle
+PAL a colori standard, o a quello CCIR b/n standard, si
+immagini)potrebbeverificarsiusandocertiVTRcome
+potrebbero verificaredisturbi di sincronismo.
+segnali d'ingresso (a causa del disallineamento), o a
+Se il rapporto segnale/rumore (S/N) del segnale
+(2)
+causa delle caratteristiche del monitor video (per le
+dingresso e molto basso, la qualita delle immagini
+costanti di tempo AFC).
+potrebbedeteriorarsi.
+(3)
+Se il segnale d'ingresso video e molto instabile, come
+accade nel caso che il segnale di riproduzione VTR
+sia scarso, il sincronismo o il colore potrebbero essere
+disturbati
+(4)
+Se il rumore appare sul monitor TV, il sincronismo o il
+colore potrebbero essere disturbati,per cuiregolare it
+controllo di allineamento del televisore.
+Quando si alimentano i caratteri da un generatore di
+(5)
+(7) II bordo del duro e della tendina nel modo di tendina del
+caratteri (WV-KB12 o WJ-TTL5) o da una telecamera,
+cerchio potrebbe essere a zig-zag. Questo fenomeno
+in certe condizioni il loro contorno potrebbe diventare
+e normale e non indica un errore di funzionamento.
+irregolare, come mostrato in figura.
+- 60 -
+=== PAGE 62 ===
+COMANDI ELORO FUNZIONI
+63
+68)
+55
+60
+65
+66
+69
+62
+64
+73
+19
+56
+23
+25
+28
+30
+20
+JEY
+26
+34
+35
+36
+54
+49
+52
+42
+-61
+=== PAGE 63 ===
+Presa d'ingresso microfono (MIC)
+Serve a collegare un microfono.
+FORME TENDINA
+NON
+X4
+2.Connettoredingresso titolo (TITLE)
+POSI
+x16
+MULTI
+MULTI
+Servea collegare if Generatore di Caratteri WV-KB12
+MULTI
+o WJ-TTL5 opzionale.
+(1):Ingreso caratteri
+(2): Non usato
+(3) : Massa
+(4):Nonusato
+TITLE
+):Uscitadisincronismo
+(6):Nonusato
+Front View
+(7):Massa
+(8):Uscita +9V
+(9):Massa
+(10) :D (WV-KB12: aperto, WJ-TTL5: massa)
+Note:
+Usand il wV-KB12, le sue funzioni seguenti si
+disattivano:
+1)Visualizzazione del cronometro
+2)
+Regolazionedelcoloredeltitolo
+3)Visualizzazionedella pagina del titolo
+Durante lo scorrimento dei titoli con i caratteri
+2.
+delle dimensioni piu piccole usando il WJ-TTL5, il
+posto in cui le nuove linee dei caratteri appaiono
+si sposta gradualmente dal basso alla meta dello
+schermo.
+Collegare i! cavo del WV-KB12 o WJ-TTL5 al
+connettore d'ingresso titolo (2)come mostrato
+sotto.
+Generatore di Caratteri
+WV-KB12
+WJ-TTL5
+3.Interruttore d'alimentazione (POWERON/OFF)
+Premere questo interruttore per accendere I'apparec-
+chio. Quando lo si preme, I'indicatore d'alimentazione
+(4) si accende.
+4.Indicatored'alimentazione (POWER)
+Interruttoredi selezione coloredi fondo
+5.
+(BACKCOLOUR)
+Serve a selezionare il colore di fondo per ie operazioni
+di mixaggio, tendina, sovrapposizione e dissolvenza
+video. Si puo scegliere uno degli otto colori di fondo
+seguenti: bianco,giallo,celeste,verde,magenta,rosso,
+blu e nero.fcoloricambiano con la pressionediquesto
+interruttore.
+Interruttoridiselezioneformatendina
+(WIPE MODE)
+La combinazione dei cinque interruttori permette
+IMMAGINE NELL'IMMAGINE
+leforme tendina mostratenella tabella.
+1LED
+corrispondenti si accendono quando si premono gli
+interruttori.Tenerpresente che il posizionamentodella
+TAGLIO
+A→B
+forma mediante il posizionatore del joystick (54)e
+operativo per le tre forme contrassegnate dalla (P) nella
+TAGLIO-MULTI
+tabella.
+- 62 -
+=== PAGE 64 ===
+7.Interruttore di immagine nell'immagine (P-IN-P)
+15.Interruttore di attivazione/disattivazione strobo
+Premendo una volta questo interruttore si ottiene il
+buS A (STROBE)-A
+modo di immagine nell'immagine delle dimensioni di
+Serve ad ottenere I'effetto strobo dellimmagine del
+1/4. I1 LED si accende.Premendolo di nuovo, si ottiene
+bus A.Premendolo una volta, si applicano gli effetti
+i modo di immagine nell'immagine delle dimensioni di
+strobo allimmagine del bus 'A e Frindicatore a LED
+1/16.Il posizionamento del'immagine nell'immagine
+sull'interruttore si ccende.L'intervallo di tempo
+puo essere operato col posizionatore del joystick (54).
+dell'effettostrobo puu essere variatopremendo questo
+Premendo per la terza volta I'interruttore si termina
+interruttore in sequenza.La regolazione e possibile
+questo modo e sitorna a quello delle immagini'normali.
+da 0,1 a 1 secondo circa in cinque passi.
+Per
+liLED sispegne.
+tornare alle immagini normali,premere ancora una volta
+Note:
+I'interruttore. L'indicatore a LED si spegne.
+(1) Se durante il modo di immagine nell'immagine si
+sposta la controllo di mixaggio/tendina (45) da A
+16.Interruttoredi attivazione/disattivazione strobo
+a B o da B a A, le immagini cambiano posizione, in
+bus B(STROBE)-B
+modo corrispondente, da A a B o da B a A.
+Serve ad ottenere I'effetto strobo dellimmagine del
+Se si posiziona un'immagine di 1/4 o di 1/16 sul
+(2)
+bus B. Premendolo una volta, si applicano gli effetti
+bordo sinistro, con alcuni monitor TV I'immagine
+strobo all'immagine del bus B e f'indicatore a LED
+nellimmaginepotrebbenon
+essere
+completa
+sul'interruttore si accende.L'intervallo di tempo
+nellarea marginale.
+dell'effetto strobopuoesserevariatopremendoquesto
+interruttore in sequenza,La regolazione e possibile
+da o,1 a 1 secondo circa in cinque passi.
+Per
+tornare alle immagini normali,premere ancora una volta
+I'interruttore. L'indicatore a LED si spegne.
+17.Interruttorediattivazione/disattivazionemosaico
+bus A (MOSAIC)-A
+Serve ad ottenere I'effetto mosaico dellimmagine
+del bus A. Premendolo una volta, si applica I'effetto
+(3) Lo strobo e il fermo immagine non funzionano
+mosaico all'immagine det bus A e l'indicatore a LED
+quandononsiusail mododiimmagine
+sull'interruttore siaccende. Le dimensioni delle tessere
+nell'(immagine.
+del mosaico possono essere variate in quattro passi
+premendo questo interruttore in sequenza.
+8.
+Interruttore dimoltiplicazioneformatendina
+(MULTI)
+Quando si seleziona 'effetto mosaico,
+Premendo una volta questo interruttore, si moltiplica
+esso non si produce sul bordo sinistro
+e superiore.
+per quattro la forma della tendina.Premendolo di
+Cionon indicaun
+nuovo, ia si moltiptica per 16. II LED corrispondente
+difetto dell'apparecchio. Per tornare alle
+si accende quando si seleziona questo modo. ll LED
+immagini normali,premere ancora una
+volta I"interruttore.
+si spegne quando si preme tre volte I'interruttore per
+L'indicatore a LED si
+tornare al modo tendina normale.
+spegne.
+9.
+Interruttore di tendina ad una via (ONE-WAY)
+18.Interruttore diattivazione/disattivazione mosaico
+corrispondentesi accendeela direzionedi
+bus B (MOSAIC)-B
+Serve ad ottenere I'effetto mosaico dell'immagine
+cancellamento delleimmagini rimane la stessa
+del bus B. Premendolo una volta, si applica I'effetto
+indipendentemente dallo spostamento della controllo
+di mixaggio/tendina (45).
+mosaico all'immagine del bus B e I'indicatore a LED
+suilinterruttore siaccende.Le dimensioni del mosaico
+possono essere variate in quattro passi premendo
+10.Interruttore ditendina inversa (REVERSE)
+questo interruttore in sequenza.
+Quando si,preme questo interruttore,
+iLED
+corrispondente si accende e la posizione delle
+Quando si seleziona I'effetto mosaico,
+immaginicancellate si inverte.
+esso non si produce sui bordo sinistro
+e superiore.
+Ciononindicaun
+t1.Interruttorediattivazione/disattivazioneeffetto
+difetto dell'apparecchio. Per tornare alle
+digitale bus A (ON)-A
+immagini normali,premere ancora_una
+Serve ad attivare e disattivare gli effetti digitali per il
+bus A, come strobo,fermo immagine,mosaico e pittura.
+volta I'interruttore. L'indicatore a LED si
+spegne.
+12.Interruttorediattivazione/disattivazioneeffetto
+digitale bus B (ON)-B
+19.Interruttore diattivazione/disattivazione pittura
+Serve ad attivare e disattivare gli effetti digitali per il
+buS A (PAINT)-A
+bus B, come strobo, fermo immagine,mosaico e pittura.
+Serve ad ottenere I'effetto pittura per fimmagine del
+bus A.Premendolo una volta, si applica 'effetto di
+13.Interruttoredi attivazione/disattivazione fermo
+pittura ad olio all'immagine del bus 'A e I'indicatore
+immagine bus A (STILL)-A
+a LED sull'interruttore si accende.I grado d'effetto
+Serve a congelare I'immagine del bus A Premendolo
+pittura puo essere variato in 4 passi (de 2 bit a 5 bit).
+una voita, Iimmagine delbus A si congela e I'indicatore
+Per tornare alle immagini normali, premere ancora una
+a LED sullinterruttore si accende.Per tornare alle
+voita I'interruttore. L'indicatore a LED si spegne.
+immagini"vive",premere di nuovo questo interruttore.
+L'indicatore a LED si spegne.
+14.Interruttoredi attivazione/disattivazione fermo
+immagine bus B (STILL)-B
+Serve a congelare It'immagine del bus B. Premendolo
+una volta, l'immagine del bus B si congela e I'indicatore
+a LED sull'interruttore si accende.Per tornare alle
+immagini"vive", premere di nuovo questo interruttore.
+L'indicatore a LED si spegne.
+-63-
+=== PAGE 65 ===
+2o.Interruttoredi attivazione/disattivazione pittura
+bus B (PAINT)-B
+Serve ad ottenere P'effetto ittura per I'immagine del bus
+B. Premendolo una volta, si applica I'effetto di pittura
+Normale→Bordo Stretto → Bordo Ampio-
++ Ombra Stretta → Ombra Ampia → Ombra Bassa ]
+ad olio allimmagine del bus B e I'indicatore a LED
+sullinterruttore si accende. Il grado d'effetto pittura
+Normale
+BordoStretto
+puo essere variato in 4 passi (da 1 bit a 4 bit). Per
+Bordo Ampio
+tornare alle immagininormali, premere ancora una volta
+A-A-A-
+I'interruttore. L'indicatore a LED si spegne.
+21.Interruttore di inversione (REVERSE)
+Ombra Ampia
+OmbraStretta
+Serve a selezionare la polarita del segnale chiave
+Ombra Bassa
+sovrapposto.
+A-A-A
+Immagine originale
+Diventa il colore del titolo
+VIDEQ
+VIDEO
+30. Controli di livello chiave (KEY LEVEL)
+Servono a regolare il fivello di luminanza del segnale
+chiaverispettivamente.
+Titolo
+Immagine originale nel titoio
+Immagine sovrapposta
+31. lnterruttore di selezione uscita video di
+registrazione bus A (REC VIDEO OUT/A)
+Servea selezionare le immaginidelbusA come segnale
+22.Interruttore diattivazione/disattivazione
+d'uscita video di registrazione.I LED si accende
+sovrapposizione (ON)
+quando si seleziona I'interruttore..
+Questo e I'interruttore principale di attivazione/
+disattivazione della funzione di sovrapposizione.
+32.Interruttore di selezione uscita video di
+registrazione bus B (REC VIDEOOUT/B)
+Quando si seleziona 'effetto di sovrap-
+Serve a selezionare leimmaginidelbus Bcome segnale
+posizione, esso non si produce sui bordi
+d'uscita video di registrazione.I LED si accende
+sinistro e superiore. Cio non indica un
+quando si seleziona I'interruttore.
+difetto dell'apparecchio.
+33.interruttore diselezione uscita video di
+23.Interruttore diselezionetelecamera
+registrazione effetto (RECVIDEO OUT/EFFECT)
+esterna (EXTCAMERA)
+Serve a selezionare il segnale con I'effetto
+Serve a selezionare una telecamera esterna come
+(sovrapposizione,mixaggio/tendina o dissolvenza)
+segnale chiave dell'effetto di sovrapposizione.
+come segnale d'uscita video di registrazione. li LED
+si accende quando si seleziona linterruttore.
+24. Interruttore di selezione bus A(A)
+Serve a selezionare le immagini delbus Acome segnale
+34.Interruttorediselezionecolore (BACKCOLOUR)
+chiave del'effetto di sovrapposizione.
+Serve a selezionaere il colore per itmodo didissolvenza
+in chiusura. ll colore si regola mediante Iinterruttore di
+selezione colore di fondo (5). II LED si accende quando
+25.interruttore di selezione busB (B)
+Serve a selezionare le immagini delbus B come segnale
+si seleziona l'interruttore.
+chiave dell'effetto di sovrapposizione.
+35.Interruttore di selezione colore (WHITE)
+26. Indicatori di livello audio (AUDIO LEVEL)
+Serve a selezionare i bianco per la dissolvenza in
+Questi indicatori a LED mostrano rispettivamente il
+chiusura.lI LED si accende quando si seleziona
+fivello d'uscita dei canali destro e sinistro.
+I'interruttore.
+27.Interruttoredicolorefondo (BACKCOLOUR)
+36.Interruttoredi selezione colore (BLACK)
+Serve a selezionare il colore dei titoli sovrapposti
+Serve a selezionare il nero per la dissolvenza in
+chiusura.li LED si accende quando si seleziona
+selezionati mediante l'interruttore di selezione colore
+di fondo (5).
+I'interruttore.
+28. Interruttore del bianco (WHITE)
+37.Interruttoredidissolvenzavideo (VIDEO)
+Selezionando questo interruttore si effettua
+Serve a selezionare il bianco come colore dei titoli
+la
+sovrapposti.
+dissolvenza in apertura o chiusura delle immagini. Il
+LED si accende quando si seleziona Iinterruttore.
+29.interruttore di effetto titolo (TITLEEFFECT)
+Premendo questo interruttore si possono cambiare i
+38.Interruttoreidissolvenza titolo (TITLE)
+titoli nel modo seguente:
+Selezionando questo interruttore si effettua la
+dissolvenza in apertura o chiusura del titolo. Il LED
+si accende quando si seleziona I'interruttore.
+-64-
+=== PAGE 66 ===
+39.Levadidissolvenza(IN/OUT)
+49.Interruttore di selezione sorgente 2bus B
+Spostando questa leva dalla posizione"OuT"a quella
+(SOURCE2)-B
+"iN" si opera la dissolvenza in apertura delle immagini.
+Serve ad assegnare il segnale video della sorgente
+La dissolvenza in chiusura si opera spostando la leva
+2 allingresso del bus B. Il LED si accende quando si
+dalla posizione"IN"a quella"OUT".
+seleziona Il'interruttore.
+40. Controllo principale di livello audio
+50.Interruttore di selezione sorgente 1bus A
+(MASTER,MAX/MIN)
+(SOURCE1)-A
+Questo e I'attenuatore generale del Mixer audio.
+Serve ad assegnare il segnale video della sorgente
+1 all'ingresso del bus A. Il LED si accende quando si
+41.Controllodi livello microfono (MIC,MAX/MIN)
+seleziona I'interruttore.
+Questo e I'attenuatore del segnale del microfono
+alimentato alla presa d'ingresso microfono (1)
+51.Interruttore di selezione sorgente 1busB
+(SOURCE 1)-B
+42.Controllo di livello audio ausiliario (AUX,MAX/MIN)
+Serve ad assegnare il segnale video della sorgente
+Questo e I'attenuatore d'ingresso del segnale audio
+1 allingresso del bus B. H LED si accende quando si
+ausiliario alimentato ai connettori d'ingresso audio
+seleziona I'interruttore.
+ausiliario (65) del pannello posteriore.
+52.Interruttore di selezione modo di mixaggio (Mix)
+43.Controllo di livello sorgente(SOURCE,MAX/MIN)
+Premendo questo interruttore, il LED si accende e si
+Questo e I'attenuatore generale del suono miscelato
+seleziona ilmodo di mixaggio dell'effetto MIX/WiPE.
+AUDIO1eAUDIO2.
+53.interruttore di selezione modo tendina (WiPE)
+44.Controllo audio (AUDIO,1/2)
+Premendo questo interruttore, il LED si accende e
+Servea bilanciare il segnale audiomiscelato alimentato
+si seleziona il modo tendina dell'effetto MiX/WIPE.
+al connettore d'ingresso SOURCE 1 (AUDiO 1)e il
+Quando lo si preme, il modo tendina cambia nel modo
+segnale alimentato al connettore d'ingresso SOURCE
+seguente:
+2 (AUDiO 2) del pannello posteriore.
++ Normale → Laterale
+45. Controllo di mixaggio/tendina (VIDEOA,B)
+Morbido +
+Nel modo tendina, spostando questa leva da A a B si
+aumenta 'entita dellingresso B, e viceversa.Nel modo
+di mixaggio,le immagini video vengono commutate tra
+Nota:
+Ae B.
+Quando siseleziona ilmodo Laterale, il colore puo
+essere aggiunto al bordo mediante I'interruttore di
+selezione colore di fondo (5).
+46.nterruttore diselezione colore difondobusA
+(BACKCOLOUR)
+Serve ad assegnae il segnale del colore di fondo
+54.Posizionatoredel joystick (POSITIONER)
+atlingresso del bus A. tI segnale del colore di fondo puo
+La posizione della forma cancellata, come it cerchio, il
+essere selezionato conl'interruttore diselezione colore
+quadrato e it diamante, selezionata con l'interruttore di
+di fondo (5). 1l LED si accende quando si seleziona
+selezione forma tendina (6), o f'interruttore di immagine
+Iinterruttore.
+nellimmagine (7),puo essere selezionata liberamente
+mediantequesto posizionatore.
+47.Interruttoredi selezione coloredi fondobusB
+(BACK COLOUR)
+55.Connettori audio sorgente1
+Serve ad assegnare il segnale del colore di fondo
+(SOURCE1,AUDIOL/R)
+all'ingresso del bus B. Il segnale del colore di fondo pud
+A questo connettori d'ingresso (IN) vanno alimentati
+essereselezionatocon tinterruttorediselezionecolore
+segnaliaudio di -6dBV/15kohmper la sorgente 1.
+di fondo (5). II LED si accende quando si seleziona
+Quando al canale sinistro viene atimentato il segnale
+I'interruttore.
+audio monofonico, questo segnale viene distribuito
+Nota:
+internamente al canale destro.
+Se si seleziona I'interruttore di selezione colore
+di fondo bus B (47) dall'interruttore di selezione
+56.Connettore d'ingressovideoY/C sorgente1
+sorgente 2 bus B (49), it LED dellinterruttore di
+(SOURCE1,Y/CIN)
+selezione sorgente 2bus B (49) lampeggia.
+I segnali di luminanza (Y) e di crominanza (C) dal
+Il lampeggiamento segnala che Pimmagine della
+VTR o televisore a colori vengono alimentati a questo
+sorgente 2 viene selezionata quando si preme
+connettore.
+'interruttore di selezione bus B (25). La stessa
+Nota:
+L'ingresso
+Y/C halaprecedenza
+procedura ha luogo quando si usa il bus A o la
+nella
+sorgente 1.
+circuitazione sulringresso composito.
+Se entrambi i segnali video Y/C e composito
+48.Interruttore di selezione sorgente 2busA
+vengonoalimentaticontemporaneamenteai
+(SOURCE2)-A
+connettori della sorgente 1, soltanto il segnale
+Serve ad assegnare il segnale video della sorgente
+video Y/C entra nel circuito.
+2 all'ingresso del bus A. Il LED si accende quando si
+seleziona I'interruttore.
+- 65 -
+=== PAGE 67 ===
+57.Connettore d'ingresso videosorgente1
+Nota:
+L'ingresso Y/C ha la precedenza
+1.
+(SOURCE1,COMP.IN)
+nelia
+A questo connettore d'ingresso (iN) va alimentato un
+circuitazione sull'ingresso composito.
+segnale video compositodi 1,o Vp-p/75ohm.
+Se entrambi i segnali video Y/C e composito
+Note:
+vengono alimentati contemporaneamente ai
+(1) Se il segnale d'ingresso video non risponde a
+connettori dingresso della telecamera esterna,
+quello PAL a colori standard, o a quello CCIR
+soltanto il segnale video Y/C entra nel circuito.
+2.
+b/n standard, si potrebbero verificare errori di
+L'ingresso accetta soltanto il segnale video
+sincronismo.
+della telecamera, e non accetta il segnale di
+Se il rapporto segnale/rumore del segnale
+(2)
+riproduzione dei VTR.
+d'ingresso e molto basso, la qualita delle immagini
+potrebbe deteriorarsi.
+64.Connettore d'ingressotelecamera esterna video
+Se il segnale d'ingresso video e molto instabile
+(3)
+composito(EXTCAMERAINCOMP.)
+come accade nel caso che il segnale di
+Questo connettore accetta un segnale video
+riproduzione sia VTR scarso, si potrebbero
+composito di 1,o Vp-p/75 ohm per il segnale chiave
+verificare errori di sincronismo o di coiore.
+nel modo di sovrapposizione. ll sincronismo esterno
+none necessario per la telecamera.
+58.Connettore d'uscita videosorgente1
+Nota:
+(SOURCE1,COMP.MONITOROUT)
+L'ingresso accetta soltanto il segnale video
+Aquesto connettore viene alimentatoun segnalevideo
+della telecamera, e non accetta il segnale di
+composito di 1,o Vp-p/75 ohm per il controllo del
+riproduzione del VTR.
+segnale d'ingresso video della sorgente 1.
+65.Connettori d'ingresso audioausiliario
+59.Connettoriaudiosorgente2
+(AUXAUDIO IN)
+(SOURCE2,AUDIOL/R)
+Accettano il segnaleaudio di-6 dBv/75ohm da una
+A questi connettori d'ingresso (iN) vanno alimentati
+sorgentetaudio esterna.Quando al canale sinistro
+segnali audio di -6 dBV/75 ohm per la sorgente 2.
+viene alimentato il segnale audio monofonico,questo
+Quando al canale sinistro viene alimentato il segnale
+segnale viene distribuito internamente alcanaledestro.
+audio monofonico, questo segnale viene distribuito
+internamente al canale destro.
+66. Connettori d'uscita audio di registrazione
+(AUDIO OUT,L/R)
+60.Connettored"ingresso videoY/C sorgente2
+A questi connettori vengono alimentati segnali audio di
+(SOURCE 2,Y/C IN)
+6 dBV/1 kohm per la registrazione.
+I segnali di luminanza (M) e di crominanza (C) dal
+VTR o televisore a colori vengono alimentati a questo
+67.Connettore d'uscita video di registrazione Y/C
+connettore.
+(RECVIDEOOUT1,Y/C)
+Nota:
+Da questo connettore si ottengono i segnali di
+L'ingressoY/C hala precedenza
+nella
+luminanza (M) e crominanza (C) quando alla sorgente
+circuitazione sullingresso composito.
+1o2 si alimenta il segnale compsito oY/C.
+Se entrambi i segnali video Y/C e composito
+vengonoalimentati contemporaneamenteai
+68.Connettorid'uscita videodi registrazione
+connettori della sorgente 2, soltanto il segnale
+(RECVIDEOOUT1,COMP.)
+videoY/C entra nel circuito.
+Aquesti connettori viene alimentato il segnale video
+composito di 1,o Vp-p/75 ohm selezionato mediante
+61.Connettored'ingressovideosorgente2
+gli interruttori di selezione uscita video di registrazione
+(SOURCE2,COMP.IN)
+(31), (32) e (33)
+ll connettore d'ingresso accetta un segnale video
+composito di 1,o Vp-p/75ohm.
+69.Connettori d'uscita audio di registrazione
+Note:
+(AUDIO OUT2,L/R)
+(1) Se il segnale d'ingresso video non risponde a
+A questi connettori vengono alimentati segnali audio di
+quello PAL a colori standard, o a quello CCIR
+6 dBV/1kohm per la registrazione.
+b/n standard, si potrebbero verificare errori di
+70.Connettore d'uscita video di registrazione Y/C
+sincronismo.
+Se il rapporto segnale/rumore del segnale
+(2)
+(RECVIDEOOUT2,Y/C)
+d'ingresso e molto basso,la qualita delle immagini
+Da questo connettore si ottengono i segnali di
+potrebbe deteriorarsi.
+luminanza (Y) e crominanza (C) quando alla sorgente
+Se il segnale d'ingresso video e molto instabile
+(E)
+1o2 sialimenta ilsegnale composito o Y/C.
+come accade nel caso che il segnale di
+riproduzione sia VTR scarso, si potrebbero
+71. Connettori d'uscita video di registrazione
+verificare errori di sincronismo o di colore.
+(RECVIDEOOUT2,COMP.)
+A questi connettori viene alimentato il segnale video
+composito di 1,o Vp-p/75 ohm seiezionato mediante
+62.Connettored'uscitavideosorgente2
+(SOURCE2,COMP.MONITOROUT)
+gli interruttori di selezione uscita video di registrazione
+A questo connettore viene alimentato un segnale video
+(31), (32) e (33).
+composito di 1,o Vp-p/75 ohm per-it controllo del
+segnale d'ingresso video della sorgente 2.
+72.Connettored'uscitadivisionepreliminare
+(PREVIEWOUT)
+63.Connettore d'ingresso telecameraesterna Y/C
+Aquestoconnettore vienealimentatoun segnale video
+(EXT CAMERAIN Y/C)
+composito di 1,0 Vp-p/75 ohm dellimmagine EFFECT
+I segnali di luminanza (Y) e di crominanza (C) dal
+(tutti gli effetti).
+VTR o televisore a colori vengono alimentati a questo
+73.Cavod'alimentazione
+connettore.
+- 99 -
+=== PAGE 68 ===
+CONNESSIONIDELSISTEMA
+Precauzione:
+Mentre si effettuano le connessioni I'apparecchio deve essere spento.
+1.Coliegare il cavo coassiale con connettori BNC tra I'uscita video del VTR,lettore divideodischi,sintonizzatore TVo telecamera
+e il connettore SOURCE1 COMP.IN sul pannello posterioredel Mixer AV Digitale,oppure collegare il cavo Y/C (4 pin)tra il
+VTR e il connettore d'ingresso video SOURCE1Y/C sul pannello posteriore del Mixer AV Digitale.
+2.
+Collegare il cavo audio con le spine tra I'uscita audio del VTR, lettore di videodischi, sintonizzatore TV o telecamera e i
+connettori SOURCE1AUDIOINsul pannelloposterioredelMixerAVDigitale.
+3.
+Collegare il cavo coassialeo il cavo Y/C (4 pin)e un cavo audio per gli ingressi SOURCE2 del Mixer AV Digitale alio stesso
+modo come ai punti 1 e 2 sopra.
+soprapposizione)eilconnettore EXTCAMERA INdelMixerAVDigitale.
+5.
+Se si usa il Generatore di Caratteri WV-KB12 o WJ-TTL5 (venduti a parte), collegare il connettore del cavo a 10 pin del
+Generatore di Caratteri al connettore TITLE del Mixer AV Digitale.
+6.
+Se e necessaria una sorgente audio ausiliaria, collegare il cavo audio con le spine tra I'uscita audio della sorgente audio
+(lettore CD,registratoreogiradischi)e iconnettori AUx IN del Mixer AVDigitale.
+7.
+Se necessario, collegare la spina del cavo dei microfono al connettore dingresso MiC del Mixer AV Digitale.
+8.
+Per la visione preliminare delle immagini, collegare il cavo coassiale con connettori BNC tra il connettore PREVIEW OUT del
+Mixer AV Digitale e il connettore VIDEO IN di un monitor video.
+9.
+Per la registrazione, collegarei cavi coassiali con connettori BNC (cavo Y/C) tra i connettori REC VIDEO OUT dei Mixer AV
+Digitale e iconnettori VIDEO IN del VTR e del monitor video.
+10.F
+Per la registrazione, collegare il cavo audio con le spine tra i connettori REC AUDIO OUT del Mixer AV Digitale e i connettori
+AUDIO IN del VTR e il monitor video.
+Televisore
+VTR/Letore
+Lettore CD, ecc.
+di videodischi
+a coiori
+Monitor video
+VIDEO
+VIDEO
+AUDIO
+SOURCE1
+AUX AUDIO
+PREVIEW OUT
+Monitor audio
+video
+SOURCE 2
+REC OUT
+Telcamera
+VIDEO
+VTR
+Adattatore c.a.
+VIDEO
+AUDIO
+AUDIO
+REC OUT
+VIDEO
+AUDIO
+VTR
+EXTCAMERAIN
+VIDEO OUT
+Generatoredi Caratteri
+Telecamera esterna
+MIC
+WV-KB12
+WJ-TTL5
+Connessionidel sistema
+- 67 -
+=== PAGE 69 ===
+PROCEDUREDIFUNZIONAMENTO
+Effettuaretutte le connessioni necessarie.
+1.
+Accertarsi che I'indicatore a LED dellinterruttore di
+2.
+Accendere il Mixer AV Digitale e tuttigli altri componenti
+dissolvenza video (37) sia spento.
+collegati.
+3.
+Preparare la sceneggiatura del programma.
+Spostare la controllo di mixaggio/tendina (45) da A a B,
+Prepare tutte le carte dei titoli.
+4.
+o viceversa.
+Nota:
+Per la funzione di sovrapposizione si possono
+usare carte dei titoli con lettere nere su bianco
+o bianche sunero.
+Bus A
+5.
+Memorizzare tuttii titoli da sovrapporre nel Generatore
+diCaratteriWV-KB12/WJ-TTL5riferendosi alle
+istruzioni per I'uso del WV-KB12/WJ-TTL5.
+SCENA 1: INGRESSO A
+EFFETTOMIX/WIPE,MODOWIPE
+A.
+10
+Bus AeB
+SCENA 1 e SCENA2
+MULTI
+REVERSE
+Bus B
+MIXWIPEEFFECT
+SCENA2:INGRESSO B
+MIX
+2.
+EFFETTO WIPE
+Premere I'interruttore di selezione uscita video di
+SOURCE
+SOURCE
+BACK
+COLOUR
+registrazione effetto (33).
+WIPE
+Premere Iinterruttore di selezione modo tendina (53).
+Selezionare il modo tendina desiderato premendo uno
+degli interruttori di selezione forma tendina (6).
+Riferirsi alla tabella delle forme a page 65 per la
+combinazione degli interruttori (6).
+50
+Selezionare il segnale della sorgente per il bus A e bus
+52
+49
+BdaSOURCE1,SOURCE2oBACKCOLOUR.
+Nel caso della selezione del colore di fondo, scegliere il
+colore desiderato con I'interruttore di selezione colore
+Premere I'interruttore di selezione uscita video di
+di fondo (5).
+registrazione effetto (33)
+Accertarsi che I'indicatore a LED dell'interruttore di
+dissolvenza video (37)sia spento.
+EFFETTOMIX
+Spostare la controllo di mixaggio/tendina (45) da Aa B,
+Premere finterruttore di selezione modo di mixaggio
+o viceversa.
+(52).
+Selezionare il segnale della sorgente per il bus A e bus
+BdaSOURCE1,SOURCE2oBACKCOLOUR
+Nel caso della selezione del colore di fondo, scegliere il
+colore desiderato con I'interruttore di selezione colore
+di fondo (5).
+68
+=== PAGE 70 ===
+Quando in questa condizione si sposta la controllo
+di mixaggio/tendina (45) sulla posizione A, I'immagine
+B inserita si cambia nell'immagine del bus A, come
+Bus A
+mostrato sotto.
+INGRESSO A
+Il'interruttore
+Premere
+!P
+nuovo
+di
+immagine
+nellimmagine (7)per ottenere unimmagine di 1/16 per
+I'inserzione.
+Bus Ae Bus B
+tmmagine cancellata
+La posizione di queste immagini di 1/4 o di 1/16
+pud essere cambiata liberamente col posizionatoredel
+joystick (54).
+Nota:
+(1)Se si posiziona un'immagine di 1/4 o di 1/16
+Bus B
+sul bordo sinistro, con alcuni monitor TV il modo
+d'immagine nell'immagine potrebbenon estendersi
+fino al'area marginale.
+INGRESSO B
+3.
+WIPE DELL'IMMAGINENELL'IMMAGINE
+Premere I'interruttore di selezione uscita video di
+(2) L"immagine
+dell'immagine
+inserita
+potrebbe
+registrazione effetto (33).
+disallinearsi in due orizzontalmente a seconda
+della posizione dell'immagine inserita.
+Premere I'interruttore di selezione modo tendina (53)
+Selezionare il segnale della sorgente per il bus A e bus
+BdaSOURCE1,SOURCE2oBACKCOLOUR.
+Nel caso della selezione del colore di fondo, scegliere il
+colore desiderato con Il'interruttore di selezione colore
+di fondo (5).
+Accertarsi che I'indicatore a LED dell'interruttore di
+dissolvenza video (37) sia spento.
+(3) Nel caso di inserzione dell'immagine del bus B
+nellimmagine del bus A e
+Premere I'interruttore di immagine nell'immagine (7).
+1) si preme l'interruttore di selezione uscita
+Se si preme una volta I'interruttore con la controllo di
+video di registrazione busA (31),viene
+mixaggio/tendina (45)posizionata su B, nell'immagine
+emessa soltanto F'immagine del bus A.
+del bus A viene inserita un'immagine di 1/4 del bus B,
+si preme l'interruttore di selezione uscita
+come mostratosotto.
+video di registrazione bus B(32),viene
+emessa I"immagine inserita del bus B con
+fondo nero.
+Ossevazione:
+Lo strobo e il fermo immagine non funzionano
+quandonon si usa i modo di immagine
+nellimmagine.
+69-
+=== PAGE 71 ===
+TENDINAMULTI
+6.
+4.
+TENDINAAD UNA VIA
+Premere I'interruttore di selezione uscita video di
+Premendo
+questo
+interruttore,
+la
+direzione
+registrazione effetto (33).
+cancellazione rimane la stessa indipendentemente
+dalla direzione di spostamento della controllo di
+Premere l'interruttore di selezione modo tendina (53)
+mixaggio/tendina (45)
+Selezionare il segnale della sorgente per il bus A e bus
+BdaSOURCE1,SOURCE2oBACKCOLOUR.
+Nel caso della selezione del colore di fondo, scegliere il
+colore desiderato con t'interruttore di selezione colore
+di fondo (5).
+Accertarsi che I'indicatore a LED dell'interruttore di
+dissolvenza video (37) sia spento.
+Selezionare la forma tendina desiderata usando gli
+interruttori di selezione forma tendina (6).
+7.
+MODOTENDINA
+Si puo selezionare il modo tendina morbido o laterale.
+Premere poi una volta I'interruttore di moltiplicazione
+forma tendina (8) per ottenere una
+forma tendina
+Premere due volte F'interruttore di selezione modo
+moltiplicata per quattro.
+tendina (53) per ottenere un bordo chiaro/ampio. 1l
+colore del bordo puo essere selezionato mediante
+I'interruttore di selezione colore di fondo (5).
+Premere questo interruttore per la terza volta per
+ottenereun bordo di cancellazione attenuato.
+Per
+tornare al modo tendina normale, premere di nuovo
+questo interruttore (53).
+Se sipreme dinuovo questo interruttore (8), simoltiplica
+la forma tendina per sedici.
+8.
+Applicazioni
+8-1. Tendina di taglio
+Preme finterruttore di selezione uscita video di
+registrazione effetto (33)
+Premere f'interruttore di selezione modo tendina (53).
+Selezionare il segnaledella sorgente per il bus A e bus
+BdaSOURCE1,SOURCE2oBUSCOLOUR.
+5.
+TENDINAINVERSA
+Nel caso della selezione del cotore di fondo, scegliere il
+colore desiderato con l'interruttore di selezione colore
+Premendo questo interruttora si inverte la posizione
+di fondo (5).
+delle immagini cancellate.
+Accertarsi che I'indicatore a LED dell'interruttore di
+dissolvenza video (37) sia spento.
+Non selezionare alcuna forma tendina con Iinterruttore
+di selezione forma tendina (6).
+Spostare il controllo di mixaggio/tendina (45) su e gid
+vicino alla posizione centrale. Le immagini del bus A e
+delbus Bappaiono alternativamente.
+-70-
+=== PAGE 72 ===
+Nota:
+Premendo due volte Finterruttore dimoltiplicazione
+forma tendina (8), appare allo stesso modo
+AB
+un'immagine di 1/16.
+Osservazioni:
+(1) Se si seleziona Pinterruttore di selezione colore
+di fondo bus B (47) dallinterruttore di selezione
+sorgente 2 bus B (49), il LED sull'interruttore di
+8-2. Tendina multi-taglio
+selezione sorgente bus B (49) iampeggia.
+Questo lampeggiamento indica che premendo
+Premere 'interruttore di selezione uscita video di
+I'interruttore di selezione bus B (25) si seleziona
+registrazione effetto (33)
+I'immagine della sorgente 2. La stessa procedura
+avviene usando il bus A o la sorgente 1.
+(2)
+Premere I'interruttore di selezione modo tendina (53).
+Se si preme f'interruttore di attivazione/disattiva-
+zione fermo immagine bus B (14) quando si e
+Selezionare il segnale della sorgente per il bus A e bus
+selezionato Iinterruttore di selezione sorgente 2
+BdaSOURCE1,SOURCE2oBACKCOLOUR
+bus B (49), I'interruttore di selezione sorgente
+Nel caso della selezione del colore di fondo, scegliere il
+sorgente 1bus B (51)non funziona.La stessa
+colore desiderato con I'interruttore di selezione colore
+procedura avviene usando il bus A o la sorgente 1.
+di fondo (5).
+Accertarsi che l'indicatore a LED delf'interruttore di
+dissolvenza video (37) sia spento.
+B.EFFETTODIGITALE
+Non selezionare alcuna forma tendina con Il'interruttore
+di selezione forma tendina (6).
+19
+20
+Premere una volta t'interruttore di moltiplicazione forma
+tendina (8).
+Spostare lentamente la controllo di mixaggio/tendina
+(45) dalla posizione A alla posizione BAppare
+r'immagine di 1/4 del bus A, come mostrato.
+CON
+STILL
+STROBE
+MOSAIC
+PANT
+Gli effetti seguenti vengono spiegati principalmente come
+esempio per le immagini del bus A
+(1)
+Preme I'interruttore di selezione modo di mixaggio (52).
+(2)
+Premere f'interruttore di selezione ingresso bus A (50).
+(e)
+Spostare la controllo di mixaggio/tendina (45) sulla
+posizione A.
+(4)
+Premere linterruttore di attivazione/disattivazione
+effetto digitale bus A (11).
+(5)
+Premere I'interruttore di selezione uscita video di
+registrazione effetto (33).
+FERMOIMMAGINE
+Premere l'interruttore di attivazione/disattivazione
+fermo immagine bus A (13). II LED si accende.
+=== PAGE 73 ===
+PITTURA
+Premere Pinterruttore di attivazione/disattivazione
+pittura (19) per ottenere I'effetto delle pennellate di
+un quadro ad olio sulle immagini.
+IMMAGINE VIVA
+FERMO 1MMAGINE
+Per tornare all'immagine viva, premere di
+nuovo
+l'interruttore
+diattivazione/disattivazione
+fermo
+immagine bus A (13). II LED si spegne.
+PITTURA ATTIVATA
+PITTURA DISATTIVATA
+(LIVELLO DI PITTURA: ALTO)
+STROBO
+Lagradazionedellapitturapuo esserevariata inquattro
+2.
+passi premendo ripetutamente questo interruttore.
+Premere 'interruttore di attivazione/disattivazione
+strobobus A (15)perottenere gli effetti strobo. (Questa
+funzione puo essere paragonata aduna moviola,con le
+immagini che si nuovono a intervalli da 0,2 a t secondo.)
+L'intervallo dello strobo puo essere variato premendo
+BASSA
+questo interruttore nel modo seguente.
+ALTA
+Prima volta - O,2 se., Seconda volta - 0,4 sec.,
+Terza volta - 0,6 sec.,
+Per tornare alle immagini normali premere questo
+Quarta voita - 0,8 sec., Quinta volta - 1, sec. (ll
+interruttore per la quinta volta.
+tempo e approssimativo.)
+5.
+APPLICAZIONI
+5-1
+Selezionare I'interruttore di selezione sorgente 1 bus A
+(50) e I'interruttore di selezione sorgente 1 bus B (51).
+L'effetto strobo torna alle immagini vive normali quando
+si preme questo interruttore per la sesta volta.
+Premere I'interruttore di selezione modo di mixaggio
+(52).
+MOSAICO
+Premere I'interruttore di attivazione/disattivazione
+3.
+effettodigitalebusB(12) e I'interruttoredi
+Premere I'interruttore di attivazione/disattivazione
+attivazione/disattivazione strobo bus B (16).
+mosaico bus A (17)per ottenere I'effetto mosaico
+dell'immagine.
+Spostare la controllo di mixaggio/tendina (45) suila
+sua posizione centraleper ottenereun effettodi dopo
+immagine.
+IMMAGINE VIVA
+Le dimensioni delle tessere del mosaico possono
+esserevariateinquattropassipremendoripetutamente
+questo interruttore.
+DOPOIMMAGINE
+GRAND!
+PICCOLE
+Per tornare alle immagini normali premere questo
+interruttoreper la quinta volta.
+STROBO
+72
+=== PAGE 74 ===
+5-2
+(3) Selezionare I'immagine di fondo.
+Posizionare la
+Premere t'interruttore di attivazione/disattivazione
+controllo di mixaggio/tendina (45) sulla posizione piu
+mosaico bus B e regolare le dimensioni delle tessere
+bassa (B)-per Il'immagine del bus B come immagine di
+premendo ripetutamente questo interruttore (18).
+fondo, o sulla posizione piu alta (A)per l'immagine del
+bus A come immagine di fondo. L'immagine di fondo
+Premere I'interruttore di selezione modo tendina (53).
+puo essere selezionata da SOURCE1,SOURCE2o
+BACK COLOUR sia per la posizione del bus A sia per
+Selezionare la tendina dei cerchio o del guadrato
+quella del bus B.
+mediante gli interruttori di selezione forma tendina (6).
+(4) 3
+Selezionare la sorgente dellimmagine chiave (da
+Azionare la controllo di mixaggio/tendina (45)per le
+sovrapporre) premendo uno degli interruttori
+dimensioni detla endina desiderate.
+selezione sorgente sovrapposizione (23), (24) o (25).
+Nota:
+Se si usa il Generatore di Caratteri, collegarlo al
+connettore d'ingresso titolo (2).
+(5) Se si deve selezionare il colore di fondo, regolare
+I'interruttore di colore fondo (27) o I'interruttore del
+bianco (28) per i colore desiderato.
+Selezionare it colore usando I'interruttore di selezione
+colore di fondo (5).
+Precauzione:
+Azionare
+posizionatore del joystick (54) per
+Non premere contemporaneamente linterruttore
+posizionare la tendina sul punto desiderato dello
+schermo.
+di selezione colore di fondo bus A (bus B) e
+I'interruttore colore di fondo per la funzione di
+sovrapposizione.
+(6)
+Premere una volta I'interruttore di attivazione/
+disattivazione sovrapposizione (22)per selezionarne
+la funzione.
+Ossevazione:
+Se si seleziona P'interruttore di selezione colore
+di fondo bus B (47) dall'interruttore di selezione
+sorgente 2 bus B (49), il LED sul'interruttore di
+selezione sorgente bus B (49) lampeggia.
+Questo lampeggiamento indica che premendo
+I'interruttore di selezione bus B (25) si seleziona
+C.EFFETTODISOVRAPPOSIZIONEE
+l'immagine della sorgente 2.La stessa procedura
+COLOREDIFONDO
+avviene usando il bus A o la sorgente 1.
+Sovrapposizioneconlatelecamera
+25
+28
+23
+30
+Collegare la telecamera al connettore dingresso
+22
+24
+telecamera esterna video composito (64) o al
+connettore dingresso telecamera esterna Y/C (63)
+KEY.
+FOLOURELECT
+Puntare la telecamera sul soggetto o su un pannello.
+EVEL
+Premere l'interruttore di selezione telecamera esterna
+(23).
+WHITE
+Guardando le immagine sul monitor video, collegato al
+connettore d'uscita visione preliminare (72),regolare
+il controllo di livello chiave (30) finche non si ottiene
+TILE
+EXT
+un'immaginesovrappostachiara.
+Nel caso che il titolo sia scritto in lettere bianche su
+fondo nero, spostare il controllo di livello chiave (30)
+dalla posizione superiore.
+29
+KEY
+LE
+VEL
+(1) Premere l'interruttore di selezione uscita video di
+VIDEO
+registrazione effetto (33).
+(2) Premere l'interruttore di selezione modo di mixaggio
+(52) o I'interruttore di selezione modo tendina (53).
+CARTA DEL TITOLO
+-73 -

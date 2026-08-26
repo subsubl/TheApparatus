@@ -118,7 +118,7 @@ const cv=document.getElementById('scope'),cx=cv.getContext('2d');
 const CW=cv.width,CH=cv.height,CY=CH/2,SC=CH*.42;
 const rv=document.getElementById('radar'),rx=rv.getContext('2d');
 const RW=rv.width,RH=rv.height,RBASE_Y=RH-20;RMAX_CM=675;RSCALE=(RH-40)/RMAX_CM;
-const TRIGGERS=["Manual","Layer 1 Return (Idle)","Layer 2 Entry (Macro)","Breath Lock (Micro)","Layer 3 Cut (Contact)","Inhale Peak","Exhale Peak"];
+const TRIGGERS=["Manual","Layer 1 Return (Idle)","Layer 2 Entry (Macro)","Breath Lock (Micro)","Layer 3 Cut (Contact)","Inhale Peak","Exhale Peak","Layer 3 Release (un-latch)"];
 let AVE5_BUTTONS=[],AVE5_POTS=[];   // filled from config payload
 const VAC_NAMES=["Mix/T-Bar","Color X","Color Y","Wipe Speed","Effect Level","Aux Mod"];
 const PIN_OPTIONS=[4,5,12,13,14,15,16,17,18,19,21,22,23,25,26,27,32,33];

@@ -1,73 +1,87 @@
 # WJ-AVE5 Integration Notes
 
-Everything known about the mixer itself, consolidated. Deep-read of the
-service manual PDF is queued (needs one manual browser click — see bottom).
+Deep-read **done** — from the full Operating Manual
+(`WJAVE5_OM_PANASONIC_EN_DE_FR_IT.pdf`, 74 pp, EN/DE/FR/IT, user-supplied;
+OCR-extracted text at `docs/WJ-AVE5_OM_ocr.txt` in-repo). Service-manual
+schematic level (button electrical topology) remains open — see bottom.
 
 ## What the machine is
 
-Panasonic **WJ-AVE5 Digital AV Mixer**: two composite/S-video inputs, mix +
-wipe section, digital effects, superimposer (keyer), fade control, audio
-mixer. Composite I/O pairs perfectly with our Pi PAL-composite feeds.
+Panasonic **WJ-AVE5 Digital AV Mixer**: two composite/YC inputs, mix + wipe
+section with **built-in digital frame synchronizer**, digital effects,
+superimposer (luminance keyer), fade control, 4-channel audio mixer.
+The frame synchronizer means our two free-running Pi PAL feeds can be mixed
+without external sync — confirmed by the Features section.
 
-## Verified documentation sources
+## Verified key facts (from the manual, page references to EN section)
 
-| Document | Where | Status |
-|----------|-------|--------|
-| Operating Instructions (~21 pp) | ManualsLib (product page 3961369) | ✅ readable online, ToC extracted |
-| Service Manual (72 pp, schematics) | Elektrotanya · freeservicemanuals.info · eserviceinfo.com | ⏳ CAPTCHA-gated for robots → needs your browser |
+1. **Every effect button is a latching ON/OFF switch.** The manual's phrasing
+   for STROBE/MOSAIC/STILL/PAINT/P-IN-P is always "press again to exit" —
+   and Superimpose has an explicit *master* "ON/OFF Switch (22)".
+   ⇒ Our relay press = toggle. Whatever we turn ON must be turned OFF.
+2. **Superimpose-by-Camera recipe** (pp. 16–17), exactly:
+   - camera → `EXT CAMERA IN` (composite #64 or Y/C #63)
+   - press `EXT CAMERA` key-source select (23) once — setup only
+   - adjust `KEY LEVEL` (30) against a test card until clean key
+     (white-on-black card → Key Level from upper range; black-on-white → lower)
+   - runtime: press Superimpose ON/OFF (22) **once to engage**, **once again
+     to disengage**
+   - `REVERSE` (21) selects key polarity; `TITLE EFFECT` (29) cycles
+     edge/shadow styles; Key Level does not apply to Character-Generator titles.
+3. **EXT CAMERA accepts only live cameras, never VTR playback** (input notes)
+   — ideal: our contact camera is live by definition; sync not required.
+4. Mix bus: `Mix Mode Selection Switch (52)` + physical `Mix/Wipe Control
+   lever (45)` — the lever is what vactrol channel 1 drives.
+5. Digital effects per bus: STILL (13/14), STROBE (15/16), MOSAIC (17/18),
+   PAINT (19/20) — each with A-bus and B-bus variants; plus P-IN-P (7),
+   Multi-Wipe (8), One-way/Reverse wipe options.
+6. Fade section: Video Fade (37) / Black (36) / White (35) switches + physical
+   Fade Lever (39); audio follows video in fade if selected via (37)+(38).
+7. Background colour: 8 colours incl. black/white, used by mix/wipe/superimpose/
+   fader. Caution in manual: never press bus BACK COLOUR and superimpose BACK
+   COLOUR simultaneously.
 
-## Control surface map (from Operating Instructions ToC)
+## Relay → button plan (final default, firmware-shipped)
 
-Pages refer to the Operating Instructions:
+| Relay | Name | Trigger | AVE5 target |
+|-------|------|---------|-------------|
+| 1 | WJ-BTN1 | Manual | STILL (freeze) |
+| 2 | WJ-BTN2 | Manual | STROBE |
+| 3 | WJ-BTN3 | Manual | MOSAIC |
+| 4 | WJ-BTN4 | Manual | PAINT |
+| 5 | WJ-BTN5 | Manual | WIPE arm |
+| 6 | WJ-BTN6 | Manual | CUT (bus switch) |
+| 7 | WJ-CAM | **Layer 3 Cut (Contact)** | SUPERIMPOSE (camera keyer) ON |
+| 8 | WJ-CAM-OFF | **Layer 3 Release (un-latch)** | SUPERIMPOSE (camera keyer) OFF |
 
-- p5 **Major Operating Controls** — the physical button/slider layout
-- p6–10 **Wipe Patterns**
-- p12 **MIX Effect, Wipe Mode** — the mix/wipe bus our Mix vactrol drives
-- p15–16 **Digital Effects**: `STILL` · `CUT`/Multi-Wipe · `STROBE` · `MOSAIC` · `PAINT`
-- p17 **Superimpose Effect & Back Colour** → includes **“Superimpose by
-  Camera”** — *the* camera-keyer function our relay 7 (`WJ-CAM`) presses on
-  CONTACT. Also here: Fade Control, Reverse Effect, Title Effect
-- p18 Fading Operation · p19 Audio Mixer
+Because buttons latch, CONTACT entry presses the keyer ON (relay 7) and
+CONTACT exit presses it OFF (relay 8). Both relays are wired **in parallel
+across the same physical button pads** — two relays across one button is just
+a parallel connection; each keeps its own timing/cooldown config. The new
+"Layer 3 Release" trigger fires on any transition out of CONTACT.
 
-## Relay → button assignment (working plan, 8 channels)
+(Trade-off: FADE lost its factory-default relay slot; assign it to any relay
+from the GUI if you want motorized-fade moments.)
 
-| Relay | Default name | Proposed AVE5 target | Used by |
-|-------|--------------|---------------------|---------|
-| 1 | WJ-BTN1 | `STILL` (freeze) | Boot ritual “power-click”; L2 glitch stabs |
-| 2 | WJ-BTN2 | `STROBE` | L2 entry — attention-grabbing stutter |
-| 3 | WJ-BTN3 | `MOSAIC` | L2 deep-degradation beat |
-| 4 | WJ-BTN4 | `PAINT` | Breath-peak (inhale) color smear |
-| 5 | WJ-BTN5 | `WIPE` pattern select | L1→L2 transition accent |
-| 6 | WJ-BTN6 | `CUT` (hard bus switch alt.) | spare/performance |
-| 7 | WJ-CAM | **`SUPERIMPOSE` (camera key)** | fires automatically on CONTACT |
-| 8 | WJ-BTN8 | `FADE` | exhibition open/close ritual |
+## Setup checklist (one-time, from the manual)
 
-All assignments are GUI-editable per installation day — this table is the
-sensible default, not a constraint.
+1. Camera → EXT CAM IN; press EXT CAMERA select (23).
+2. Point camera at neutral panel, adjust KEY LEVEL (30) for clean key.
+3. Choose REVERSE polarity so the visitor's face keys correctly.
+4. Optional: TITLE EFFECT style for the key edge.
+5. Leave Superimpose (22) OFF in the resting state — the apparatus toggles it.
 
-## Choreography sketch with real effects
+## Choreography with verified semantics
 
-- **L1 (far)**: clean loop, zero effects.
-- **L2 entry (MACRO)**: brief `STROBE` stab → release; as visitor nears,
-  `MOSAIC` holds longer; breath inhale-peaks pulse `PAINT`.
-- **CONTACT (touch)**: `WJ-CAM` presses Superimpose-by-Camera while Pi B seeks
-  to t=300 s — visitor’s live face rides over the L3 montage.
-- **Boot ritual**: FADE-in from black after mixer PSU settles, then arm STILL.
+- L2 entry: fire STROBE (relay 2) once → auto-press again after N ms to clear
+  (set press_count=2!) or leave artists to clear manually via FIRE.
+- Breath peaks: PAINT pulses (each fire = toggle → use even counts, or accept
+  the flip as part of the aesthetic).
+- CONTACT: relay 7 → face appears over Layer 3 montage; release → relay 8 →
+  face gone. Fully hands-free, matches the latching reality.
 
-## Electrical questions for the service-manual deep-read ⏳
+## Still open (needs service manual, not operating manual)
 
-1. Button topology: direct-to-ground vs scanned matrix (determines whether a
-   relay can simply bridge pads, or must emulate a row/column short).
-2. Is SUPERIMPOSE latching or momentary? If latching → set relay 7 to a single
-   long press on entry AND exit (GUI press-count/length handles it; no FW change).
-3. Safe tap points & voltages on the Main Board (p12+) — solder pads preferred
-   over button terminals where possible.
-4. Any MCU scanning that could be confused by slow relay bounce → measure, and
-   if needed raise press_length_ms ≥ 80 ms (default 120 ms should be safe).
-
-## PAL composite chain reminder
-
-Pi A → AV jack → mixer IN 1 · Pi B → AV jack → mixer IN 2 · mixer OUT →
-projector/monitor. All PAL (`sdtv_mode=2`, baked into images). Keep cables
-short and away from relay/vactrol wiring; composite hates ground loops —
-star-ground at the mixer PSU.
+- Button electrical topology: direct-to-ground vs scanned matrix → decides
+  solder-tap points vs button-terminal bridging.
+- Scan-rate/bounce tolerance (if matrix-scanned) → validates 120 ms press.

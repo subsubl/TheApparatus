@@ -6,6 +6,14 @@ via a DSP pipeline, drives **6 vactrols** bridging the sliders of a
 circuit-bent **Panasonic WJ-AVE5** analog video mixer, presses its effect
 buttons through **8 relays**, and exposes a full calibration/control WebUI.
 
+## Downloads / Releases
+
+**[v0.8 — First complete system release](https://github.com/subsubl/TheApparatus/releases/tag/v0.8)**:
+CI-built flashable images for **Player A** (Layer-1 looper) and **Player B**
+(master, L2/L3 + serial daemon) + ESP32 firmware zip with flash instructions.
+Both Pi images output **PAL composite** (Pi 3/Pi 4 only — Pi 5 has no
+composite out). SHA256 checksums attached. See `wiki/` for full docs.
+
 ## Hardware Architecture
 
 | Component | Connection | Details |
@@ -14,7 +22,7 @@ buttons through **8 relays**, and exposes a full calibration/control WebUI.
 | **Radar** | HLK-LD2410 | UART2 (GPIO16 RX / GPIO17 TX), 256 kbps, Engineering Mode via cmd **0x62** |
 | **Vactrols ×6** | WJ-AVE5 sliders | LEDC @ 10-bit / 5 kHz: Mix/T-Bar GPIO13, Color X GPIO14, Color Y GPIO25, Wipe Speed GPIO26, Effect Level GPIO27, Aux Mod GPIO33 |
 | **Relays ×8** | WJ-AVE5 buttons (active-LOW board) | GPIO4, 18, 19, 21, 22, 23, 32, 15 — **GUI-remappable at runtime** |
-| **Performer buttons ×8** | Physical buttons | GPIO5, 12, then input-only bank 34, 35, 36, 39 + spares (external pull-downs required) |
+| **Performer buttons ×3** | Physical buttons | GPIO35, 36, 39 (input-only bank, external pull-downs required) |
 | **Touch plate** | Bare metal plate → **ESP32 internal touch peripheral, T5 = GPIO12** (1 kΩ series + 10 kΩ pull-down; no external touch IC) |
 | **Pi B link** | UART1 TX → Pi serial0 | GPIO2 @ 115200 8N1 — ASCII protocol `LOOP_A` / `LOOP_B` / `TRIGGER_SEEK` |
 | **Status LED** | Onboard | GPIO2* (see PinDefinitions.h; move if conflicting with PiLink TX) |
@@ -44,7 +52,9 @@ Each relay is wired **across** a mixer button. Closing the relay = pressing it.
 
 ### Per-relay configuration (all GUI-editable, NVS-persisted)
 - **Trigger source**: Manual · Layer 1 Return (Idle) · Layer 2 Entry (Macro) ·
-  Breath Lock (Micro) · Layer 3 Cut (Contact) · Inhale Peak · Exhale Peak
+  Breath Lock (Micro) · Layer 3 Cut (Contact) · Inhale Peak · Exhale Peak ·
+  **Layer 3 Release (un-latch)** — plus an **AVE5 target-button dropdown**
+  per relay (STILL…SUPERIMPOSE), see below
 - **Press shape**: press length (30–3000 ms), press count 1–5 (**double/triple-click**),
   gap between presses
 - **Clock mode**: re-fire the sequence automatically every N ms

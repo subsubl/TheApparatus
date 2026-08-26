@@ -17,9 +17,10 @@ Single-page console served by the ESP32 itself; WebSocket telemetry at 20 Hz.
    - "CONTACT – live camera" overlay while touched
 4. **Breathing oscilloscope** — dual trace: biquad raw (blue) and AGC
    normalized ±1 (orange), 20 s rolling window.
-5. **Vactrol channels ×6** — per channel: AUTO/MANUAL toggle, manual level
-   slider, min/max clamps, slew. Mix/T-Bar is radar-driven in AUTO; the rest
-   are spares for other mixer controls.
+5. **Vactrol channels ×6** — per channel: AUTO/MANUAL toggle, **"Drives"
+   dropdown naming the physical WJ-AVE5 pot/lever this channel actuates**
+   (Mix/T-Bar, Color X/Y, Wipe speed, Effect level, Fade lever, Audio level),
+   manual level slider, min/max clamps, slew. Mix/T-Bar is radar-driven in AUTO.
 6. **Sensor calibration** — range sliders for every DSP/state threshold;
    *Save to NVS* persists everything (incl. relay/boot config).
 7. **Relay bank ×8** — per relay: name, trigger dropdown, press length/count/

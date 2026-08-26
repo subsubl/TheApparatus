@@ -20,13 +20,18 @@ const config = {
   variance_threshold_cm: 5, breath_threshold: 0.45,
   pi_zone_near_cm: 150, pi_zone_far_cm: 350,
   pwm_min_clamp: 0, pwm_max_clamp: 255,
+  ave5_buttons: ["(unassigned)", "STILL (freeze)", "STROBE", "MOSAIC", "PAINT",
+    "NEGATIVE", "CUT (bus switch)", "A/B (bus select)", "WIPE (arm)",
+    "WIPE PATTERN select", "SUPERIMPOSE (camera key)", "FADE (auto fade)"],
+  ave5_pots: ["(free use / unlabeled)", "Mix/T-Bar lever", "Color balance X",
+    "Color balance Y", "Wipe speed", "Effect level", "Fade lever", "Audio level"],
   vactrol: Array.from({ length: 6 }, (_, i) => ({
     auto_mode: i === 0, min_clamp: 0, max_clamp: 255,
-    slew_per_ms: 2, manual_value: 128 })),
+    slew_per_ms: 2, manual_value: 128, ave5_pot: i + 1 })),
   fx: Array.from({ length: 8 }, (_, i) => ({
     name: "WJ-BTN" + (i + 1), trigger: 0, press_length_ms: 120,
     press_count: 1, press_gap_ms: 150, pin: [4,18,19,21,22,23,32,15][i],
-    clock_enable: false, clock_interval_ms: 5000 })),
+    clock_enable: false, clock_interval_ms: 5000, ave5_button: i + 1 })),
   boot: {
     enabled: true, start_delay_ms: 3000, step_count: 2,
     steps: Array.from({ length: 12 }, () => ({

@@ -119,6 +119,7 @@ const CW=cv.width,CH=cv.height,CY=CH/2,SC=CH*.42;
 const rv=document.getElementById('radar'),rx=rv.getContext('2d');
 const RW=rv.width,RH=rv.height,RBASE_Y=RH-20;RMAX_CM=675;RSCALE=(RH-40)/RMAX_CM;
 const TRIGGERS=["Manual","Layer 1 Return (Idle)","Layer 2 Entry (Macro)","Breath Lock (Micro)","Layer 3 Cut (Contact)","Inhale Peak","Exhale Peak"];
+let AVE5_BUTTONS=[],AVE5_POTS=[];   // filled from config payload
 const VAC_NAMES=["Mix/T-Bar","Color X","Color Y","Wipe Speed","Effect Level","Aux Mod"];
 const PIN_OPTIONS=[4,5,12,13,14,15,16,17,18,19,21,22,23,25,26,27,32,33];
 
@@ -209,6 +210,8 @@ function drawRadar(p){
 }
 let CFG=null;const dragging={};
 function buildUI(c){CFG=c;
+ AVE5_BUTTONS=c.ave5_buttons||AVE5_BUTTONS;
+ AVE5_POTS=c.ave5_pots||AVE5_POTS;
  // calibration sliders
  const cal=[['D_min','D_min (cm)',10,500,1,'cm'],['D_max','D_max (cm)',50,675,1,'cm'],
  ['hysteresis','Hysteresis',0,100,1,'cm'],['gamma_exponent','Gamma γ',0.1,4,0.01,''],
@@ -225,6 +228,7 @@ function buildUI(c){CFG=c;
   const v=c.vactrol[i];
   return `<div class="vac-card"><div class="vac-head"><span class="vac-name">${i+1}. ${n}</span>
   <label class="vac-auto"><input type="checkbox" id="va_${i}" ${v.auto_mode?'checked':''} onchange="setVacAuto(${i},this.checked)"> AUTO</label></div>
+  <div class="slider-row"><label>Drives</label><select id="vpot_${i}" style="flex:1" onchange="setVacPot(${i})">${AVE5_POTS.map((p,pi)=>`<option value="${pi}" ${v.ave5_pot===pi?'selected':''}>${p}</option>`).join('')}</select></div>
   <div class="slider-row"><label>Manual level</label><input type="range" id="vs_${i}" min="0" max="1023" value="${v.manual_value}" oninput="setVac(${i},this.value)" ${v.auto_mode?'disabled':''}><span class="val" id="vv${i}">${v.manual_value}</span></div>
   <div class="slider-row"><label>Clamp min / max</label>
   <input type="number" id="vcmin_${i}" min="0" max="1022" value="${v.min_clamp}" style="width:80px">
@@ -233,6 +237,7 @@ function buildUI(c){CFG=c;
  // relays
  document.getElementById('relays').innerHTML=c.fx.map((r,i)=>
   `<div class="relay-card" id="rcard${i}"><div class="relay-name">${r.name}<span class="relay-dot" id="rdot${i}"></span></div>
+  <select id="rb_${i}" title="WJ-AVE5 button this relay presses" onchange="setRelayBtn(${i})">${AVE5_BUTTONS.map((b,bi)=>`<option value="${bi}" ${r.ave5_button===bi?'selected':''}>${b}</option>`).join('')}</select>
   <select id="rt_${i}" onchange="setRelayCfg(${i})">${TRIGGERS.map((t,ti)=>`<option value="${ti}" ${r.trigger===ti?'selected':''}>${t}</option>`).join('')}</select>
   <div style="display:flex;gap:4px">
   <input type="number" id="rl_${i}" min="30" max="3000" step="10" value="${r.press_length_ms}" title="press ms" onchange="setRelayCfg(${i})">
@@ -285,6 +290,10 @@ function setRelayCfg(i,clockOnly){
   press_gap_ms:parseInt(document.getElementById('rg_'+i).value)}))}
 function remapPin(i){ws.send(JSON.stringify({type:'relay_pin',index:i,
  pin:parseInt(document.getElementById('rpin_'+i).value)}))}
+function setRelayBtn(i){ws.send(JSON.stringify({type:'relay_ave5_button',index:i,
+ button:parseInt(document.getElementById('rb_'+i).value)}))}
+function setVacPot(i){ws.send(JSON.stringify({type:'vactrol_pot',ch:i,
+ pot:parseInt(document.getElementById('vpot_'+i).value)}))}
 function replayBoot(){ws.send(JSON.stringify({type:'boot_replay'}))}
 function fireRelay(i){ws.send(JSON.stringify({type:'relay_fire',index:i}))}
 function stopRelay(i){ws.send(JSON.stringify({type:'relay_stop',index:i}))}
@@ -298,7 +307,15 @@ document.getElementById('saveBtn').onclick=()=>{
   min_clamp:parseInt(document.getElementById('vcmin_'+i).value),
   max_clamp:parseInt(document.getElementById('vcmax_'+i).value),
   slew_per_ms:parseFloat(document.getElementById('vslew_'+i).value),
-  manual_value:parseInt(document.getElementById('vs_'+i).value)});
+  manual_value:parseInt(document.getElementById('vs_'+i).value),
+  ave5_pot:parseInt(document.getElementById('vpot_'+i).value)});
+ p.fx=CFG.fx.map((r,i)=>({trigger:parseInt(document.getElementById('rt_'+i).value),
+  press_length_ms:parseInt(document.getElementById('rl_'+i).value),
+  press_count:parseInt(document.getElementById('rn_'+i).value),
+  press_gap_ms:parseInt(document.getElementById('rg_'+i).value),
+  clock_enable:document.getElementById('rclk_'+i).checked,
+  clock_interval_ms:parseInt(document.getElementById('rci_'+i).value),
+  ave5_button:parseInt(document.getElementById('rb_'+i).value)}));
  // boot sequence
  const stepsOn=[];for(let i=0;i<BOOT_STEPS_MAX;i++){
   if(document.getElementById('bs_on_'+i).checked)stepsOn.push(i)}
@@ -395,6 +412,12 @@ void WebConsole::_sendFullConfig(AsyncWebSocketClient* client) {
     c["pwm_min_clamp"] = g_config.pwm_min_clamp;
     c["pwm_max_clamp"] = g_config.pwm_max_clamp;
 
+    // WJ-AVE5 control-surface catalogs for the GUI dropdowns
+    JsonArray abtns = c["ave5_buttons"].to<JsonArray>();
+    for (unsigned b = 0; b < AVE5_BUTTON_COUNT; b++) abtns.add(AVE5_BUTTONS[b]);
+    JsonArray apots = c["ave5_pots"].to<JsonArray>();
+    for (unsigned q = 0; q < AVE5_POT_COUNT; q++) apots.add(AVE5_POTS[q]);
+
     JsonArray vac = c["vactrol"].to<JsonArray>();
     for (int i = 0; i < VACTROL_COUNT; i++) {
         JsonObject v = vac.add<JsonObject>();
@@ -403,6 +426,7 @@ void WebConsole::_sendFullConfig(AsyncWebSocketClient* client) {
         v["max_clamp"] = g_config.vactrol[i].max_clamp;
         v["slew_per_ms"] = g_config.vactrol[i].slew_per_ms;
         v["manual_value"] = g_config.vactrol[i].manual_value;
+        v["ave5_pot"] = g_config.vactrol[i].ave5_pot;
     }
 
     JsonArray fx = c["fx"].to<JsonArray>();
@@ -416,6 +440,7 @@ void WebConsole::_sendFullConfig(AsyncWebSocketClient* client) {
         r["pin"] = g_relays.getPin(i);
         r["clock_enable"] = g_config.fx[i].clock_enable;
         r["clock_interval_ms"] = g_config.fx[i].clock_interval_ms;
+        r["ave5_button"] = g_config.fx[i].ave5_button;
     }
 
     // Boot sequence
@@ -467,11 +492,19 @@ void WebConsole::_handleWsMessage(AsyncWebSocketClient* client, uint8_t* data, s
             s.press_length_ms   = constrain(doc["press_length_ms"].as<int>(), 30, 3000);
             s.press_count       = constrain(doc["press_count"].as<int>(), 1, 5);
             s.press_gap_ms      = constrain(doc["press_gap_ms"].as<int>(), 20, 2000);
+            if (!doc["ave5_button"].isNull())
+                s.ave5_button   = constrain(doc["ave5_button"].as<int>(), 0, (int)AVE5_BUTTON_COUNT - 1);
             if (!doc["clock_enable"].isNull())
                 s.clock_enable = doc["clock_enable"] | false;
             if (!doc["clock_interval_ms"].isNull())
                 s.clock_interval_ms = constrain(doc["clock_interval_ms"].as<int>(), 500, 600000);
         }
+    }
+    else if (!strcmp(type, "relay_ave5_button")) {
+        uint8_t idx = doc["index"] | 255;
+        if (idx < RELAY_COUNT)
+            g_config.fx[idx].ave5_button =
+                constrain(doc["button"].as<int>(), 0, (int)AVE5_BUTTON_COUNT - 1);
     }
     else if (!strcmp(type, "relay_pin")) {
         uint8_t idx = doc["index"] | 255;
@@ -492,6 +525,12 @@ void WebConsole::_handleWsMessage(AsyncWebSocketClient* client, uint8_t* data, s
             g_config.vactrol[ch].manual_value =
                 constrain(doc["value"].as<int>(), 0, VACTROL_PWM_MAX);
         }
+    }
+    else if (!strcmp(type, "vactrol_pot")) {
+        uint8_t ch = doc["ch"] | 255;
+        if (ch < VACTROL_COUNT)
+            g_config.vactrol[ch].ave5_pot =
+                constrain(doc["pot"].as<int>(), 0, (int)AVE5_POT_COUNT - 1);
     }
     else if (!strcmp(type, "save_config")) {
         JsonObject p = doc["payload"];
@@ -517,7 +556,25 @@ void WebConsole::_handleWsMessage(AsyncWebSocketClient* client, uint8_t* data, s
             g_config.vactrol[i].max_clamp    = v["max_clamp"] | g_config.vactrol[i].max_clamp;
             g_config.vactrol[i].slew_per_ms  = v["slew_per_ms"] | g_config.vactrol[i].slew_per_ms;
             g_config.vactrol[i].manual_value = v["manual_value"] | g_config.vactrol[i].manual_value;
+            g_config.vactrol[i].ave5_pot     = v["ave5_pot"] | g_config.vactrol[i].ave5_pot;
             i++;
+        }
+
+        // Relay bank: persisted here so GUI edits survive reboots
+        JsonArray fxp = p["fx"].as<JsonArray>();
+        i = 0;
+        if (!fxp.isNull()) {
+            for (JsonObject r : fxp) {
+                if (i >= RELAY_COUNT) break;
+                g_config.fx[i].trigger         = constrain(r["trigger"].as<int>(), 0, FX_TRIGGER_COUNT - 1);
+                g_config.fx[i].press_length_ms = constrain(r["press_length_ms"].as<int>(), 30, 3000);
+                g_config.fx[i].press_count     = constrain(r["press_count"].as<int>(), 1, 5);
+                g_config.fx[i].press_gap_ms    = constrain(r["press_gap_ms"].as<int>(), 20, 2000);
+                g_config.fx[i].clock_enable    = r["clock_enable"] | g_config.fx[i].clock_enable;
+                g_config.fx[i].clock_interval_ms = constrain(r["clock_interval_ms"].as<int>() | (int)g_config.fx[i].clock_interval_ms, 500, 600000);
+                g_config.fx[i].ave5_button     = constrain(r["ave5_button"].as<int>(), 0, (int)AVE5_BUTTON_COUNT - 1);
+                i++;
+            }
         }
 
         JsonObject boot = p["boot"];

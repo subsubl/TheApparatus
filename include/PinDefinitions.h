@@ -194,6 +194,40 @@ static const char* const TRIGGER_NAMES[] = {
 };
 #define FX_TRIGGER_COUNT 7
 
+/* ============================================================================
+ * WJ-AVE5 PHYSICAL CONTROL SURFACE
+ * Targets for the relay bank (buttons/keys) and the vactrol bank (pots/
+ * levers) - exactly the functions documented in the AVE5 Operating
+ * Instructions (see wiki/WJ-AVE5-Notes.md). Index 0 always = unassigned.
+ * ============================================================================ */
+static const char* const AVE5_BUTTONS[] = {
+    "(unassigned)",
+    "STILL (freeze)",
+    "STROBE",
+    "MOSAIC",
+    "PAINT",
+    "NEGATIVE",
+    "CUT (bus switch)",
+    "A/B (bus select)",
+    "WIPE (arm)",
+    "WIPE PATTERN select",
+    "SUPERIMPOSE (camera key)",
+    "FADE (auto fade)"
+};
+#define AVE5_BUTTON_COUNT (sizeof(AVE5_BUTTONS)/sizeof(AVE5_BUTTONS[0]))
+
+static const char* const AVE5_POTS[] = {
+    "(free use / unlabeled)",
+    "Mix/T-Bar lever",
+    "Color balance X",
+    "Color balance Y",
+    "Wipe speed",
+    "Effect level",
+    "Fade lever",
+    "Audio level"
+};
+#define AVE5_POT_COUNT (sizeof(AVE5_POTS)/sizeof(AVE5_POTS[0]))
+
 struct FxRelaySettings {
     bool     enabled;
     uint8_t  trigger;          // FxTrigger
@@ -203,6 +237,7 @@ struct FxRelaySettings {
     bool     clock_enable;     // Re-fire automatically at fixed interval
     uint16_t clock_interval_ms;// Clock period (seq restarts every N ms)
     char     name[12];
+    uint8_t  ave5_button;     // AVE5_BUTTONS index this relay presses
 };
 
 // One step of the power-on / scene-init sequence
@@ -265,13 +300,14 @@ struct VactrolSettings {
     uint16_t max_clamp;       // 0..1023
     float   slew_per_ms;      // Max counts change per millisecond
     uint16_t manual_value;    // Target when auto_mode == false
+    uint8_t ave5_pot;         // AVE5_POTS index this vactrol drives
 };
 
 /* ============================================================================
  * MASTER CALIBRATION CONFIG (NVS-persisted, versioned)
  * ============================================================================ */
 
-#define CONFIG_VERSION 3
+#define CONFIG_VERSION 4
 
 struct CalibrationConfig {
     // Distance thresholds
@@ -312,27 +348,27 @@ struct CalibrationConfig {
 
     // Per-vactrol channel settings
     VactrolSettings vactrol[VACTROL_COUNT] = {
-        // auto_mode, min, max, slew, manual
-        {true,    0, VACTROL_PWM_MAX, 2.0f,   0},   // Mix: radar-driven
-        {false,   0, VACTROL_PWM_MAX, 2.0f,   0},   // Color X: manual
-        {false,   0, VACTROL_PWM_MAX, 2.0f,   0},   // Color Y
-        {false,   0, VACTROL_PWM_MAX, 2.0f,   0},   // Wipe Speed
-        {false,   0, VACTROL_PWM_MAX, 2.0f,   0},   // Effect Level
-        {false,   0, VACTROL_PWM_MAX, 2.0f,   0}    // Aux
+        // auto_mode, min, max, slew, manual, ave5_pot
+        {true,    0, VACTROL_PWM_MAX, 2.0f,   0, 1},   // Mix: radar-driven -> Mix/T-Bar lever
+        {false,   0, VACTROL_PWM_MAX, 2.0f,   0, 2},   // Color X
+        {false,   0, VACTROL_PWM_MAX, 2.0f,   0, 3},   // Color Y
+        {false,   0, VACTROL_PWM_MAX, 2.0f,   0, 4},   // Wipe Speed
+        {false,   0, VACTROL_PWM_MAX, 2.0f,   0, 5},   // Effect Level
+        {false,   0, VACTROL_PWM_MAX, 2.0f,   0, 6}    // Aux -> Fade lever
     };
 
     // Per-relay settings
     FxRelaySettings fx[RELAY_COUNT] = {
-        // enabled, trigger, press_len, count, gap, clock, clk_int, name
-        {true, TRIG_MANUAL,       120, 1, 150, false, 5000, "WJ-BTN1"},
-        {true, TRIG_MANUAL,       120, 1, 150, false, 5000, "WJ-BTN2"},
-        {true, TRIG_MANUAL,       120, 1, 150, false, 5000, "WJ-BTN3"},
-        {true, TRIG_MANUAL,       120, 1, 150, false, 5000, "WJ-BTN4"},
-        {true, TRIG_MANUAL,       120, 1, 150, false, 5000, "WJ-BTN5"},
-        {true, TRIG_MANUAL,       120, 1, 150, false, 5000, "WJ-BTN6"},
+        // enabled, trigger, press_len, count, gap, clock, clk_int, name, ave5_button
+        {true, TRIG_MANUAL,       120, 1, 150, false, 5000, "WJ-BTN1", 1},
+        {true, TRIG_MANUAL,       120, 1, 150, false, 5000, "WJ-BTN2", 2},
+        {true, TRIG_MANUAL,       120, 1, 150, false, 5000, "WJ-BTN3", 3},
+        {true, TRIG_MANUAL,       120, 1, 150, false, 5000, "WJ-BTN4", 4},
+        {true, TRIG_MANUAL,       120, 1, 150, false, 5000, "WJ-BTN5", 8},
+        {true, TRIG_MANUAL,       120, 1, 150, false, 5000, "WJ-BTN6", 6},
         // Camera imposition = AVE5's own keyer, pressed by this relay on contact:
-        {true, TRIG_ON_L3_CUT,    120, 1, 150, false, 5000, "WJ-CAM"},
-        {true, TRIG_MANUAL,       120, 1, 150, false, 5000, "WJ-BTN8"}
+        {true, TRIG_ON_L3_CUT,    120, 1, 150, false, 5000, "WJ-CAM", 10},
+        {true, TRIG_MANUAL,       120, 1, 150, false, 5000, "WJ-BTN8", 12}
     };
 
     // Power-on button sequence (mixer mains-on ritual)

@@ -119,10 +119,12 @@ Panels:
 4. **Breathing oscilloscope** — biquad raw + AGC normalized traces @ 20 Hz
 5. **Vactrol channels ×6** — AUTO/MANUAL toggle, manual slider, min/max clamp, per-channel slew
 6. **Sensor calibration** — D_min/D_max/hysteresis/gamma/M/slew/variance/breath-threshold/Pi zones + PWM clamps → Save to NVS / Factory reset
-7. **Relay bank ×8** — trigger dropdown, press length/count/gap, clock toggle +
-   interval, **GPIO remap dropdown**, FIRE/STOP buttons, live pressed dot
+7. **Relay bank ×8** — per relay: **AVE5 target-button dropdown** (STILL,
+   STROBE, MOSAIC, PAINT, … SUPERIMPOSE), trigger dropdown, press length/count/
+   gap, clock toggle + interval, **GPIO remap dropdown**, FIRE/STOP, live dot.
+   The whole bank persists to NVS on Save.
 8. **Boot sequence editor** — 12 steps, per-step relay/N-presses/length/gap/dwell,
-   start delay, replay button
+   start delay, replay button.
 
 WebSocket messages: `{type:"telemetry"|"config"|"saved"|...}`, client→server
 commands: `get_config`, `relay_fire`, `relay_stop`, `relay_cfg`, `relay_pin`,

@@ -69,6 +69,33 @@ test.describe("The Apparatus console", () => {
     }
   });
 
+  test("08b - AVE5 button dropdowns populated and selectable", async () => {
+    // 8 relays x 12 buttons, defaults selected from config
+    await expect(page.locator(".relay-card select[id^='rb_']")).toHaveCount(8);
+    await expect(page.locator("#rb_0")).toContainText("STILL");
+    await page.locator("#rb_2").selectOption({ index: 10 });   // SUPERIMPOSE
+    await new Promise((r) => setTimeout(r, 400));
+    const fs = require("fs");
+    const cmds = fs.readFileSync("received.log", "utf-8").trim().split("\n")
+      .map((l) => JSON.parse(l));
+    const msg = cmds.filter((m) => m.type === "relay_ave5_button" && m.index === 2).pop();
+    expect(msg).toBeTruthy();
+    expect(msg.button).toBe(10);
+  });
+
+  test("08c - vactrol 'Drives' pot dropdowns wired", async () => {
+    await expect(page.locator("#vactrols select[id^='vpot_']")).toHaveCount(6);
+    await expect(page.locator("#vpot_0")).toContainText("Mix/T-Bar lever");
+    await page.locator("#vpot_5").selectOption({ index: 7 });  // Audio level
+    await new Promise((r) => setTimeout(r, 400));
+    const fs = require("fs");
+    const cmds = fs.readFileSync("received.log", "utf-8").trim().split("\n")
+      .map((l) => JSON.parse(l));
+    const msg = cmds.filter((m) => m.type === "vactrol_pot" && m.ch === 5).pop();
+    expect(msg).toBeTruthy();
+    expect(msg.pot).toBe(7);
+  });
+
   test("09 - boot panel shows 12 steps + replay button", async () => {
     await expect(page.locator("#bootpanel .vac-card")).toHaveCount(12);
     await expect(page.getByRole("button", { name: /REPLAY BOOT SEQUENCE/ })).toBeVisible();
@@ -110,6 +137,9 @@ test.describe("The Apparatus console", () => {
     const save = cmds.filter((m) => m.type === "save_config").pop();
     expect(save.payload.boot.step_count).toBeGreaterThanOrEqual(0);
     expect(save.payload.vactrol.length).toBe(6);
+    expect(save.payload.vactrol[0].ave5_pot).toBe(1);          // Mix -> T-Bar
+    expect(save.payload.fx.length).toBe(8);                    // relay bank persisted!
+    expect(save.payload.fx[6].ave5_button).toBeGreaterThan(0); // WJ-CAM target set
   });
 
   test("14 - no console errors during 3s of live telemetry", async () => {

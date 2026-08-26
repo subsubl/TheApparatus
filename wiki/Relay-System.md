@@ -6,6 +6,11 @@ active-LOW (GPIO LOW = pressed).
 
 ## Trigger sources
 
+Each relay additionally carries an **AVE5 target-button assignment**
+(`relay_ave5_button` / persisted): which physical mixer control it presses —
+STILL, STROBE, MOSAIC, PAINT, NEGATIVE, CUT, A/B, WIPE arm, WIPE pattern,
+SUPERIMPOSE (camera key), FADE. See [[WJ-AVE5-Notes]] for the default plan.
+
 | Trigger | Fires when |
 |---------|-----------|
 | Manual | GUI FIRE / performer button |

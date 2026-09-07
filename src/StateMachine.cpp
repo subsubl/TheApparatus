@@ -16,10 +16,12 @@
  */
 
 #include "StateMachine.h"
+#ifndef APPARATUS_NATIVE_TEST
 #include <Arduino.h>
+extern HardwareSerial PiLink;  // Defined in main.cpp
+#endif
 #include <math.h>
 
-extern HardwareSerial PiLink;  // Defined in main.cpp
 
 /* ============================================================================
  * CONSTRUCTOR
@@ -36,10 +38,13 @@ ApparatusStateMachine::ApparatusStateMachine(DSPPipeline& dsp) : _dsp(dsp) {
 bool ApparatusStateMachine::getPiTrigger() const { return _pi_trigger_active; }
 
 static void piSend(const char* cmd) {
+#ifndef APPARATUS_NATIVE_TEST
     PiLink.print(cmd);
     PiLink.print('\n');
+#endif
     log_i("PiLink -> %s", cmd);
 }
+
 
 /* ============================================================================
  * MAIN UPDATE
@@ -144,6 +149,9 @@ void ApparatusStateMachine::_handleMicro(float dsp_normalized) {
 
 void ApparatusStateMachine::_handleContact(bool touch_active, const RadarFrame& frame) {
     if (touch_active) {
+        if (_current_state != STATE_CONTACT) {
+            _transitionTo(STATE_CONTACT);
+        }
         if (!_pi_trigger_active) {
             // Rising edge of CONTACT: fire the Layer 3 cut ONCE.
             // Live-camera superimposition is handled on the mixer itself:
@@ -155,6 +163,7 @@ void ApparatusStateMachine::_handleContact(bool touch_active, const RadarFrame& 
         _updatePWMOutput(1.0f);   // Instant full-scale (VactrolManager bypasses slew)
         return;
     }
+
 
     // Touch released
     float dist = _effectiveDistance(frame);

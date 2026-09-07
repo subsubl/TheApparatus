@@ -4,7 +4,10 @@
  */
 
 #include "DSP.h"
+#ifndef APPARATUS_NATIVE_TEST
 #include <Arduino.h>
+#endif
+
 
 /* ============================================================================
  * CONSTRUCTOR

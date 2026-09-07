@@ -13,7 +13,14 @@ if [ -f "${CFG}" ]; then
 	# Composite defaults to NTSC unless told otherwise; we are PAL here.
 	sed -i 's/^sdtv_mode=.*/sdtv_mode=2/' "${CFG}"
 	grep -q '^sdtv_mode=' "${CFG}" || echo 'sdtv_mode=2' >> "${CFG}"
-	echo "config.txt: enable_tvout=1, sdtv_mode=2 (PAL)"
+	# SDTV aspect ratio: 1 = 4:3 for analog composite video outputs
+	sed -i 's/^sdtv_aspect=.*/sdtv_aspect=1/' "${CFG}"
+	grep -q '^sdtv_aspect=' "${CFG}" || echo 'sdtv_aspect=1' >> "${CFG}"
+	# Disable overscan black borders on analog video signals
+	sed -i 's/^disable_overscan=.*/disable_overscan=1/' "${CFG}"
+	grep -q '^disable_overscan=' "${CFG}" || echo 'disable_overscan=1' >> "${CFG}"
+	echo "config.txt: enable_tvout=1, sdtv_mode=2 (PAL), sdtv_aspect=1 (4:3), disable_overscan=1"
+
 else
 	echo "FATAL: ${CFG} missing"
 	exit 1

@@ -15,8 +15,40 @@
 #ifndef PIN_DEFINITIONS_H
 #define PIN_DEFINITIONS_H
 
+#ifdef APPARATUS_NATIVE_TEST
+#include <cstdint>
+#include <cstdio>
+#include <algorithm>
+#include <cmath>
+#ifndef PI
+#define PI 3.14159265358979323846f
+#endif
+#ifndef HIGH
+#define HIGH 1
+#define LOW  0
+#endif
+#ifndef constrain
+#define constrain(amt,low,high) ((amt)<(low)?(low):((amt)>(high)?(high):(amt)))
+#endif
+#ifndef log_i
+#define log_i(...)
+#define log_e(...)
+#endif
+class Preferences {
+public:
+    bool begin(const char*, bool) { return true; }
+    bool isKey(const char*) { return false; }
+    size_t getBytesLength(const char*) { return 0; }
+    size_t getBytes(const char*, void*, size_t) { return 0; }
+    size_t putBytes(const char*, const void*, size_t) { return 0; }
+    void clear() {}
+};
+#else
 #include <Arduino.h>
 #include <Preferences.h>
+#endif
+
+
 
 /* ============================================================================
  * VACTROL PWM OUTPUTS - 6 channels, LEDC peripheral

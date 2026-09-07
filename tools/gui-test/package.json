@@ -4,8 +4,10 @@
   "description": "",
   "main": "gui.spec.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "npx playwright test",
+    "sim": "node ../interactive_sim.js"
   },
+
   "keywords": [],
   "author": "",
   "license": "ISC",

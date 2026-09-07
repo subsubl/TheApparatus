@@ -30,6 +30,7 @@ import time
 VIDEO_EXTS = (".mp4", ".mkv", ".mov", ".avi", ".ts")
 POLL_INTERVAL_S = float(os.environ.get("APPARATUS_MEDIA_POLL", "10"))
 MEDIA_DIR = os.environ.get("APPARATUS_MEDIA_DIR", "/home/pi/media")
+RAM_DIR = os.environ.get("APPARATUS_RAM_DIR", "/dev/shm/apparatus_media")
 PLACEHOLDER_AFTER_S = float(os.environ.get("APPARATUS_PLACEHOLDER_AFTER", "20"))
 
 TAG = "[autoloader]"
@@ -39,38 +40,77 @@ def log(msg):
     print(f"{TAG} {time.strftime('%H:%M:%S')} {msg}", flush=True)
 
 
-def find_media(media_dir=MEDIA_DIR, stems=("layer1_loop", "layer1")):
-    """Return best matching filepath or None.
+def find_media(stems=("layer1_loop", "layer1")):
+    """Return best matching filepath or None across local media and USB mounts.
 
+    Searches /home/pi/media as well as USB automount points (/media, /mnt).
     Priority: earlier stem in `stems` wins; within same stem, newest
     modification time wins. Case-insensitive prefix match.
     """
-    if not os.path.isdir(media_dir):
-        return None
+    search_dirs = [MEDIA_DIR, "/media", "/mnt"]
+    # Include child subdirectories of /media (e.g. /media/pi/USB_NAME)
+    for base in ("/media", "/media/pi", "/mnt"):
+        if os.path.isdir(base):
+            try:
+                for sub in os.listdir(base):
+                    full_sub = os.path.join(base, sub)
+                    if os.path.isdir(full_sub) and full_sub not in search_dirs:
+                        search_dirs.append(full_sub)
+            except OSError:
+                pass
+
     best = None
     best_key = None
-    try:
-        entries = os.listdir(media_dir)
-    except OSError as e:
-        log(f"listdir failed: {e}")
-        return None
-    for fname in entries:
-        low = fname.lower()
-        if not low.endswith(VIDEO_EXTS):
+
+    for mdir in search_dirs:
+        if not os.path.isdir(mdir):
             continue
-        for prio, stem in enumerate(stems):
-            if low.startswith(stem):
-                path = os.path.join(media_dir, fname)
-                try:
-                    mtime = os.stat(path).st_mtime_ns
-                except OSError:
+        try:
+            entries = os.listdir(mdir)
+        except OSError:
+            continue
+        for fname in entries:
+            low = fname.lower()
+            if not low.endswith(VIDEO_EXTS):
+                continue
+            for prio, stem in enumerate(stems):
+                if low.startswith(stem):
+                    path = os.path.join(mdir, fname)
+                    try:
+                        mtime = os.stat(path).st_mtime_ns
+                    except OSError:
+                        break
+                    key = (prio, -mtime)
+                    if best_key is None or key < best_key:
+                        best_key = key
+                        best = path
                     break
-                key = (prio, -mtime)
-                if best_key is None or key < best_key:
-                    best_key = key
-                    best = path
-                break
     return best
+
+
+def prepare_ram_media(src_path):
+    """Copy matching video file into RAM drive (/dev/shm) for zero-latency, zero-SD-wear playback."""
+    if not src_path or not os.path.exists(src_path):
+        return src_path
+    try:
+        os.makedirs(RAM_DIR, exist_ok=True)
+        fname = os.path.basename(src_path)
+        ram_path = os.path.join(RAM_DIR, f"ram_{fname}")
+
+        # If already copied and size/mtime match, return RAM path directly
+        if os.path.exists(ram_path):
+            if os.stat(src_path).st_size == os.stat(ram_path).st_size:
+                return ram_path
+
+        log(f"Copying {src_path} into RAM drive ({RAM_DIR})...")
+        import shutil
+        shutil.copy2(src_path, ram_path)
+        log(f"RAM copy complete: {ram_path} ({os.path.getsize(ram_path)} bytes)")
+        return ram_path
+    except Exception as e:
+        log(f"RAM copy skipped/failed ({e}) - playing directly from disk")
+        return src_path
+
 
 
 class AutoPlayer:
@@ -92,8 +132,10 @@ class AutoPlayer:
     def _spawn(self, path):
         cmd = ["mpv", f"--input-ipc-server={self.socket}", *self.fixed_args]
         if path:
-            cmd.append(path)
+            play_path = prepare_ram_media(path)
+            cmd.append(play_path)
         else:
+
             # Gray placeholder: instantly visible "no media" card
             cmd += [
                 "--loops=inf",

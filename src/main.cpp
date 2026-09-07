@@ -169,6 +169,8 @@ void setup() {
 #else
     if (!g_radar.begin()) {
         log_e("Radar init failed - continuing radarless");
+    } else {
+        g_radar.setGateSensitivities(g_config.gate_sensitivity);
     }
 #endif
 
@@ -218,10 +220,12 @@ void loop() {
 
     // 5. Vactrols (mix target normalized 0-1 from state machine)
     float mix_target = g_state_machine.getPWMOutputFloat();
-    g_vactrols.update(mix_target, now_state == STATE_CONTACT);
+    float velocity = g_dsp.getVelocity();
+    float breath = dsp_ready ? dsp_norm : 0.0f;
+    g_vactrols.update(mix_target, velocity, breath, now_state == STATE_CONTACT);
 
     // 6. Relays + performer buttons + boot ritual
-    g_relays.update(state_changed, now_state, dsp_ready ? dsp_norm : 0.0f);
+    g_relays.update(state_changed, now_state, breath, velocity);
     g_buttons.update(g_relays);
     g_boot.update(g_relays);
 
@@ -233,6 +237,18 @@ void loop() {
         log_w("Factory reset - restarting");
         delay(200);
         ESP.restart();
+    }
+
+    // 7.5 Wi-Fi AP Self-Healing
+    static uint32_t last_wifi_check = 0;
+    if (millis() - last_wifi_check > 30000) {
+        last_wifi_check = millis();
+        if (WiFi.softAPIP() == IPAddress(0,0,0,0)) {
+            log_w("WiFi AP down, restarting...");
+            WiFi.softAPdisconnect();
+            delay(100);
+            WiFi.softAP(g_config.wifi_ssid, g_config.wifi_password);
+        }
     }
 
     // 8. Telemetry 20 Hz
@@ -260,7 +276,7 @@ void loop() {
         }
         for (int i = 0; i < VACTROL_COUNT; i++) {
             p.vactrol_val[i] = g_vactrols.getValue(i);
-            p.vactrol_auto[i] = g_config.vactrol[i].auto_mode;
+            p.vactrol_auto[i] = (g_config.vactrol[i].source_mode != 0);
         }
         g_web.broadcastTelemetry(p);
     }

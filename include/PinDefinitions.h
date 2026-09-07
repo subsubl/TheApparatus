@@ -33,7 +33,10 @@
 #ifndef log_i
 #define log_i(...)
 #define log_e(...)
+#define log_w(...)
+#define log_d(...)
 #endif
+uint32_t millis();
 class Preferences {
 public:
     bool begin(const char*, bool) { return true; }
@@ -205,28 +208,34 @@ static const char* const STATE_NAMES[] = {"IDLE", "MACRO", "MICRO", "CONTACT"};
  * FX RELAY SYSTEM - trigger conditions & press shaping
  * ============================================================================ */
 
-enum FxTrigger : uint8_t {
-    TRIG_MANUAL          = 0,
-    TRIG_ON_L1_RETURN    = 1,   // IDLE entered -> back to pristine Layer 1
-    TRIG_ON_L2_ENTRY     = 2,   // MACRO entered -> dissolve into Layer 2
-    TRIG_ON_BREATH_LOCK  = 3,   // MICRO locked
-    TRIG_ON_L3_CUT       = 4,   // CONTACT entered -> Layer 3 hard cut
-    TRIG_ON_L3_RELEASE   = 7,   // CONTACT exited -> un-press latched buttons (AVE5)
-    TRIG_INHALE          = 5,
-    TRIG_EXHALE          = 6
+enum FxRelayTrigger : uint8_t {
+    TRIG_MANUAL = 0,
+    TRIG_ON_L3_CUT,
+    TRIG_ON_L3_RELEASE,
+    TRIG_ON_L2_ENTRY,
+    TRIG_ON_L1_RETURN,
+    TRIG_ON_BREATH_LOCK,
+    TRIG_INHALE,
+    TRIG_EXHALE,
+    TRIG_ON_LUNGE,
+    TRIG_ON_RETREAT,
+    TRIG_VELOCITY_ZERO
 };
 
 static const char* const TRIGGER_NAMES[] = {
     "Manual",
-    "Layer 1 Return (Idle)",
-    "Layer 2 Entry (Macro)",
-    "Breath Lock (Micro)",
     "Layer 3 Cut (Contact)",
+    "Layer 3 Release (un-latch)",
+    "Layer 2 Entry (Macro)",
+    "Layer 1 Return (Idle)",
+    "Breath Lock (Micro)",
     "Inhale Peak",
     "Exhale Peak",
-    "Layer 3 Release (un-latch)"
+    "Lunge",
+    "Retreat",
+    "Velocity Zero"
 };
-#define FX_TRIGGER_COUNT 8
+#define FX_TRIGGER_COUNT 11
 
 /* ============================================================================
  * WJ-AVE5 PHYSICAL CONTROL SURFACE
@@ -329,12 +338,14 @@ private:
  * ============================================================================ */
 
 struct VactrolSettings {
-    bool    auto_mode;        // true = algorithm/state-machine driven
+    uint8_t source_mode;      // 0:Manual, 1:Distance, 2:Velocity, 3:Breath, 4:Lunge
+    bool    dynamic_slew;     // Scale slew rate by target speed
     uint16_t min_clamp;       // 0..1023
     uint16_t max_clamp;       // 0..1023
     float   slew_per_ms;      // Max counts change per millisecond
-    uint16_t manual_value;    // Target when auto_mode == false
+    uint16_t manual_value;    // Target when source_mode == 0
     uint8_t ave5_pot;         // AVE5_POTS index this vactrol drives
+    float   gamma;            // Channel-specific gamma curve exponent
 };
 
 /* ============================================================================
@@ -366,6 +377,7 @@ struct CalibrationConfig {
     // Radar tuning
     float variance_threshold_cm = 5.0f;
     uint32_t stationary_lock_time_ms = 1500;
+    uint8_t gate_sensitivity[RADAR_GATE_COUNT] = {50, 50, 50, 50, 50, 50, 50, 50, 50};
 
     // DSP
     float agc_epsilon = 1e-6f;
@@ -376,19 +388,21 @@ struct CalibrationConfig {
     uint32_t multiclick_window_ms = 320;
     uint32_t long_press_ms = 650;
 
-    // Breath event detection
-    float breath_threshold = 0.55f;
+    // Breath event and trigger detection
+    float breath_threshold = 0.35f;
+    float lunge_threshold_cm_s = -40.0f;
+    float retreat_threshold_cm_s = 30.0f;
     uint32_t auto_trigger_cooldown_ms = 2500;
 
     // Per-vactrol channel settings
     VactrolSettings vactrol[VACTROL_COUNT] = {
-        // auto_mode, min, max, slew, manual, ave5_pot
-        {true,    0, VACTROL_PWM_MAX, 2.0f,   0, 1},   // Mix: radar-driven -> Mix/T-Bar lever
-        {false,   0, VACTROL_PWM_MAX, 2.0f,   0, 2},   // Color X
-        {false,   0, VACTROL_PWM_MAX, 2.0f,   0, 3},   // Color Y
-        {false,   0, VACTROL_PWM_MAX, 2.0f,   0, 4},   // Wipe Speed
-        {false,   0, VACTROL_PWM_MAX, 2.0f,   0, 5},   // Effect Level
-        {false,   0, VACTROL_PWM_MAX, 2.0f,   0, 6}    // Aux -> Fade lever
+        // source, dyn_slew, min, max, slew, manual, ave5_pot, gamma
+        {1, false,    0, VACTROL_PWM_MAX, 2.0f,   0, 1, 1.5f},   // Mix: radar-driven -> Mix/T-Bar lever
+        {0, false,   0, VACTROL_PWM_MAX, 2.0f,   0, 2, 1.0f},   // Color X
+        {0, false,   0, VACTROL_PWM_MAX, 2.0f,   0, 3, 1.0f},   // Color Y
+        {0, false,   0, VACTROL_PWM_MAX, 2.0f,   0, 4, 1.0f},   // Wipe Speed
+        {0, false,   0, VACTROL_PWM_MAX, 2.0f,   0, 5, 1.0f},   // Effect Level
+        {0, false,   0, VACTROL_PWM_MAX, 2.0f,   0, 6, 1.0f}    // Aux -> Fade lever
     };
 
     // Per-relay settings

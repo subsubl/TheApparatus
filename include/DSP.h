@@ -26,31 +26,47 @@
  * EMA FILTER
  * ============================================================================ */
 
-class EMAFilter {
+class AlphaBetaFilter {
 public:
-    explicit EMAFilter(float alpha = 0.181f) : _alpha(alpha), _initialized(false), _value(0.0f) {}
+    AlphaBetaFilter(float alpha = 0.85f, float beta = 0.005f) 
+        : _alpha(alpha), _beta(beta), _initialized(false) {}
 
-    void setAlpha(float alpha) { _alpha = constrain(alpha, 0.001f, 1.0f); }
-    float getAlpha() const { return _alpha; }
-
-    float update(float input) {
-        if (!_initialized) {
-            _value = input;
-            _initialized = true;
-        } else {
-            _value = _alpha * input + (1.0f - _alpha) * _value;
-        }
-        return _value;
+    void setParams(float alpha, float beta) {
+        _alpha = constrain(alpha, 0.001f, 1.0f);
+        _beta = constrain(beta, 0.0f, 1.0f);
     }
 
-    float getValue() const { return _value; }
-    bool isInitialized() const { return _initialized; }
-    void reset(float initial = 0.0f) { _value = initial; _initialized = false; }
+    float update(float measurement, float dt) {
+        if (!_initialized) {
+            _x = measurement;
+            _v = 0.0f;
+            _initialized = true;
+            return _x;
+        }
+
+        // Predict
+        float x_pred = _x + _v * dt;
+        float v_pred = _v;
+
+        // Update
+        float residual = measurement - x_pred;
+        _x = x_pred + _alpha * residual;
+        if (dt > 0.0f) {
+            _v = v_pred + (_beta * residual) / dt;
+        }
+        
+        return _x;
+    }
+
+    float getValue() const { return _x; }
+    void reset(float initial = 0.0f) { _x = initial; _v = 0.0f; _initialized = false; }
 
 private:
     float _alpha;
+    float _beta;
     bool _initialized;
-    float _value;
+    float _x = 0.0f;
+    float _v = 0.0f;
 };
 
 /* ============================================================================
@@ -257,7 +273,7 @@ public:
     bool process(const RadarFrame& frame, float& out_normalized_resp, float& out_biquad_raw);
 
     // Telemetry getters
-    float getDistanceFiltered() const { return _distance_ema.getValue(); }
+    float getDistanceFiltered() const { return _distance_tracker.getValue(); }
     float getBiquadRaw() const { return _last_biquad_output; }
     float getAGCNormalized() const { return _last_agc_output; }
     int getPeakGate() const { return _current_peak_gate; }
@@ -265,14 +281,14 @@ public:
     float getGateAlpha() const { return _last_alpha; }
 
     // Live reconfiguration
-    void updateEMAAlpha(float alpha) { _distance_ema.setAlpha(alpha); }
+    void updateEMAAlpha(float alpha) { _distance_tracker.setParams(alpha, 0.005f); }
     void updateAGCWindow(size_t size) { _agc.resize(size); }
     void reset();
 
 private:
     const CalibrationConfig& _config;
 
-    EMAFilter _distance_ema;
+    AlphaBetaFilter _distance_tracker;
     GateInterpolator _gate_interpolator;
     BiquadFilter _biquad;
     AGCNormalizer _agc;

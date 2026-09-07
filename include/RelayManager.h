@@ -21,8 +21,9 @@ public:
     void begin();
 
     // Poll every loop. state_changed: SM transitioned this tick;
-    // new_state valid only then; agc = breathing wave [-1,+1].
-    void update(bool state_changed, ApparatusState_t new_state, float agc);
+    // Must be called at loop rate to run non-blocking delays
+    // and process layer-linked triggers.
+    void update(bool state_changed, ApparatusState_t new_state, float agc, float velocity_cm_s);
 
     // === GPIO remapping (GUI-configurable relay pin matrix) ===
     bool remapPin(uint8_t index, uint8_t new_pin);   // Returns false on conflict
@@ -52,13 +53,17 @@ public:
 private:
     FxRelayRuntime _rt[RELAY_COUNT] = {};
     uint32_t _last_breath_fire[RELAY_COUNT] = {0};
+    uint32_t _last_zero_fire = 0;
+    float    _last_velocity = 0.0f;
+    bool     _lunge_latched = false;
+    bool     _retreat_latched = false;
     uint8_t  _active_pins[RELAY_COUNT];     // Runtime pin assignment
 
     void _writeLevel(uint8_t index, bool pressed);
     void _sequencerTick(uint8_t i);
     void _clockTick(uint8_t i);
     void _autoTriggerCheck(bool state_changed, ApparatusState_t prev,
-                           ApparatusState_t new_state, float agc);
+                           ApparatusState_t new_state, float agc, float velocity_cm_s);
     bool _cooldownOk(uint8_t index) const;
 };
 

@@ -424,3 +424,33 @@ void RadarParser::printStatus() const {
           (unsigned long)_parse_errors,
           (unsigned long)(millis() - _last_frame_time));
 }
+
+void RadarParser::setGateSensitivities(const uint8_t sensitivities[RADAR_GATE_COUNT]) {
+#ifndef APPARATUS_SIM_MODE
+    if (!_waitAckFor(RADAR_CMD_ENABLE_CONFIG, 0)) {
+        _sendCommand(RADAR_CMD_ENABLE_CONFIG, (const uint8_t*)"\x01\x00", 2);
+        if (!_waitAckFor(RADAR_CMD_ENABLE_CONFIG, 1000)) return;
+    }
+    
+    for (int i = 0; i < RADAR_GATE_COUNT; i++) {
+        uint8_t payload[18] = {0};
+        payload[0] = 0x01; // Command word 0x0001: set single gate sensitivity
+        payload[1] = 0x00;
+        
+        // Gate index (4 bytes)
+        payload[2] = i; 
+        
+        // Moving sensitivity (4 bytes)
+        payload[6] = sensitivities[i];
+        
+        // Stationary sensitivity (4 bytes)
+        payload[10] = sensitivities[i];
+        
+        _sendCommand(0x0064, payload, 18);
+        _waitAckFor(0x0064, 200);
+    }
+    
+    _sendCommand(RADAR_CMD_DISABLE_CONFIG);
+    _waitAckFor(RADAR_CMD_DISABLE_CONFIG, 500);
+#endif
+}

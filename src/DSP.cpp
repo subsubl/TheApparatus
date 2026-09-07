@@ -14,9 +14,8 @@
  * ============================================================================ */
 
 DSPPipeline::DSPPipeline(const CalibrationConfig& config) : _config(config) {
-    // EMA: 500 ms time constant at 10 Hz sampling
-    // alpha = 1 - exp(-dt/tau) = 1 - exp(-0.1/0.5) ≈ 0.1813
-    _distance_ema.setAlpha(1.0f - expf(-0.1f / 0.5f));
+    // Alpha-Beta tracking filter
+    _distance_tracker.setParams(0.85f, 0.005f);
 
     // Peak-gate + centroid interpolation
     _gate_interpolator = GateInterpolator(RADAR_GATE_SIZE_CM);
@@ -43,12 +42,12 @@ bool DSPPipeline::process(const RadarFrame& frame,
     _last_sample_time = now;
     _sample_count++;
 
-    // === STAGE 1: EMA on raw distance ===
+    // === STAGE 1: Alpha-Beta tracking on raw distance ===
     float raw_distance = (float)frame.detection_distance_cm;   // Authoritative field
     if (frame.target_state == TARGET_STATE_NONE || raw_distance <= 0.0f) {
         raw_distance = RADAR_MAX_DISTANCE_CM;  // Treat as "no target" for filter continuity
     }
-    float filtered_distance = _distance_ema.update(raw_distance);
+    float filtered_distance = _distance_tracker.update(raw_distance, 0.1f); // dt = 100ms
 
     // === STAGE 2: Peak-gate selection + sub-gate centroid interpolation ===
     int peak_gate = -1;
@@ -85,7 +84,7 @@ bool DSPPipeline::process(const RadarFrame& frame,
  * ============================================================================ */
 
 void DSPPipeline::reset() {
-    _distance_ema.reset();
+    _distance_tracker.reset();
     _biquad.reset();
     _agc.clear();
     _sample_count = 0;

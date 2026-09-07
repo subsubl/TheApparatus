@@ -11,21 +11,21 @@
 #include "../include/PinDefinitions.h"
 #include "../include/DSP.h"
 
+uint32_t g_mock_millis = 0;
+uint32_t millis() { return g_mock_millis; }
 
-void test_ema_filter() {
-    EMAFilter ema(0.2f);
-    assert(!ema.isInitialized());
+void test_alphabeta_filter() {
+    AlphaBetaFilter ab(0.5f, 0.1f);
 
     // First update initializes filter to input value
-    float val = ema.update(100.0f);
-    assert(ema.isInitialized());
+    float val = ab.update(100.0f, 0.1f);
     assert(std::abs(val - 100.0f) < 1e-5);
 
     // Step update towards 200.0f
-    val = ema.update(200.0f); // 0.2 * 200 + 0.8 * 100 = 120
-    assert(std::abs(val - 120.0f) < 1e-4);
+    val = ab.update(200.0f, 0.1f); 
+    assert(val > 100.0f && val < 200.0f);
 
-    std::cout << "[PASS] test_ema_filter\n";
+    std::cout << "[PASS] test_alphabeta_filter\n";
 }
 
 void test_agc_normalizer() {
@@ -75,7 +75,7 @@ int main() {
     std::cout << "========================================\n";
     std::cout << "RUNNING NATIVE DSP UNIT TESTS\n";
     std::cout << "========================================\n";
-    test_ema_filter();
+    test_alphabeta_filter();
     test_agc_normalizer();
     test_gate_interpolator();
     test_biquad_filter();

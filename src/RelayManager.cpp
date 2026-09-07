@@ -61,14 +61,14 @@ bool RelayManager::remapPin(uint8_t index, uint8_t new_pin) {
  * UPDATE
  * ============================================================================ */
 
-void RelayManager::update(bool state_changed, ApparatusState_t new_state, float agc) {
+void RelayManager::update(bool state_changed, ApparatusState_t new_state, float agc, float velocity_cm_s) {
     static ApparatusState_t s_prev_state = STATE_IDLE;
     ApparatusState_t prev = s_prev_state;
     for (uint8_t i = 0; i < RELAY_COUNT; i++) {
         _sequencerTick(i);
         _clockTick(i);
     }
-    _autoTriggerCheck(state_changed, prev, new_state, agc);
+    _autoTriggerCheck(state_changed, prev, new_state, agc, velocity_cm_s);
     s_prev_state = new_state;
 }
 
@@ -192,7 +192,7 @@ bool RelayManager::_cooldownOk(uint8_t index) const {
 
 void RelayManager::_autoTriggerCheck(bool state_changed, ApparatusState_t prev,
                                      ApparatusState_t new_state,
-                                     float agc) {
+                                     float agc, float velocity_cm_s) {
     uint32_t now = millis();
 
     // --- Layer/state-linked triggers ---
@@ -237,6 +237,59 @@ void RelayManager::_autoTriggerCheck(bool state_changed, ApparatusState_t prev,
             }
         }
     }
+
+    // --- Velocity-based Directional Triggers ---
+    if (velocity_cm_s < g_config.lunge_threshold_cm_s) {
+        if (!_lunge_latched) {
+            _lunge_latched = true;
+            for (uint8_t i = 0; i < RELAY_COUNT; i++) {
+                if (g_config.fx[i].enabled && g_config.fx[i].trigger == TRIG_ON_LUNGE && _cooldownOk(i)) {
+                    fireSequence(i);
+                    _last_breath_fire[i] = now;
+                }
+            }
+            log_i("Velocity < %.1f cm/s: LUNGE TRIGGER", g_config.lunge_threshold_cm_s);
+        }
+    } else if (velocity_cm_s > g_config.lunge_threshold_cm_s * 0.5f) { // Hysteresis to unlatch
+        _lunge_latched = false;
+    }
+
+    if (velocity_cm_s > g_config.retreat_threshold_cm_s) {
+        if (!_retreat_latched) {
+            _retreat_latched = true;
+            for (uint8_t i = 0; i < RELAY_COUNT; i++) {
+                if (g_config.fx[i].enabled && g_config.fx[i].trigger == TRIG_ON_RETREAT && _cooldownOk(i)) {
+                    fireSequence(i);
+                    _last_breath_fire[i] = now;
+                }
+            }
+            log_i("Velocity > %.1f cm/s: RETREAT TRIGGER", g_config.retreat_threshold_cm_s);
+        }
+    } else if (velocity_cm_s < g_config.retreat_threshold_cm_s * 0.5f) {
+        _retreat_latched = false;
+    }
+
+    // --- Velocity Zero-Crossing Trigger (Micro-movements) ---
+    // Only process zero-crosses if we are relatively stationary (e.g., Micro state)
+    if (new_state == STATE_MICRO) {
+        bool crossed_zero = (_last_velocity < 0.0f && velocity_cm_s >= 0.0f) ||
+                            (_last_velocity > 0.0f && velocity_cm_s <= 0.0f);
+        
+        // Ensure it's a "real" crossing and not just tiny floating point noise (hysteresis)
+        if (crossed_zero && fabsf(velocity_cm_s - _last_velocity) > 0.5f) {
+            if ((now - _last_zero_fire) > 300) { // Fast 300ms throttle for zero crossings
+                for (uint8_t i = 0; i < RELAY_COUNT; i++) {
+                    if (g_config.fx[i].enabled && g_config.fx[i].trigger == TRIG_VELOCITY_ZERO) {
+                        fireSequence(i);
+                        // Deliberately bypassing _cooldownOk here to allow rapid firing
+                    }
+                }
+                _last_zero_fire = now;
+            }
+        }
+    }
+
+    _last_velocity = velocity_cm_s;
 }
 
 /* ============================================================================

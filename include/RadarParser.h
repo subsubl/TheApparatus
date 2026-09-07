@@ -31,6 +31,7 @@ public:
     uint32_t getFramesReceived() const { return _frames_received; }
     uint32_t getParseErrors() const { return _parse_errors; }
     void printStatus() const;
+    void setGateSensitivities(const uint8_t sensitivities[RADAR_GATE_COUNT]);
 
 private:
     static constexpr size_t RX_BUFFER_SIZE = 512;

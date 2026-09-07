@@ -25,10 +25,12 @@ public:
     // Call every loop iteration. mix_auto_target: algorithmic target for the
     // Mix/T-Bar channel in 0..1023 (already gamma-shaped by caller or raw -
     // manager applies its own gamma on top when cfg.gamma_exponent != 1).
-    // contact_active: bypasses slew + clamps for instant full-scale T-Bar hit.
-    void update(float mix_auto_target_0to1, bool contact_active);
+    // mix_auto_target_0to1: The computed target for the Mix channel
+    // velocity_cm_s: The target's velocity from AlphaBeta filter
+    // breath_wave: The target's respiration wave from Biquad/AGC
+    // contact_active: True if we are in STATE_CONTACT (override)
+    void update(float mix_auto_target_0to1, float velocity_cm_s, float breath_wave, bool contact_active);
 
-    // Manual control
     void setManual(uint8_t ch, uint16_t value_0_1023);
     void setAutoMode(uint8_t ch, bool auto_mode);
 

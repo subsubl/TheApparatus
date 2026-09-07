@@ -104,6 +104,14 @@ def prepare_ram_media(src_path):
 
         log(f"Copying {src_path} into RAM drive ({RAM_DIR})...")
         import shutil
+        
+        # RAM disk safety check: avoid exceeding 50% free RAM
+        file_size = os.path.getsize(src_path)
+        disk_usage = shutil.disk_usage(RAM_DIR)
+        if file_size > disk_usage.free * 0.5:
+            log(f"RAM copy skipped: file size ({file_size} bytes) exceeds 50% free RAM ({disk_usage.free} bytes)")
+            return src_path
+            
         shutil.copy2(src_path, ram_path)
         log(f"RAM copy complete: {ram_path} ({os.path.getsize(ram_path)} bytes)")
         return ram_path

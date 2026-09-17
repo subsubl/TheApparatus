@@ -234,8 +234,8 @@ function buildUI(c){CFG=c;
  document.getElementById('gateSens').innerHTML=c.gate_sensitivity.map((v,i)=>
   `<div class="slider-row"><label>G${i}</label><input type="range" id="gsens_${i}" min="0" max="100" value="${v}" oninput="document.getElementById('gsv_${i}').textContent=this.value"><span class="val" id="gsv_${i}">${v}</span></div>`).join('');
  // vactrols
- document.getElementById('vactrols').innerHTML=VAC_NAMES.map((n,i)=>{
-  const v=c.vactrol[i];
+ document.getElementById('vactrols').innerHTML=c.vactrol.map((v,i)=>{
+  const n=VAC_NAMES[i]||`Vactrol ${i+1}`;
    return `<div class="vac-card"><div class="vac-head"><span class="vac-name">${i+1}. ${n}</span>
    <select id="vsrc_${i}" style="font-size:.75rem;padding:2px">
     <option value="0" ${v.source_mode===0?'selected':''}>Manual</option>
@@ -323,7 +323,7 @@ document.getElementById('saveBtn').onclick=()=>{
  p.pwm_max_clamp=parseInt(document.getElementById('c_pwm_max_clamp').value);
  p.gate_sensitivity = [];
  for(let i=0;i<9;i++) p.gate_sensitivity.push(parseInt(document.getElementById('gsens_'+i).value));
- p.vactrol=[];for(let i=0;i<6;i++)p.vactrol.push({source_mode:parseInt(document.getElementById('vsrc_'+i).value),
+ p.vactrol=[];for(let i=0;i<CFG.vactrol.length;i++)p.vactrol.push({source_mode:parseInt(document.getElementById('vsrc_'+i).value),
   dynamic_slew:document.getElementById('vdyn_'+i).checked,
   min_clamp:parseInt(document.getElementById('vcmin_'+i).value),
   max_clamp:parseInt(document.getElementById('vcmax_'+i).value),

@@ -204,8 +204,8 @@ function buildUI(c){CFG=c;
  <input type="number" id="c_pwm_min_clamp" min="0" max="254" value="${c.pwm_min_clamp}" style="width:70px">
  <input type="number" id="c_pwm_max_clamp" min="1" max="255" value="${c.pwm_max_clamp}" style="width:70px"></div>`;
  // vactrols
- document.getElementById('vactrols').innerHTML=VAC_NAMES.map((n,i)=>{
-  const v=c.vactrol[i];
+ document.getElementById('vactrols').innerHTML=c.vactrol.map((v,i)=>{
+  const n=VAC_NAMES[i]||`Vactrol ${i+1}`;
   return `<div class="vac-card"><div class="vac-head"><span class="vac-name">${i+1}. ${n}</span>
   <label class="vac-auto"><input type="checkbox" id="va_${i}" ${v.auto_mode?'checked':''} onchange="setVacAuto(${i},this.checked)"> AUTO</label></div>
   <div class="slider-row"><label>Drives</label><select id="vpot_${i}" style="flex:1" onchange="setVacPot(${i})">${AVE5_POTS.map((p,pi)=>`<option value="${pi}" ${v.ave5_pot===pi?'selected':''}>${p}</option>`).join('')}</select></div>
@@ -283,7 +283,7 @@ document.getElementById('saveBtn').onclick=()=>{
  'variance_threshold_cm','breath_threshold','pi_zone_near_cm','pi_zone_far_cm'].forEach(k=>p[k]=CFG[k]);
  p.pwm_min_clamp=parseInt(document.getElementById('c_pwm_min_clamp').value);
  p.pwm_max_clamp=parseInt(document.getElementById('c_pwm_max_clamp').value);
- p.vactrol=[];for(let i=0;i<6;i++)p.vactrol.push({auto_mode:document.getElementById('va_'+i).checked,
+ p.vactrol=[];for(let i=0;i<CFG.vactrol.length;i++)p.vactrol.push({auto_mode:document.getElementById('va_'+i).checked,
   min_clamp:parseInt(document.getElementById('vcmin_'+i).value),
   max_clamp:parseInt(document.getElementById('vcmax_'+i).value),
   slew_per_ms:parseFloat(document.getElementById('vslew_'+i).value),

@@ -8,6 +8,10 @@ on:
       - 'pi/**'
       - 'image/**'
       - '.github/workflows/build-images.yml'
+    tags: ['v*']
+
+permissions:
+  contents: write
 
 jobs:
   build-image:

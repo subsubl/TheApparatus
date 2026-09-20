@@ -8,11 +8,27 @@ buttons through **8 relays**, and exposes a full calibration/control WebUI.
 
 ## Downloads / Releases
 
-**[v0.8 — First complete system release](https://github.com/subsubl/TheApparatus/releases/tag/v0.8)**:
+**[v0.9 — Dynamic channels + velocity tracking](https://github.com/subsubl/TheApparatus/releases/tag/v0.9)**:
 CI-built flashable images for **Player A** (Layer-1 looper) and **Player B**
 (master, L2/L3 + serial daemon) + ESP32 firmware zip with flash instructions.
 Both Pi images output **PAL composite** (Pi 3/Pi 4 only — Pi 5 has no
 composite out). SHA256 checksums attached. See `wiki/` for full docs.
+
+**What's new since v0.8:**
+- **Dynamic output channels** — vactrols/relays are no longer a fixed 6+8.
+  Fresh defaults are 1 vactrol + 1 relay; add/remove up to the usable ESP32
+  GPIO budget, with a shared output-pin allocator guarding against conflicts,
+  reserved/input-only pins and duplicates. Existing v4 installs migrate to the
+  new v5 config preserving their layout.
+- **Alpha-Beta velocity tracking** — distance+velocity from the DSP drive the
+  relays and vactrols (incl. lunge/retreat triggers and dynamic slew).
+- **RAM-drive playback** — Pi media autoloaders run from `/dev/shm` with USB
+  auto-copy for faster, cleaner gallery looping.
+- **ESP32 sim + native C++ test suites** — headless firmware tests for the DSP
+  pipeline, state machine, output allocator and config codec run in CI/local
+  without hardware.
+
+**[v0.8 — First complete system release](https://github.com/subsubl/TheApparatus/releases/tag/v0.8)**:
 
 ## Hardware Architecture
 

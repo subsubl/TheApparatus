@@ -12,6 +12,7 @@
 #include "WebConsole.h"
 #include "RelayManager.h"
 #include "VactrolManager.h"
+#include "RadarParser.h"
 #include <Arduino.h>
 
 /* ============================================================================
@@ -570,7 +571,9 @@ void WebConsole::_handleWsMessage(AsyncWebSocketClient* client, uint8_t* data, s
     }
     else if (!strcmp(type, "vactrol_auto")) {
         uint8_t ch = doc["ch"] | 255;
-        if (ch < VACTROL_COUNT) g_config.vactrol[ch].auto_mode = doc["auto"] | false;
+        // Legacy auto toggle: map bool -> source_mode (0=Manual, 1=Distance/auto)
+        if (ch < VACTROL_COUNT)
+            g_config.vactrol[ch].source_mode = (doc["auto"] | false) ? 1 : 0;
     }
     else if (!strcmp(type, "vactrol_manual")) {
         uint8_t ch = doc["ch"] | 255;

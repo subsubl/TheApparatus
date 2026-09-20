@@ -59,6 +59,7 @@ public:
     }
 
     float getValue() const { return _x; }
+    float getVelocity() const { return _v; }
     void reset(float initial = 0.0f) { _x = initial; _v = 0.0f; _initialized = false; }
 
 private:
@@ -274,6 +275,7 @@ public:
 
     // Telemetry getters
     float getDistanceFiltered() const { return _distance_tracker.getValue(); }
+    float getVelocity() const { return _distance_tracker.getVelocity(); }
     float getBiquadRaw() const { return _last_biquad_output; }
     float getAGCNormalized() const { return _last_agc_output; }
     int getPeakGate() const { return _current_peak_gate; }

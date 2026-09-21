@@ -27,8 +27,8 @@ fi
 
 CMDLINE="${ROOTFS_DIR}/boot/firmware/cmdline.txt"
 if [ -f "${CMDLINE}" ]; then
-	grep -q 'video=Composite-1' "${CMDLINE}" || sed -i 's/$/ video=Composite-1:720x576i,vc4.tv_norm=PAL/' "${CMDLINE}"
-	echo "cmdline.txt: video=Composite-1:720x576i,vc4.tv_norm=PAL appended"
+	grep -q 'vc4.tv_norm=PAL' "${CMDLINE}" || sed -i 's/$/ vc4.tv_norm=PAL/' "${CMDLINE}"
+	echo "cmdline.txt: vc4.tv_norm=PAL appended"
 fi
 
 # Bookworm moved display config into /etc/xdg/lxsession (desktop) or the

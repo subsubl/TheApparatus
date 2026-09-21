@@ -25,7 +25,7 @@ def main() -> int:
     # VO chain is env-overridable: mpv #17447 reports dropped frames on
     # Pi 5 with gpu/drm/opengl - set APPARATUS_MPV_VO_ARGS="--vo=gpu-next ..."
     # there if needed (Pi 3/4 defaults work fine).
-    default_vo = ("--vo=gpu --gpu-context=drm").split()
+    default_vo = ("--vo=gpu,drm").split()
     vo_args = os.environ.get("APPARATUS_MPV_VO_ARGS", "").split() or default_vo
     ap = AutoPlayer(
         stems=("master_l2_l3", "master"),

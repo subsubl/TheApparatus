@@ -10,7 +10,13 @@ ExecStart=/usr/bin/python3 /home/pi/apparatus/player_a.py
 Restart=always
 RestartSec=3
 
-SupplementaryGroups=video render input
+TTYPath=/dev/tty1
+TTYReset=yes
+TTYVHangup=yes
+StandardInput=tty
+StandardOutput=journal
+
+SupplementaryGroups=video render input tty
 
 [Install]
 WantedBy=multi-user.target

@@ -8,6 +8,8 @@
 # firmware reads it before any of our services exist.
 CFG="${ROOTFS_DIR}/boot/firmware/config.txt"
 if [ -f "${CFG}" ]; then
+	# Enable composite output parameter on vc4-kms-v3d overlay
+	sed -i 's/^dtoverlay=vc4-kms-v3d$/dtoverlay=vc4-kms-v3d,composite=1/' "${CFG}"
 	sed -i 's/^enable_tvout=.*/enable_tvout=1/' "${CFG}"
 	grep -q '^enable_tvout=' "${CFG}" || echo 'enable_tvout=1' >> "${CFG}"
 	# Composite defaults to NTSC unless told otherwise; we are PAL here.
@@ -19,11 +21,14 @@ if [ -f "${CFG}" ]; then
 	# Disable overscan black borders on analog video signals
 	sed -i 's/^disable_overscan=.*/disable_overscan=1/' "${CFG}"
 	grep -q '^disable_overscan=' "${CFG}" || echo 'disable_overscan=1' >> "${CFG}"
-	echo "config.txt: enable_tvout=1, sdtv_mode=2 (PAL), sdtv_aspect=1 (4:3), disable_overscan=1"
+	echo "config.txt: dtoverlay=vc4-kms-v3d,composite=1, enable_tvout=1, sdtv_mode=2 (PAL), sdtv_aspect=1 (4:3), disable_overscan=1"
 
-else
-	echo "FATAL: ${CFG} missing"
-	exit 1
+fi
+
+CMDLINE="${ROOTFS_DIR}/boot/firmware/cmdline.txt"
+if [ -f "${CMDLINE}" ]; then
+	grep -q 'video=Composite-1' "${CMDLINE}" || sed -i 's/$/ video=Composite-1:720x576i,vc4.tv_norm=PAL/' "${CMDLINE}"
+	echo "cmdline.txt: video=Composite-1:720x576i,vc4.tv_norm=PAL appended"
 fi
 
 # Bookworm moved display config into /etc/xdg/lxsession (desktop) or the

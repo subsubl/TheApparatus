@@ -1,6 +1,6 @@
 [Unit]
 Description=The Apparatus - Pi A Loop Player (Layer 1 autoloader)
-After=sound.target network.target
+After=network.target sound.target
 Wants=sound.target
 
 [Service]
@@ -10,13 +10,7 @@ ExecStart=/usr/bin/python3 /home/pi/apparatus/player_a.py
 Restart=always
 RestartSec=3
 
-TTYPath=/dev/tty1
-TTYReset=yes
-TTYVHangup=yes
-StandardInput=tty
-StandardOutput=journal
-
-SupplementaryGroups=video render input tty
+SupplementaryGroups=video render input dialout
 
 [Install]
 WantedBy=multi-user.target

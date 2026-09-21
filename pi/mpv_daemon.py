@@ -15,7 +15,7 @@ mpv's IPC socket:
 Wiring: ESP32 PI_LINK_TX (GPIO2) -> Pi RXD (GPIO15 on Pi header, /dev/serial0)
 Common GND mandatory. 115200 8N1.
 
-Run under systemd: apparatus-trigger-watcher.service (renamed role:
+Run under systemd: apparatus-mpv-daemon.service (renamed role:
 it is now BOTH the serial listener and the cut executor).
 """
 

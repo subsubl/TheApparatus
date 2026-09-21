@@ -17,15 +17,15 @@ SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 echo "==> Deploying role '$ROLE' to $TARGET:$APP_DIR"
 ssh "$TARGET" "mkdir -p $APP_DIR"
 
-scp "$SCRIPT_DIR/player_${ROLE}.py" "$TARGET:$APP_DIR/"
+scp "$SCRIPT_DIR/media_autoloader.py" "$SCRIPT_DIR/player_${ROLE}.py" "$TARGET:$APP_DIR/"
 
 if [ "$ROLE" = "b" ]; then
     scp "$SCRIPT_DIR/mpv_daemon.py" "$SCRIPT_DIR/test_mpv_daemon.py" "$TARGET:$APP_DIR/"
     scp "$SCRIPT_DIR/systemd/apparatus-player-b.service" \
-        "$SCRIPT_DIR/systemd/apparatus-trigger-watcher.service" "$TARGET:/tmp/"
+        "$SCRIPT_DIR/systemd/apparatus-mpv-daemon.service" "$TARGET:/tmp/"
     ssh -t "$TARGET" 'sudo mv /tmp/apparatus-*.service /etc/systemd/system/ && \
                       sudo systemctl daemon-reload && \
-                      sudo systemctl enable --now apparatus-player-b.service apparatus-trigger-watcher.service && \
+                      sudo systemctl enable --now apparatus-player-b.service apparatus-mpv-daemon.service && \
                       echo "NOTE: ensure pyserial is installed: sudo apt install python3-serial"'
 else
     scp "$SCRIPT_DIR/systemd/apparatus-player-a.service" "$TARGET:/tmp/"

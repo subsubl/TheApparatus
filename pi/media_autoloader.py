@@ -146,7 +146,7 @@ class AutoPlayer:
 
             # Gray placeholder: instantly visible "no media" card
             cmd += [
-                "--loops=inf",
+                "--loop-file=inf",
                 "--no-audio",
                 "--force-media-title",
                 f"{self.label}: NO MEDIA in {MEDIA_DIR}",

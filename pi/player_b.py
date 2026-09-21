@@ -39,7 +39,6 @@ def main() -> int:
             "--no-osd-bar",
             "--osc=no",
             "--hwdec=auto",
-            "--profile=high-quality",
             "--video-sync=display-resample",
             "--video-aspect-override=4:3", # PAL SD 4:3 mixer aspect ratio
             "--override-display-fps=50",   # 50 Hz PAL frame rate sync

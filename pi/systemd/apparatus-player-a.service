@@ -1,6 +1,6 @@
 [Unit]
 Description=The Apparatus - Pi A Loop Player (Layer 1 autoloader)
-After=multi-user.target sound.target
+After=sound.target network.target
 Wants=sound.target
 
 [Service]

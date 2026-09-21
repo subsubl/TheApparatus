@@ -1,6 +1,6 @@
 [Unit]
 Description=The Apparatus - Pi B Master Player (L2/L3 autoloader)
-After=multi-user.target sound.target
+After=sound.target network.target
 Wants=sound.target
 
 [Service]

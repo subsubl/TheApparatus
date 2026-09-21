@@ -35,7 +35,6 @@ def main() -> int:
             "--video-sync=display-resample",
             "--video-aspect-override=4:3", # PAL SD 4:3 mixer aspect ratio
             "--override-display-fps=50",   # 50 Hz PAL frame rate sync
-            "--video-margin-ratio=0",
             *vo_args,
             "--input-default-bindings=no",
             "--input-vo-keyboard=no",

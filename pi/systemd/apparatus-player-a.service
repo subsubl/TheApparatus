@@ -1,7 +1,7 @@
 [Unit]
 Description=The Apparatus - Pi A Loop Player (Layer 1 autoloader)
-After=graphical.target
-Wants=graphical.target
+After=multi-user.target sound.target
+Wants=sound.target
 
 [Service]
 Type=simple
@@ -13,4 +13,4 @@ RestartSec=3
 SupplementaryGroups=video render input
 
 [Install]
-WantedBy=graphical.target
+WantedBy=multi-user.target

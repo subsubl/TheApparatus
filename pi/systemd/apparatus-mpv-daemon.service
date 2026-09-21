@@ -20,4 +20,4 @@ RestartSec=3
 SupplementaryGroups=dialout video render input
 
 [Install]
-WantedBy=graphical.target
+WantedBy=multi-user.target

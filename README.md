@@ -6,6 +6,10 @@ via a DSP pipeline, drives **6 vactrols** bridging the sliders of a
 circuit-bent **Panasonic WJ-AVE5** analog video mixer, presses its effect
 buttons through **8 relays**, and exposes a full calibration/control WebUI.
 
+![The Apparatus Web Console](docs/images/webconsole_gui.png)
+
+*The Apparatus Web Console running live @ 20 Hz: real-time telemetry, 9-gate LD2410 stationary energy & sensitivity sliders, top-down radar preview with near/far Pi zones, breathing biquad/AGC oscilloscope, dynamic vactrol sliders with source mode selection (Manual / Distance / Speed / Breath), dynamic relay triggers with double/triple-click shaping, and power-on boot sequence ritual.*
+
 ## Downloads / Releases
 
 **[v0.9 — Dynamic channels + velocity tracking](https://github.com/subsubl/TheApparatus/releases/tag/v0.9)**:
@@ -14,21 +18,13 @@ CI-built flashable images for **Player A** (Layer-1 looper) and **Player B**
 Both Pi images output **PAL composite** (Pi 3/Pi 4 only — Pi 5 has no
 composite out). SHA256 checksums attached. See `wiki/` for full docs.
 
-**What's new since v0.8:**
-- **Dynamic output channels** — vactrols/relays are no longer a fixed 6+8.
-  Fresh defaults are 1 vactrol + 1 relay; add/remove up to the usable ESP32
-  GPIO budget, with a shared output-pin allocator guarding against conflicts,
-  reserved/input-only pins and duplicates. Existing v4 installs migrate to the
-  new v5 config preserving their layout.
-- **Alpha-Beta velocity tracking** — distance+velocity from the DSP drive the
-  relays and vactrols (incl. lunge/retreat triggers and dynamic slew).
-- **RAM-drive playback** — Pi media autoloaders run from `/dev/shm` with USB
-  auto-copy for faster, cleaner gallery looping.
-- **ESP32 sim + native C++ test suites** — headless firmware tests for the DSP
-  pipeline, state machine, output allocator and config codec run in CI/local
-  without hardware.
-
-**[v0.8 — First complete system release](https://github.com/subsubl/TheApparatus/releases/tag/v0.8)**:
+**What's new:**
+- **Dynamic output channels (Modules 1–4)** — vactrols and relays are fully dynamic ($1..14$ channels each, up to the 15-pin GPIO pool). Add/remove channels and remap GPIOs directly in the WebUI with live conflict detection.
+- **Robust v5 NVS Configuration Envelope (`APP5`)** — CRC-32 protected little-endian binary envelope with automatic in-place migration for legacy v4 NVS blobs.
+- **HLK-LD2410 9-Gate Sensitivity Control** — Datasheet-exact 18-byte command payload (`0x0064`) with Web Console sliders (0–100) to tune gate thresholds and mask stationary background noise.
+- **Alpha-Beta velocity tracking** — Distance + velocity derived from the DSP pipeline drive relays and vactrols (including lunge/retreat triggers, dynamic slew, and non-linear gamma curves).
+- **One-Command Test, Build & Emulation Harness** — Single portable runner (`./test_and_build.sh` + `Makefile`) for host unit tests (Codec, DSP, State Machine), Pi mock-IPC tests, Playwright browser E2E tests (18 tests), desktop emulation, and PlatformIO builds (`esp32dev` and `esp32dev_sim`).
+- **RAM-drive playback** — Pi media autoloaders run from `/dev/shm` with USB auto-copy for gapless, zero-blackout gallery looping.
 
 ## Hardware Architecture
 
@@ -264,29 +260,51 @@ python3 pi/test_mpv_daemon.py    # -> ALL TESTS PASS (no hardware needed)
 7. Touch the GPIO12 plate → CONTACT: mix snaps to 100%, Pi logs `TRIGGER_SEEK OK`
 8. Save config, power-cycle → settings and boot ritual restored from NVS
 
+## One-Command Local Testing, Building & Emulation
+
+The repository includes a single-command, path-independent test and build harness (`test_and_build.sh` + `Makefile`) that operates identically on any machine (remote Linux VM or local workstation such as `/media/ator/Tera/TheAparatus`):
+
+```bash
+# 1. Run ALL verifications: native C++ unit tests, Pi IPC tests, Playwright GUI, and ESP32 builds
+./test_and_build.sh all
+# or via Make:
+make all
+
+# 2. Run test suites only
+./test_and_build.sh test          # Run all tests (unit + pi + gui)
+./test_and_build.sh test-unit     # C++ host unit tests (Configuration/Codec, DSP, State Machine)
+./test_and_build.sh test-pi       # Raspberry Pi B MPV daemon mock-IPC test
+./test_and_build.sh test-gui      # Playwright browser E2E test suite (18/18 tests)
+
+# 3. Build ESP32 firmware
+./test_and_build.sh build         # Build production (esp32dev) and simulation (esp32dev_sim)
+./test_and_build.sh build-prod    # Build production firmware (.pio/build/esp32dev/firmware.bin)
+./test_and_build.sh build-sim     # Build radar-less simulation firmware
+
+# 4. Launch interactive desktop simulator (serves live WebConsole on :8765)
+./test_and_build.sh sim
+```
+
 ## GUI Quality Assurance (Playwright)
 
-`tools/gui-test/` contains a browser test suite that runs the **real firmware
-SPA** against a mock ESP32 backend:
+`tools/gui-test/` contains an automated browser test suite that tests the **real firmware SPA** extracted verbatim from `WebConsole.cpp`:
 
 ```bash
 cd tools/gui-test
 npm install && npx playwright install chromium
 python3 ../extract_spa.py        # pull the SPA out of WebConsole.cpp verbatim
-npx playwright test              # 14 tests, ~10 s
+npx playwright test              # 18 tests, ~7 s
 ```
 
 Coverage: WS connection & 20 Hz telemetry · state badge cycling · metric
 updates · 9 gate bars + peak marker · radar preview canvas rendering ·
-oscilloscope signal · vactrol cards · relay card controls · boot panel ·
-FIRE/config commands reaching the WebSocket (asserted server-side) · save
+oscilloscope signal · dynamic vactrol cards & pin/source selection · dynamic relay card controls & AVE5 button mapping · boot panel ·
+dynamic channel addition and removal · FIRE/config commands reaching the WebSocket (asserted server-side) · save
 payload integrity · zero JS errors under live telemetry.
 
 ## Research Notes & Design Justifications
 
-- **LD2410 gate sensitivity**: per-gate sensitivity thresholds exist in the
-  protocol (gate N sensitivity 0–100; 100 = off) — a future firmware option to
-  mask interference sources behind walls. Not yet exposed.
+- **LD2410 gate sensitivity**: Per-gate sensitivity thresholds (gate N sensitivity 0–100; 100 = off) are fully exposed in the Web Console and transmitted via the datasheet-exact 18-byte command payload (`0x0064`) to mask interference sources behind walls.
 - **mpv on Pi 5**: upstream issue #17447 reports dropped frames with
   `--vo=gpu --gpu-context=drm` on Pi 5. Both players accept
   `APPARATUS_MPV_VO_ARGS="--vo=gpu-next …"` to override the video output chain

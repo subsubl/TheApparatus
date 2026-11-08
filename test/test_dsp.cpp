@@ -71,6 +71,23 @@ void test_biquad_filter() {
     std::cout << "[PASS] test_biquad_filter\n";
 }
 
+#include "../include/RadarParser.h"
+
+void test_radar_gate_sensitivity_payload() {
+    uint8_t payload[18] = {0};
+    size_t sz = RadarParser::formatGateSensitivityPayload(3, 40, 40, payload);
+    assert(sz == 18);
+    // [00 00][gate=3 u32LE][01 00][motion=40 u32LE][02 00][still=40 u32LE]
+    assert(payload[0] == 0x00 && payload[1] == 0x00);
+    assert(payload[2] == 0x03 && payload[3] == 0x00 && payload[4] == 0x00 && payload[5] == 0x00);
+    assert(payload[6] == 0x01 && payload[7] == 0x00);
+    assert(payload[8] == 40 && payload[9] == 0x00 && payload[10] == 0x00 && payload[11] == 0x00);
+    assert(payload[12] == 0x02 && payload[13] == 0x00);
+    assert(payload[14] == 40 && payload[15] == 0x00 && payload[16] == 0x00 && payload[17] == 0x00);
+
+    std::cout << "[PASS] test_radar_gate_sensitivity_payload\n";
+}
+
 int main() {
     std::cout << "========================================\n";
     std::cout << "RUNNING NATIVE DSP UNIT TESTS\n";
@@ -79,6 +96,7 @@ int main() {
     test_agc_normalizer();
     test_gate_interpolator();
     test_biquad_filter();
+    test_radar_gate_sensitivity_payload();
     std::cout << "ALL NATIVE DSP TESTS PASSED SUCCESSFULLY!\n";
     return 0;
 }

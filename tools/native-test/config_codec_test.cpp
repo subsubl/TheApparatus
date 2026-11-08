@@ -80,9 +80,10 @@ void expectStr(const char* got, const char* want, const char* what) {
 
 // ---- row helpers ----
 bool vactrolEq(const VactrolSettings& a, const VactrolSettings& b) {
-    return a.auto_mode == b.auto_mode && a.min_clamp == b.min_clamp &&
-           a.max_clamp == b.max_clamp && a.slew_per_ms == b.slew_per_ms &&
-           a.manual_value == b.manual_value && a.ave5_pot == b.ave5_pot;
+    return a.source_mode == b.source_mode && a.dynamic_slew == b.dynamic_slew &&
+           a.min_clamp == b.min_clamp && a.max_clamp == b.max_clamp &&
+           a.slew_per_ms == b.slew_per_ms && a.manual_value == b.manual_value &&
+           a.ave5_pot == b.ave5_pot && a.gamma == b.gamma;
 }
 
 bool fxRelayEq(const FxRelaySettings& a, const FxRelaySettings& b) {
@@ -93,8 +94,15 @@ bool fxRelayEq(const FxRelaySettings& a, const FxRelaySettings& b) {
            std::memcmp(a.name, b.name, sizeof(a.name)) == 0 && a.ave5_button == b.ave5_button;
 }
 
-bool vactrolZeroed(const VactrolSettings& s) { return vactrolEq(s, VactrolSettings{}); }
-bool fxZeroed(const FxRelaySettings& s) { return fxRelayEq(s, FxRelaySettings{}); }
+bool vactrolZeroed(const VactrolSettings& s) {
+    return s.source_mode == 0 && !s.dynamic_slew && s.min_clamp == 0 && s.max_clamp == 0 &&
+           s.slew_per_ms == 0.0f && s.manual_value == 0 && s.ave5_pot == 0 && s.gamma == 0.0f;
+}
+bool fxZeroed(const FxRelaySettings& s) {
+    return !s.enabled && s.trigger == 0 && s.press_length_ms == 0 && s.press_count == 0 &&
+           s.press_gap_ms == 0 && !s.clock_enable && s.clock_interval_ms == 0 &&
+           s.name[0] == '\0' && s.ave5_button == 0;
+}
 
 // Full structural equality: the decode contract is that any Invalid leaves
 // the out-config unchanged, so compare every field.
@@ -112,8 +120,14 @@ bool sameConfig(const CalibrationConfig& a, const CalibrationConfig& b) {
         a.button_debounce_ms != b.button_debounce_ms ||
         a.multiclick_window_ms != b.multiclick_window_ms || a.long_press_ms != b.long_press_ms ||
         a.breath_threshold != b.breath_threshold ||
-        a.auto_trigger_cooldown_ms != b.auto_trigger_cooldown_ms ||
-        a.pi_zone_far_cm != b.pi_zone_far_cm || a.pi_zone_near_cm != b.pi_zone_near_cm)
+        a.lunge_threshold_cm_s != b.lunge_threshold_cm_s ||
+        a.retreat_threshold_cm_s != b.retreat_threshold_cm_s ||
+        a.auto_trigger_cooldown_ms != b.auto_trigger_cooldown_ms)
+        return false;
+    for (int g = 0; g < 9; ++g) {
+        if (a.gate_sensitivity[g] != b.gate_sensitivity[g]) return false;
+    }
+    if (a.pi_zone_far_cm != b.pi_zone_far_cm || a.pi_zone_near_cm != b.pi_zone_near_cm)
         return false;
     if (std::memcmp(a.wifi_ssid, b.wifi_ssid, sizeof(a.wifi_ssid)) != 0) return false;
     if (std::memcmp(a.wifi_password, b.wifi_password, sizeof(a.wifi_password)) != 0) return false;
@@ -151,25 +165,6 @@ void copyStr(char* dst, size_t cap, const char* src) {
     for (++i; i < cap; ++i) dst[i] = 0;
 }
 
-// Mirror of the NVS-glue dispatch: a raw image of exactly the frozen v4
-// size carries no envelope, so it is strict-parsed, migrated, then validated
-// (status Migrated); everything else goes through the strict v5 decoder.
-LoadResult loadConfigurationBlob(const uint8_t* data, size_t len, CalibrationConfig& out) {
-    if (data != nullptr && len == kV4ImageSize) {
-        std::array<unsigned char, kV4ImageSize> raw{};
-        std::memcpy(raw.data(), data, kV4ImageSize);
-        CalibrationConfigV4 legacy{};
-        const char* perr = parseV4Image(raw, legacy);
-        if (perr != nullptr) return {LoadStatus::Invalid, perr};
-        CalibrationConfig staged{};
-        configurationMigrateFromV4(legacy, staged);
-        const char* verr = nullptr;
-        if (!configurationValidate(staged, &verr)) return {LoadStatus::Invalid, verr};
-        out = staged;   // commit only on success => out unchanged on Invalid
-        return {LoadStatus::Migrated, nullptr};
-    }
-    return configurationDecode(data, len, out);
-}
 
 // Roundtrip source: the fixture scenario on a 3-vactrol / 8-relay rig with
 // the legacy pin topology (a pattern the migrated fixture proves valid).
@@ -192,7 +187,10 @@ CalibrationConfig makeRoundtripSource() {
     c.multiclick_window_ms = kExpMulticlickMs;
     c.long_press_ms = kExpLongPressMs;
     c.breath_threshold = kExpBreathThreshold;
+    c.lunge_threshold_cm_s = -40.0f;
+    c.retreat_threshold_cm_s = 30.0f;
     c.auto_trigger_cooldown_ms = kExpCooldownMs;
+    for (int g = 0; g < 9; ++g) c.gate_sensitivity[g] = 50;
     c.pi_zone_far_cm = kExpZoneFarCm;
     c.pi_zone_near_cm = kExpZoneNearCm;
     c.vactrol_count = 3;
@@ -203,11 +201,11 @@ CalibrationConfig makeRoundtripSource() {
         c.layout.vactrol_pins[i] = (i < 3) ? kExpVactrolPins[i] : -1;
         c.layout.relay_pins[i] = (i < 8) ? kExpRelayPins[i] : -1;
     }
-    for (int i = 0; i < 14; ++i) c.vactrol[i] = VactrolSettings{false, 0, 1023, 2.0f, 0, 0};
-    c.vactrol[0] = VactrolSettings{kExpV0Auto, kExpV0Min, kExpV0Max, kExpV0Slew, kExpV0Manual,
-                                   kExpV0Pot};
-    c.vactrol[2] = VactrolSettings{kExpV2Auto, kExpV2Min, kExpV2Max, kExpV2Slew, kExpV2Manual,
-                                   kExpV2Pot};
+    for (int i = 0; i < 14; ++i) c.vactrol[i] = VactrolSettings{};
+    c.vactrol[0] = VactrolSettings{kExpV0Auto ? uint8_t(1) : uint8_t(0), true, kExpV0Min, kExpV0Max, kExpV0Slew, kExpV0Manual,
+                                   kExpV0Pot, 1.5f};
+    c.vactrol[2] = VactrolSettings{kExpV2Auto ? uint8_t(1) : uint8_t(0), false, kExpV2Min, kExpV2Max, kExpV2Slew, kExpV2Manual,
+                                   kExpV2Pot, 1.0f};
     for (int i = 0; i < 14; ++i)
         c.fx[i] = FxRelaySettings{false, TRIG_MANUAL, 0, 0, 0, false, 0, "", 0};
     c.fx[0] = FxRelaySettings{true, TRIG_MANUAL, 120, 1, 150, false, 5000, "WJ-BTN1", 1};
@@ -256,8 +254,8 @@ int main() {
         err = nullptr;
         expectTrue(configurationValidate(src, &err), "t2 roundtrip source validates");
         const size_t need = configurationEncodedSize(src);
-        expectInt(static_cast<long long>(need), 750,
-                  "t2 encoded size 750 (12 header + 722 fixed + 2*8 boot steps)");
+        expectInt(static_cast<long long>(need), 837,
+                  "t2 encoded size 837 (12 header + 809 fixed + 2*8 boot steps)");
         envLen = configurationEncode(src, env.data(), env.size());
         expectInt(static_cast<long long>(envLen), static_cast<long long>(need),
                   "t2 encode length");
@@ -285,8 +283,14 @@ int main() {
         expectInt(d.multiclick_window_ms, src.multiclick_window_ms, "t2 multiclick_window_ms");
         expectInt(d.long_press_ms, src.long_press_ms, "t2 long_press_ms");
         expectFloat(d.breath_threshold, src.breath_threshold, "t2 breath_threshold");
+        expectFloat(d.lunge_threshold_cm_s, src.lunge_threshold_cm_s, "t2 lunge_threshold_cm_s");
+        expectFloat(d.retreat_threshold_cm_s, src.retreat_threshold_cm_s, "t2 retreat_threshold_cm_s");
         expectInt(d.auto_trigger_cooldown_ms, src.auto_trigger_cooldown_ms,
                   "t2 auto_trigger_cooldown_ms");
+        for (int g = 0; g < 9; ++g) {
+            std::snprintf(label, sizeof(label), "t2 gate_sensitivity[%d]", g);
+            expectInt(d.gate_sensitivity[g], src.gate_sensitivity[g], label);
+        }
         expectFloat(d.pi_zone_far_cm, src.pi_zone_far_cm, "t2 pi_zone_far_cm");
         expectFloat(d.pi_zone_near_cm, src.pi_zone_near_cm, "t2 pi_zone_near_cm");
         expectInt(d.telemetry_rate_hz, src.telemetry_rate_hz, "t2 telemetry_rate_hz");
@@ -312,18 +316,22 @@ int main() {
                 expectTrue(vactrolZeroed(d.vactrol[i]), label);
         }
         // explicit vactrol[0]/[2] fields
-        expectTrue(d.vactrol[0].auto_mode == kExpV0Auto, "t2 vactrol[0].auto_mode");
+        expectInt(d.vactrol[0].source_mode, kExpV0Auto ? 1 : 0, "t2 vactrol[0].source_mode");
+        expectTrue(d.vactrol[0].dynamic_slew, "t2 vactrol[0].dynamic_slew");
         expectInt(d.vactrol[0].min_clamp, kExpV0Min, "t2 vactrol[0].min_clamp");
         expectInt(d.vactrol[0].max_clamp, kExpV0Max, "t2 vactrol[0].max_clamp");
         expectFloat(d.vactrol[0].slew_per_ms, kExpV0Slew, "t2 vactrol[0].slew_per_ms");
         expectInt(d.vactrol[0].manual_value, kExpV0Manual, "t2 vactrol[0].manual_value");
         expectInt(d.vactrol[0].ave5_pot, kExpV0Pot, "t2 vactrol[0].ave5_pot");
-        expectTrue(d.vactrol[2].auto_mode == kExpV2Auto, "t2 vactrol[2].auto_mode");
+        expectFloat(d.vactrol[0].gamma, 1.5f, "t2 vactrol[0].gamma");
+        expectInt(d.vactrol[2].source_mode, kExpV2Auto ? 1 : 0, "t2 vactrol[2].source_mode");
+        expectTrue(!d.vactrol[2].dynamic_slew, "t2 vactrol[2].dynamic_slew");
         expectInt(d.vactrol[2].min_clamp, kExpV2Min, "t2 vactrol[2].min_clamp");
         expectInt(d.vactrol[2].max_clamp, kExpV2Max, "t2 vactrol[2].max_clamp");
         expectFloat(d.vactrol[2].slew_per_ms, kExpV2Slew, "t2 vactrol[2].slew_per_ms");
         expectInt(d.vactrol[2].manual_value, kExpV2Manual, "t2 vactrol[2].manual_value");
         expectInt(d.vactrol[2].ave5_pot, kExpV2Pot, "t2 vactrol[2].ave5_pot");
+        expectFloat(d.vactrol[2].gamma, 1.0f, "t2 vactrol[2].gamma");
         // fx rows: exact for active rows, zeroed for inactive rows
         for (int i = 0; i < 14; ++i) {
             std::snprintf(label, sizeof(label), "t2 fx[%d] row roundtrip", i);
@@ -461,6 +469,12 @@ int main() {
         expectInt(mig.multiclick_window_ms, kExpMulticlickMs, "t7 multiclick_window_ms");
         expectInt(mig.long_press_ms, kExpLongPressMs, "t7 long_press_ms");
         expectFloat(mig.breath_threshold, kExpBreathThreshold, "t7 breath_threshold");
+        expectFloat(mig.lunge_threshold_cm_s, -40.0f, "t7 lunge_threshold_cm_s default");
+        expectFloat(mig.retreat_threshold_cm_s, 30.0f, "t7 retreat_threshold_cm_s default");
+        for (int g = 0; g < 9; ++g) {
+            std::snprintf(label, sizeof(label), "t7 gate_sensitivity[%d] default", g);
+            expectInt(mig.gate_sensitivity[g], 50, label);
+        }
         expectInt(mig.auto_trigger_cooldown_ms, kExpCooldownMs,
                   "t7 auto_trigger_cooldown_ms");
         expectFloat(mig.pi_zone_far_cm, kExpZoneFarCm, "t7 pi_zone_far_cm");
@@ -479,29 +493,35 @@ int main() {
             expectInt(mig.layout.relay_pins[i], wantR, label);
         }
         // vactrol rows
-        expectTrue(mig.vactrol[0].auto_mode == kExpV0Auto, "t7 vactrol[0].auto_mode");
+        expectInt(mig.vactrol[0].source_mode, kExpV0Auto ? 1 : 0, "t7 vactrol[0].source_mode");
+        expectTrue(!mig.vactrol[0].dynamic_slew, "t7 vactrol[0].dynamic_slew");
         expectInt(mig.vactrol[0].min_clamp, kExpV0Min, "t7 vactrol[0].min_clamp");
         expectInt(mig.vactrol[0].max_clamp, kExpV0Max, "t7 vactrol[0].max_clamp");
         expectFloat(mig.vactrol[0].slew_per_ms, kExpV0Slew, "t7 vactrol[0].slew_per_ms");
         expectInt(mig.vactrol[0].manual_value, kExpV0Manual, "t7 vactrol[0].manual_value");
         expectInt(mig.vactrol[0].ave5_pot, kExpV0Pot, "t7 vactrol[0].ave5_pot");
-        expectTrue(!mig.vactrol[1].auto_mode, "t7 vactrol[1].auto_mode");
+        expectFloat(mig.vactrol[0].gamma, 1.0f, "t7 vactrol[0].gamma");
+        expectInt(mig.vactrol[1].source_mode, 0, "t7 vactrol[1].source_mode");
+        expectTrue(!mig.vactrol[1].dynamic_slew, "t7 vactrol[1].dynamic_slew");
         expectInt(mig.vactrol[1].min_clamp, 0, "t7 vactrol[1].min_clamp");
         expectInt(mig.vactrol[1].max_clamp, 1023, "t7 vactrol[1].max_clamp");
         expectFloat(mig.vactrol[1].slew_per_ms, 2.0f, "t7 vactrol[1].slew_per_ms");
         expectInt(mig.vactrol[1].manual_value, 0, "t7 vactrol[1].manual_value");
         expectInt(mig.vactrol[1].ave5_pot, 0, "t7 vactrol[1].ave5_pot");
-        expectTrue(mig.vactrol[2].auto_mode == kExpV2Auto, "t7 vactrol[2].auto_mode");
+        expectFloat(mig.vactrol[1].gamma, 1.0f, "t7 vactrol[1].gamma");
+        expectInt(mig.vactrol[2].source_mode, kExpV2Auto ? 1 : 0, "t7 vactrol[2].source_mode");
+        expectTrue(!mig.vactrol[2].dynamic_slew, "t7 vactrol[2].dynamic_slew");
         expectInt(mig.vactrol[2].min_clamp, kExpV2Min, "t7 vactrol[2].min_clamp");
         expectInt(mig.vactrol[2].max_clamp, kExpV2Max, "t7 vactrol[2].max_clamp");
         expectFloat(mig.vactrol[2].slew_per_ms, kExpV2Slew, "t7 vactrol[2].slew_per_ms");
         expectInt(mig.vactrol[2].manual_value, kExpV2Manual, "t7 vactrol[2].manual_value");
         expectInt(mig.vactrol[2].ave5_pot, kExpV2Pot, "t7 vactrol[2].ave5_pot");
+        expectFloat(mig.vactrol[2].gamma, 1.0f, "t7 vactrol[2].gamma");
         for (int i : {3, 4, 5}) {
             const VactrolSettings& s = mig.vactrol[i];
             std::snprintf(label, sizeof(label), "t7 vactrol[%d] default row", i);
-            expectTrue(!s.auto_mode && s.min_clamp == 0 && s.max_clamp == 1023 &&
-                           s.slew_per_ms == 2.0f && s.manual_value == 0 && s.ave5_pot == 0,
+            expectTrue(s.source_mode == 0 && !s.dynamic_slew && s.min_clamp == 0 && s.max_clamp == 1023 &&
+                           s.slew_per_ms == 2.0f && s.manual_value == 0 && s.ave5_pot == 0 && s.gamma == 1.0f,
                        label);
         }
         // fx rows

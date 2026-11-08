@@ -13,8 +13,7 @@
  * All updates are non-blocking; call update() every loop iteration.
  */
 
-#ifndef VACTROL_MANAGER_H
-#define VACTROL_MANAGER_H
+#pragma once
 
 #include "PinDefinitions.h"
 
@@ -22,28 +21,29 @@ class VactrolManager {
 public:
     void begin();
 
-    // Call every loop iteration. mix_auto_target: algorithmic target for the
-    // Mix/T-Bar channel in 0..1023 (already gamma-shaped by caller or raw -
-    // manager applies its own gamma on top when cfg.gamma_exponent != 1).
-    // mix_auto_target_0to1: The computed target for the Mix channel
-    // velocity_cm_s: The target's velocity from AlphaBeta filter
-    // breath_wave: The target's respiration wave from Biquad/AGC
-    // contact_active: True if we are in STATE_CONTACT (override)
+    // Call every loop iteration.
     void update(float mix_auto_target_0to1, float velocity_cm_s, float breath_wave, bool contact_active);
 
     void setManual(uint8_t ch, uint16_t value_0_1023);
     void setAutoMode(uint8_t ch, bool auto_mode);
 
-    uint16_t getValue(uint8_t ch) const { return _current[ch]; }
-    float getTargetFloat(uint8_t ch) const { return _target_f[ch]; }
+    uint16_t getValue(uint8_t ch) const { return (ch < BANK_CAPACITY) ? _current[ch] : 0; }
+    float getTargetFloat(uint8_t ch) const { return (ch < BANK_CAPACITY) ? _target_f[ch] : 0.0f; }
+
+    // Dynamic channel management
+    bool addVactrol(int pin = -1);
+    bool removeLastVactrol();
+    bool remapPin(uint8_t ch, int new_pin);
+    int getPin(uint8_t ch) const {
+        return (ch < g_config.vactrol_count) ? g_config.layout.vactrol_pins[ch] : -1;
+    }
+    uint8_t getChannelCount() const { return g_config.vactrol_count; }
 
 private:
-    uint16_t _current[VACTROL_COUNT] = {0};
-    float    _target_f[VACTROL_COUNT] = {0};
+    uint16_t _current[BANK_CAPACITY] = {0};
+    float    _target_f[BANK_CAPACITY] = {0};
     uint32_t _last_update_ms = 0;
 
     void _writeChannel(uint8_t ch, uint16_t counts);
     uint16_t _applyGamma(uint8_t ch, float linear01) const;
 };
-
-#endif // VACTROL_MANAGER_H

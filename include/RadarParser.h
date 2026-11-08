@@ -32,6 +32,19 @@ public:
     uint32_t getParseErrors() const { return _parse_errors; }
     void printStatus() const;
     void setGateSensitivities(const uint8_t sensitivities[RADAR_GATE_COUNT]);
+    static inline size_t formatGateSensitivityPayload(uint8_t gate, uint8_t motion_sens, uint8_t still_sens, uint8_t* out_payload18) {
+        if (!out_payload18) return 0;
+        out_payload18[0] = 0x00; out_payload18[1] = 0x00;
+        out_payload18[2] = (uint8_t)(gate & 0xFF); out_payload18[3] = (uint8_t)((gate >> 8) & 0xFF);
+        out_payload18[4] = 0x00; out_payload18[5] = 0x00;
+        out_payload18[6] = 0x01; out_payload18[7] = 0x00;
+        out_payload18[8] = (uint8_t)(motion_sens & 0xFF); out_payload18[9] = (uint8_t)((motion_sens >> 8) & 0xFF);
+        out_payload18[10] = 0x00; out_payload18[11] = 0x00;
+        out_payload18[12] = 0x02; out_payload18[13] = 0x00;
+        out_payload18[14] = (uint8_t)(still_sens & 0xFF); out_payload18[15] = (uint8_t)((still_sens >> 8) & 0xFF);
+        out_payload18[16] = 0x00; out_payload18[17] = 0x00;
+        return 18;
+    }
 
 private:
     static constexpr size_t RX_BUFFER_SIZE = 512;

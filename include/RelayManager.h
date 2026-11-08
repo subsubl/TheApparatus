@@ -25,9 +25,14 @@ public:
     // and process layer-linked triggers.
     void update(bool state_changed, ApparatusState_t new_state, float agc, float velocity_cm_s);
 
-    // === GPIO remapping (GUI-configurable relay pin matrix) ===
-    bool remapPin(uint8_t index, uint8_t new_pin);   // Returns false on conflict
-    uint8_t getPin(uint8_t index) const { return RELAY_DEFS[index].pin; }
+    // === GPIO remapping and dynamic channels ===
+    bool remapPin(uint8_t index, int new_pin);
+    bool addRelay(int pin = -1);
+    bool removeLastRelay();
+    int getPin(uint8_t index) const {
+        return (index < g_config.relay_count) ? g_config.layout.relay_pins[index] : -1;
+    }
+    uint8_t getChannelCount() const { return g_config.relay_count; }
 
     // Sequenced firing (non-blocking)
     void fireSequence(uint8_t index);                       // Configured shape
@@ -44,20 +49,19 @@ public:
     void setAllReleased();
 
     // Status
-    bool getSeqActive(uint8_t index) const { return _rt[index].seq_active; }
-    bool isPressed(uint8_t index) const { return _rt[index].level; }
-    uint8_t getPattern() const;
+    bool getSeqActive(uint8_t index) const { return (index < BANK_CAPACITY) ? _rt[index].seq_active : false; }
+    bool isPressed(uint8_t index) const { return (index < BANK_CAPACITY) ? _rt[index].level : false; }
+    uint16_t getPattern() const;
 
     void printStatus() const;
 
 private:
-    FxRelayRuntime _rt[RELAY_COUNT] = {};
-    uint32_t _last_breath_fire[RELAY_COUNT] = {0};
+    FxRelayRuntime _rt[BANK_CAPACITY] = {};
+    uint32_t _last_breath_fire[BANK_CAPACITY] = {0};
     uint32_t _last_zero_fire = 0;
     float    _last_velocity = 0.0f;
     bool     _lunge_latched = false;
     bool     _retreat_latched = false;
-    uint8_t  _active_pins[RELAY_COUNT];     // Runtime pin assignment
 
     void _writeLevel(uint8_t index, bool pressed);
     void _sequencerTick(uint8_t i);

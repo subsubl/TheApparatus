@@ -4,7 +4,11 @@
  */
 
 #include "RadarParser.h"
+#ifndef APPARATUS_NATIVE_TEST
 #include <Arduino.h>
+#else
+#include <cstring>
+#endif
 
 /* ============================================================================
  * INITIALIZATION / SHUTDOWN
@@ -433,19 +437,8 @@ void RadarParser::setGateSensitivities(const uint8_t sensitivities[RADAR_GATE_CO
     }
     
     for (int i = 0; i < RADAR_GATE_COUNT; i++) {
-        uint8_t payload[18] = {0};
-        payload[0] = 0x01; // Command word 0x0001: set single gate sensitivity
-        payload[1] = 0x00;
-        
-        // Gate index (4 bytes)
-        payload[2] = i; 
-        
-        // Moving sensitivity (4 bytes)
-        payload[6] = sensitivities[i];
-        
-        // Stationary sensitivity (4 bytes)
-        payload[10] = sensitivities[i];
-        
+        uint8_t payload[18];
+        formatGateSensitivityPayload(i, sensitivities[i], sensitivities[i], payload);
         _sendCommand(0x0064, payload, 18);
         _waitAckFor(0x0064, 200);
     }

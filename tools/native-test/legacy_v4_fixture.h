@@ -311,7 +311,7 @@ inline const char* parseV4Image(const std::array<unsigned char, kV4ImageSize>& b
     o.auto_trigger_cooldown_ms = blobU32(b, kV4OffCooldown);
     for (size_t i = 0; i < 6; ++i) {
         const size_t base = kV4OffVactrolBase + i * kV4VactrolStride;
-        apparatus::VactrolSettings s{};
+        apparatus::VactrolSettingsV4 s{};
         boolAt(base, &s.auto_mode);
         s.min_clamp = blobU16(b, base + 2);
         s.max_clamp = blobU16(b, base + 4);

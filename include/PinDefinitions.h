@@ -51,8 +51,9 @@ public:
 #include <Preferences.h>
 #endif
 
-
-
+#include "Configuration.h"
+using namespace apparatus;
+using FxRelayTrigger = apparatus::FxTrigger;
 /* ============================================================================
  * VACTROL PWM OUTPUTS - 6 channels, LEDC peripheral
  * Wiring: GPIO -> 150R -> vactrol LED anode -> GND (~10 mA max per pin)
@@ -208,20 +209,6 @@ static const char* const STATE_NAMES[] = {"IDLE", "MACRO", "MICRO", "CONTACT"};
  * FX RELAY SYSTEM - trigger conditions & press shaping
  * ============================================================================ */
 
-enum FxRelayTrigger : uint8_t {
-    TRIG_MANUAL = 0,
-    TRIG_ON_L3_CUT,
-    TRIG_ON_L3_RELEASE,
-    TRIG_ON_L2_ENTRY,
-    TRIG_ON_L1_RETURN,
-    TRIG_ON_BREATH_LOCK,
-    TRIG_INHALE,
-    TRIG_EXHALE,
-    TRIG_ON_LUNGE,
-    TRIG_ON_RETREAT,
-    TRIG_VELOCITY_ZERO
-};
-
 static const char* const TRIGGER_NAMES[] = {
     "Manual",
     "Layer 3 Cut (Contact)",
@@ -236,74 +223,6 @@ static const char* const TRIGGER_NAMES[] = {
     "Velocity Zero"
 };
 #define FX_TRIGGER_COUNT 11
-
-/* ============================================================================
- * WJ-AVE5 PHYSICAL CONTROL SURFACE
- * Targets for the relay bank (buttons/keys) and the vactrol bank (pots/
- * levers) - exactly the functions documented in the AVE5 Operating
- * Instructions (see wiki/WJ-AVE5-Notes.md). Index 0 always = unassigned.
- * ============================================================================ */
-static const char* const AVE5_BUTTONS[] = {
-    "(unassigned)",
-    "STILL (freeze)",
-    "STROBE",
-    "MOSAIC",
-    "PAINT",
-    "NEGATIVE",
-    "CUT (bus switch)",
-    "A/B (bus select)",
-    "WIPE (arm)",
-    "WIPE PATTERN select",
-    "SUPERIMPOSE (camera key)",
-    "FADE (auto fade)"
-};
-#define AVE5_BUTTON_COUNT (sizeof(AVE5_BUTTONS)/sizeof(AVE5_BUTTONS[0]))
-
-static const char* const AVE5_POTS[] = {
-    "(free use / unlabeled)",
-    "Mix/T-Bar lever",
-    "Color balance X",
-    "Color balance Y",
-    "Wipe speed",
-    "Effect level",
-    "Fade lever",
-    "Audio level"
-};
-#define AVE5_POT_COUNT (sizeof(AVE5_POTS)/sizeof(AVE5_POTS[0]))
-
-struct FxRelaySettings {
-    bool     enabled;
-    uint8_t  trigger;          // FxTrigger
-    uint16_t press_length_ms;
-    uint8_t  press_count;      // 1..5
-    uint16_t press_gap_ms;
-    bool     clock_enable;     // Re-fire automatically at fixed interval
-    uint16_t clock_interval_ms;// Clock period (seq restarts every N ms)
-    char     name[12];
-    uint8_t  ave5_button;     // AVE5_BUTTONS index this relay presses
-};
-
-// One step of the power-on / scene-init sequence
-struct BootStep {
-    uint8_t  relay;            // Relay slot index
-    uint8_t  presses;          // 1..5 (double/triple click support)
-    uint16_t length_ms;
-    uint16_t gap_ms;
-    uint16_t wait_after_ms;    // Dwell before next step
-};
-
-#define BOOT_MAX_STEPS 12
-
-struct BootSettings {
-    bool     enabled = true;
-    uint16_t start_delay_ms = 3000;   // Let mixer PSU stabilize after mains-on
-    uint8_t  step_count = 2;
-    BootStep steps[BOOT_MAX_STEPS] = {
-        // Default: power-button click on BTN1, then arm effect on BTN2
-        {0, 1, 400, 150, 2000},   // Long press = mixer power toggle
-        {1, 1, 120, 150, 500}
-    };
-};
 
 struct FxRelayRuntime {
     bool     seq_active;
@@ -333,107 +252,8 @@ private:
     uint32_t _deadline = 0;
 };
 
-/* ============================================================================
- * VACTROL CHANNEL SETTINGS
- * ============================================================================ */
-
-struct VactrolSettings {
-    uint8_t source_mode;      // 0:Manual, 1:Distance, 2:Velocity, 3:Breath, 4:Lunge
-    bool    dynamic_slew;     // Scale slew rate by target speed
-    uint16_t min_clamp;       // 0..1023
-    uint16_t max_clamp;       // 0..1023
-    float   slew_per_ms;      // Max counts change per millisecond
-    uint16_t manual_value;    // Target when source_mode == 0
-    uint8_t ave5_pot;         // AVE5_POTS index this vactrol drives
-    float   gamma;            // Channel-specific gamma curve exponent
-};
-
-/* ============================================================================
- * MASTER CALIBRATION CONFIG (NVS-persisted, versioned)
- * ============================================================================ */
-
-#define CONFIG_VERSION 4
-
-struct CalibrationConfig {
-    // Distance thresholds
-    float D_min = 50.0f;
-    float D_max = 300.0f;
-    float hysteresis = 20.0f;
-
-    // Macro response
-    float gamma_exponent = 1.5f;
-    float slew_rate_limit = 2.0f;
-
-    // Micro (breathing modulation of Mix channel)
-    float breathing_depth_M = 0.15f;
-
-    // Crossfader clamps (fraction of full scale applied on Mix channel)
-    uint8_t pwm_min_clamp = 0;
-    uint8_t pwm_max_clamp = 255;    // 0-255 legacy scale, scaled to 10-bit internally
-
-    // Touch
-    bool touch_inverted = false;
-
-    // Radar tuning
-    float variance_threshold_cm = 5.0f;
-    uint32_t stationary_lock_time_ms = 1500;
-    uint8_t gate_sensitivity[RADAR_GATE_COUNT] = {50, 50, 50, 50, 50, 50, 50, 50, 50};
-
-    // DSP
-    float agc_epsilon = 1e-6f;
-    size_t agc_window_size = 40;
-
-    // Buttons
-    uint32_t button_debounce_ms = 30;
-    uint32_t multiclick_window_ms = 320;
-    uint32_t long_press_ms = 650;
-
-    // Breath event and trigger detection
-    float breath_threshold = 0.35f;
-    float lunge_threshold_cm_s = -40.0f;
-    float retreat_threshold_cm_s = 30.0f;
-    uint32_t auto_trigger_cooldown_ms = 2500;
-
-    // Per-vactrol channel settings
-    VactrolSettings vactrol[VACTROL_COUNT] = {
-        // source, dyn_slew, min, max, slew, manual, ave5_pot, gamma
-        {1, false,    0, VACTROL_PWM_MAX, 2.0f,   0, 1, 1.5f},   // Mix: radar-driven -> Mix/T-Bar lever
-        {0, false,   0, VACTROL_PWM_MAX, 2.0f,   0, 2, 1.0f},   // Color X
-        {0, false,   0, VACTROL_PWM_MAX, 2.0f,   0, 3, 1.0f},   // Color Y
-        {0, false,   0, VACTROL_PWM_MAX, 2.0f,   0, 4, 1.0f},   // Wipe Speed
-        {0, false,   0, VACTROL_PWM_MAX, 2.0f,   0, 5, 1.0f},   // Effect Level
-        {0, false,   0, VACTROL_PWM_MAX, 2.0f,   0, 6, 1.0f}    // Aux -> Fade lever
-    };
-
-    // Per-relay settings
-    FxRelaySettings fx[RELAY_COUNT] = {
-        // enabled, trigger, press_len, count, gap, clock, clk_int, name, ave5_button
-        {true, TRIG_MANUAL,       120, 1, 150, false, 5000, "WJ-BTN1", 1},
-        {true, TRIG_MANUAL,       120, 1, 150, false, 5000, "WJ-BTN2", 2},
-        {true, TRIG_MANUAL,       120, 1, 150, false, 5000, "WJ-BTN3", 3},
-        {true, TRIG_MANUAL,       120, 1, 150, false, 5000, "WJ-BTN4", 4},
-        {true, TRIG_MANUAL,       120, 1, 150, false, 5000, "WJ-BTN5", 8},
-        {true, TRIG_MANUAL,       120, 1, 150, false, 5000, "WJ-BTN6", 6},
-        // Camera imposition = AVE5's own keyer, pressed by this relay on contact:
-        {true, TRIG_ON_L3_CUT,    120, 1, 150, false, 5000, "WJ-CAM", 10},
-        // AVE5 buttons are latching: this relay un-presses them on release
-        {true, TRIG_ON_L3_RELEASE,120, 1, 150, false, 5000, "WJ-CAM-OFF", 10}
-    };
-
-    // Power-on button sequence (mixer mains-on ritual)
-    BootSettings boot;
-
-    // Pi video automation: distance zones triggering LOOP switches
-    float pi_zone_far_cm = 350.0f;    // Beyond: LOOP_A (Layer 2 loop)
-    float pi_zone_near_cm = 120.0f;   // Nearer: LOOP_B hint (Layer 3 region)
-
-    // Network (AP default)
-    char wifi_ssid[32] = "TheApparatus_AP";
-    char wifi_password[64] = "apparatus2024";
-    uint16_t telemetry_rate_hz = 20;
-
-    uint8_t config_version = CONFIG_VERSION;
-};
+#define BOOT_MAX_STEPS 12
+#define CONFIG_VERSION 5
 
 #define NVS_NAMESPACE "apparatus"
 #define NVS_KEY_CONFIG "calib"
@@ -475,10 +295,10 @@ struct TelemetryPacket {
     float base_pwm_f = 0.0f;
     int peak_gate = -1;
     bool buttons[BUTTON_MAX] = {false};
-    bool relay_seq[RELAY_COUNT] = {false};
-    bool relay_pressed[RELAY_COUNT] = {false};
-    uint16_t vactrol_val[VACTROL_COUNT] = {0};
-    bool vactrol_auto[VACTROL_COUNT] = {false};
+    bool relay_seq[BANK_CAPACITY] = {false};
+    bool relay_pressed[BANK_CAPACITY] = {false};
+    uint16_t vactrol_val[BANK_CAPACITY] = {0};
+    bool vactrol_auto[BANK_CAPACITY] = {false};
 };
 
 extern CalibrationConfig g_config;

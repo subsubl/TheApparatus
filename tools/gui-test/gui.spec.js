@@ -56,8 +56,8 @@ test.describe("The Apparatus console", () => {
 
   test("07 - six vactrol channel cards", async () => {
     await expect(page.locator("#vactrols .vac-card")).toHaveCount(6);
-    await expect(page.locator("#va_0")).toBeVisible();      // AUTO toggle ch1
-    await expect(page.locator("#vs_5")).toBeVisible();      // manual slider ch6
+    await expect(page.locator("#vsrc_0")).toBeVisible();      // Source mode ch1
+    await expect(page.locator("#vs_5")).toBeVisible();        // manual slider ch6
   });
 
   test("08 - eight relay cards with all controls", async () => {
@@ -147,5 +147,19 @@ test.describe("The Apparatus console", () => {
     page.on("pageerror", (e) => errors.push(e.message));
     await page.waitForTimeout(3000);
     expect(errors).toEqual([]);
+  });
+
+  test("15 - add and remove vactrol channel dynamically", async () => {
+    await page.getByRole("button", { name: "+ Add Vactrol" }).click();
+    await expect(page.locator("#vactrols .vac-card")).toHaveCount(7, { timeout: 3000 });
+    await page.getByRole("button", { name: "− Remove Vactrol" }).click();
+    await expect(page.locator("#vactrols .vac-card")).toHaveCount(6, { timeout: 3000 });
+  });
+
+  test("16 - add and remove relay channel dynamically", async () => {
+    await page.getByRole("button", { name: "+ Add Relay" }).click();
+    await expect(page.locator(".relay-card")).toHaveCount(9, { timeout: 3000 });
+    await page.getByRole("button", { name: "− Remove Relay" }).click();
+    await expect(page.locator(".relay-card")).toHaveCount(8, { timeout: 3000 });
   });
 });

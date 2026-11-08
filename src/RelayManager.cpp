@@ -14,46 +14,89 @@
  * ============================================================================ */
 
 void RelayManager::begin() {
-    for (uint8_t i = 0; i < RELAY_COUNT; i++) {
-        _active_pins[i] = RELAY_DEFS[i].pin;
-        pinMode(_active_pins[i], OUTPUT);
-        digitalWrite(_active_pins[i], RELAY_BOOT_SAFE_LEVEL);
+    for (uint8_t i = 0; i < g_config.relay_count && i < BANK_CAPACITY; i++) {
+        int pin = g_config.layout.relay_pins[i];
+#ifndef APPARATUS_NATIVE_TEST
+        if (pin >= 0) {
+            pinMode(pin, OUTPUT);
+            digitalWrite(pin, RELAY_BOOT_SAFE_LEVEL);
+        }
+#endif
         _rt[i] = FxRelayRuntime{};
     }
-    log_i("RelayManager: %d channels (active-LOW, released)", RELAY_COUNT);
+    log_i("RelayManager: %d channels (active-LOW, released)", g_config.relay_count);
 }
 
 /* ============================================================================
- * GPIO REMAPPING (GUI)
+ * GPIO REMAPPING & DYNAMIC ALLOCATION
  * ============================================================================ */
 
-bool RelayManager::remapPin(uint8_t index, uint8_t new_pin) {
-    if (index >= RELAY_COUNT) return false;
-
-    // Reject conflicts with other relays and critical fixed pins
-    static const uint8_t forbidden[] = {0, 1, 3, 6, 7, 8, 9, 10, 11,
-                                        RADAR_RX_PIN, RADAR_TX_PIN,
-                                        PI_LINK_TX_PIN};
-    for (uint8_t f = 0; f < sizeof(forbidden); f++) {
-        if (new_pin == forbidden[f]) {
-            log_w("Remap refused: GPIO %u protected", new_pin);
-            return false;
-        }
+bool RelayManager::remapPin(uint8_t index, int new_pin) {
+    if (index >= g_config.relay_count || index >= BANK_CAPACITY) return false;
+    int old_pin = g_config.layout.relay_pins[index];
+    AllocationResult ar = apparatus::remapOutput(g_config.layout, Bank::Relay, index, new_pin);
+    if (!ar.ok) {
+        log_w("Remap relay %u -> GPIO %d failed: %s", index, new_pin, ar.error);
+        return false;
     }
-    for (uint8_t j = 0; j < RELAY_COUNT; j++) {
-        if (j != index && _active_pins[j] == new_pin) {
-            log_w("Remap refused: GPIO %u used by relay %u", new_pin, j);
-            return false;
-        }
-    }
-
-    // Release old pin to safe level, adopt new
     stopSequence(index);
-    digitalWrite(_active_pins[index], RELAY_BOOT_SAFE_LEVEL);
-    _active_pins[index] = new_pin;
-    pinMode(new_pin, OUTPUT);
-    digitalWrite(new_pin, RELAY_BOOT_SAFE_LEVEL);
-    log_i("Relay %u remapped to GPIO %u", index, new_pin);
+#ifndef APPARATUS_NATIVE_TEST
+    if (old_pin >= 0) {
+        digitalWrite(old_pin, RELAY_BOOT_SAFE_LEVEL);
+        pinMode(old_pin, INPUT);
+    }
+    if (new_pin >= 0) {
+        pinMode(new_pin, OUTPUT);
+        digitalWrite(new_pin, RELAY_BOOT_SAFE_LEVEL);
+    }
+#endif
+    log_i("Relay %u remapped: GPIO %d -> GPIO %d", index, old_pin, new_pin);
+    return true;
+}
+
+bool RelayManager::addRelay(int pin) {
+    AllocationResult ar = (pin < 0) ? apparatus::addOutput(g_config.layout, Bank::Relay)
+                                    : apparatus::addOutput(g_config.layout, Bank::Relay, pin);
+    if (!ar.ok) {
+        log_w("addRelay failed: %s", ar.error);
+        return false;
+    }
+    g_config.relay_count = g_config.layout.relay_count;
+    uint8_t idx = g_config.relay_count - 1;
+    g_config.fx[idx] = FxRelaySettings{};
+    g_config.fx[idx].enabled = true;
+    int new_pin = g_config.layout.relay_pins[idx];
+#ifndef APPARATUS_NATIVE_TEST
+    if (new_pin >= 0) {
+        pinMode(new_pin, OUTPUT);
+        digitalWrite(new_pin, RELAY_BOOT_SAFE_LEVEL);
+    }
+#endif
+    _rt[idx] = FxRelayRuntime{};
+    log_i("Relay channel %u added on GPIO %d (total %d)", idx, new_pin, g_config.relay_count);
+    return true;
+}
+
+bool RelayManager::removeLastRelay() {
+    if (g_config.relay_count <= 0) return false;
+    uint8_t idx = g_config.relay_count - 1;
+    int old_pin = g_config.layout.relay_pins[idx];
+    AllocationResult ar = apparatus::removeLastOutput(g_config.layout, Bank::Relay);
+    if (!ar.ok) {
+        log_w("removeLastRelay failed: %s", ar.error);
+        return false;
+    }
+    stopSequence(idx);
+#ifndef APPARATUS_NATIVE_TEST
+    if (old_pin >= 0) {
+        digitalWrite(old_pin, RELAY_BOOT_SAFE_LEVEL);
+        pinMode(old_pin, INPUT);
+    }
+#endif
+    _rt[idx] = FxRelayRuntime{};
+    g_config.fx[idx] = FxRelaySettings{};
+    g_config.relay_count = g_config.layout.relay_count;
+    log_i("Relay channel %u removed from GPIO %d (total %d)", idx, old_pin, g_config.relay_count);
     return true;
 }
 
@@ -64,7 +107,7 @@ bool RelayManager::remapPin(uint8_t index, uint8_t new_pin) {
 void RelayManager::update(bool state_changed, ApparatusState_t new_state, float agc, float velocity_cm_s) {
     static ApparatusState_t s_prev_state = STATE_IDLE;
     ApparatusState_t prev = s_prev_state;
-    for (uint8_t i = 0; i < RELAY_COUNT; i++) {
+    for (uint8_t i = 0; i < g_config.relay_count && i < BANK_CAPACITY; i++) {
         _sequencerTick(i);
         _clockTick(i);
     }
@@ -77,14 +120,14 @@ void RelayManager::update(bool state_changed, ApparatusState_t new_state, float 
  * ============================================================================ */
 
 void RelayManager::fireSequence(uint8_t index) {
-    if (index >= RELAY_COUNT || !g_config.fx[index].enabled) return;
+    if (index >= g_config.relay_count || index >= BANK_CAPACITY || !g_config.fx[index].enabled) return;
     FxRelaySettings& s = g_config.fx[index];
     fireSequenceCustom(index, s.press_length_ms, s.press_count, s.press_gap_ms);
 }
 
 void RelayManager::fireSequenceCustom(uint8_t index, uint16_t length_ms,
                                       uint8_t count, uint16_t gap_ms) {
-    if (index >= RELAY_COUNT || !g_config.fx[index].enabled) return;
+    if (index >= g_config.relay_count || index >= BANK_CAPACITY || !g_config.fx[index].enabled) return;
     FxRelayRuntime& rt = _rt[index];
 
     rt.momentary_hold = false;
@@ -97,7 +140,7 @@ void RelayManager::fireSequenceCustom(uint8_t index, uint16_t length_ms,
 }
 
 void RelayManager::stopSequence(uint8_t index) {
-    if (index >= RELAY_COUNT) return;
+    if (index >= g_config.relay_count || index >= BANK_CAPACITY) return;
     FxRelayRuntime& rt = _rt[index];
     rt.seq_active = false;
     rt.presses_left = 0;
@@ -151,7 +194,7 @@ void RelayManager::_clockTick(uint8_t i) {
  * ============================================================================ */
 
 void RelayManager::startHold(uint8_t index) {
-    if (index >= RELAY_COUNT || !g_config.fx[index].enabled) return;
+    if (index >= g_config.relay_count || index >= BANK_CAPACITY || !g_config.fx[index].enabled) return;
     FxRelayRuntime& rt = _rt[index];
     rt.seq_active = false;
     rt.presses_left = 0;
@@ -160,7 +203,7 @@ void RelayManager::startHold(uint8_t index) {
 }
 
 void RelayManager::endHold(uint8_t index) {
-    if (index >= RELAY_COUNT) return;
+    if (index >= g_config.relay_count || index >= BANK_CAPACITY) return;
     FxRelayRuntime& rt = _rt[index];
     if (rt.momentary_hold) {
         rt.momentary_hold = false;
@@ -173,16 +216,17 @@ void RelayManager::endHold(uint8_t index) {
  * ============================================================================ */
 
 void RelayManager::setPressed(uint8_t index, bool pressed) {
-    if (index >= RELAY_COUNT) return;
+    if (index >= g_config.relay_count || index >= BANK_CAPACITY) return;
     stopSequence(index);
     _writeLevel(index, pressed);
 }
 
 void RelayManager::setAllReleased() {
-    for (uint8_t i = 0; i < RELAY_COUNT; i++) stopSequence(i);
+    for (uint8_t i = 0; i < g_config.relay_count && i < BANK_CAPACITY; i++) stopSequence(i);
 }
 
 bool RelayManager::_cooldownOk(uint8_t index) const {
+    if (index >= BANK_CAPACITY) return false;
     return (millis() - _last_breath_fire[index]) >= g_config.auto_trigger_cooldown_ms;
 }
 
@@ -197,7 +241,7 @@ void RelayManager::_autoTriggerCheck(bool state_changed, ApparatusState_t prev,
 
     // --- Layer/state-linked triggers ---
     if (state_changed) {
-        for (uint8_t i = 0; i < RELAY_COUNT; i++) {
+        for (uint8_t i = 0; i < g_config.relay_count && i < BANK_CAPACITY; i++) {
             FxRelaySettings& s = g_config.fx[i];
             if (!s.enabled) continue;
             bool fire = false;
@@ -229,7 +273,7 @@ void RelayManager::_autoTriggerCheck(bool state_changed, ApparatusState_t prev,
 
     if (inhale_cross || exhale_cross) {
         uint8_t want = inhale_cross ? TRIG_INHALE : TRIG_EXHALE;
-        for (uint8_t i = 0; i < RELAY_COUNT; i++) {
+        for (uint8_t i = 0; i < g_config.relay_count && i < BANK_CAPACITY; i++) {
             if (g_config.fx[i].enabled && g_config.fx[i].trigger == want &&
                 _cooldownOk(i)) {
                 fireSequence(i);
@@ -242,7 +286,7 @@ void RelayManager::_autoTriggerCheck(bool state_changed, ApparatusState_t prev,
     if (velocity_cm_s < g_config.lunge_threshold_cm_s) {
         if (!_lunge_latched) {
             _lunge_latched = true;
-            for (uint8_t i = 0; i < RELAY_COUNT; i++) {
+            for (uint8_t i = 0; i < g_config.relay_count && i < BANK_CAPACITY; i++) {
                 if (g_config.fx[i].enabled && g_config.fx[i].trigger == TRIG_ON_LUNGE && _cooldownOk(i)) {
                     fireSequence(i);
                     _last_breath_fire[i] = now;
@@ -257,7 +301,7 @@ void RelayManager::_autoTriggerCheck(bool state_changed, ApparatusState_t prev,
     if (velocity_cm_s > g_config.retreat_threshold_cm_s) {
         if (!_retreat_latched) {
             _retreat_latched = true;
-            for (uint8_t i = 0; i < RELAY_COUNT; i++) {
+            for (uint8_t i = 0; i < g_config.relay_count && i < BANK_CAPACITY; i++) {
                 if (g_config.fx[i].enabled && g_config.fx[i].trigger == TRIG_ON_RETREAT && _cooldownOk(i)) {
                     fireSequence(i);
                     _last_breath_fire[i] = now;
@@ -278,7 +322,7 @@ void RelayManager::_autoTriggerCheck(bool state_changed, ApparatusState_t prev,
         // Ensure it's a "real" crossing and not just tiny floating point noise (hysteresis)
         if (crossed_zero && fabsf(velocity_cm_s - _last_velocity) > 0.5f) {
             if ((now - _last_zero_fire) > 300) { // Fast 300ms throttle for zero crossings
-                for (uint8_t i = 0; i < RELAY_COUNT; i++) {
+                for (uint8_t i = 0; i < g_config.relay_count && i < BANK_CAPACITY; i++) {
                     if (g_config.fx[i].enabled && g_config.fx[i].trigger == TRIG_VELOCITY_ZERO) {
                         fireSequence(i);
                         // Deliberately bypassing _cooldownOk here to allow rapid firing
@@ -297,22 +341,27 @@ void RelayManager::_autoTriggerCheck(bool state_changed, ApparatusState_t prev,
  * ============================================================================ */
 
 void RelayManager::_writeLevel(uint8_t index, bool pressed) {
-    if (index >= RELAY_COUNT) return;
+    if (index >= g_config.relay_count || index >= BANK_CAPACITY) return;
     _rt[index].level = pressed;
-    digitalWrite(_active_pins[index], pressed ? LOW : HIGH);  // Active-LOW board
+#ifndef APPARATUS_NATIVE_TEST
+    int pin = g_config.layout.relay_pins[index];
+    if (pin >= 0) {
+        digitalWrite(pin, pressed ? LOW : HIGH);  // Active-LOW board
+    }
+#endif
 }
 
-uint8_t RelayManager::getPattern() const {
-    uint8_t p = 0;
-    for (uint8_t i = 0; i < RELAY_COUNT; i++) {
+uint16_t RelayManager::getPattern() const {
+    uint16_t p = 0;
+    for (uint8_t i = 0; i < g_config.relay_count && i < BANK_CAPACITY; i++) {
         if (_rt[i].level) p |= (1 << i);
     }
     return p;
 }
 
 void RelayManager::printStatus() const {
-    log_i("Relays pressed=0x%02X seq:", getPattern());
-    for (uint8_t i = 0; i < RELAY_COUNT; i++) {
+    log_i("Relays pressed=0x%04X seq:", getPattern());
+    for (uint8_t i = 0; i < g_config.relay_count && i < BANK_CAPACITY; i++) {
         if (_rt[i].seq_active) {
             log_i("  [%d] %s: %u/%u presses left", i, g_config.fx[i].name,
                   _rt[i].presses_left, _rt[i].total_presses);

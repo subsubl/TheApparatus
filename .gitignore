@@ -7,4 +7,5 @@ playwright-report/
 received.log
 package-lock.json
 *_runner
+build_native/
 

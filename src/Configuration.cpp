@@ -9,12 +9,12 @@ constexpr uint8_t kMagic[4] = {'A', 'P', 'P', '5'};
 constexpr uint8_t kVersion = 5;
 constexpr size_t kHeaderSize = 12;  // magic(4) ver(1) flags(1) payload_len(2) crc32(4)
 constexpr size_t kMaxBootSteps = 12;
-constexpr size_t kVactrolRec = 12;  // u8 auto,u16 min,u16 max,f32 slew,u16 manual,u8 pot
+constexpr size_t kVactrolRec = 17; // u8 src,u8 dyn_slew,u16 min,u16 max,f32 slew,u16 manual,u8 pot,f32 gamma
 constexpr size_t kFxRec = 25;  // u8 en,u8 trig,u16 len,u8 cnt,u16 gap,u8 cen,u32 cint,name[12],u8 pot
 constexpr size_t kStepRec = 8;  // u8 relay,u8 presses,u16 len,u16 gap,u16 wait
-// Payload before boot steps: scalars(71) + wifi(96) + telemetry(2) +
-// version/counts(3) + pins(28) + vactrol rows(168) + fx rows(350) + boot base(4).
-constexpr size_t kFixedPayload = 722;
+// Payload before boot steps: scalars(88) + wifi(96) + telemetry(2) +
+// version/counts(3) + pins(28) + vactrol rows(238) + fx rows(350) + boot base(4).
+constexpr size_t kFixedPayload = 809;
 
 void putU16(uint8_t* p, uint16_t v) { p[0] = uint8_t(v & 0xFFu); p[1] = uint8_t(v >> 8); }
 void putU32(uint8_t* p, uint32_t v) {
@@ -79,22 +79,29 @@ bool configurationValidate(const CalibrationConfig& c, const char** error) {
     if (c.multiclick_window_ms < 100u || c.multiclick_window_ms > 1000u) return fail("multiclick_window_ms out of range");
     if (c.long_press_ms < 200u || c.long_press_ms > 2000u) return fail("long_press_ms out of range");
     if (!inRange(c.breath_threshold, 0.05f, 1.0f)) return fail("breath_threshold out of range");
+    if (!inRange(c.lunge_threshold_cm_s, -500.0f, -5.0f)) return fail("lunge_threshold_cm_s out of range");
+    if (!inRange(c.retreat_threshold_cm_s, 5.0f, 500.0f)) return fail("retreat_threshold_cm_s out of range");
     if (c.auto_trigger_cooldown_ms < 100u || c.auto_trigger_cooldown_ms > 60000u) return fail("auto_trigger_cooldown_ms out of range");
+    for (int g = 0; g < 9; ++g) {
+        if (c.gate_sensitivity[g] > 100u) return fail("gate_sensitivity out of range");
+    }
     if (!inRange(c.pi_zone_far_cm, 40.0f, 650.0f)) return fail("pi_zone_far_cm out of range");
     if (!inRange(c.pi_zone_near_cm, 40.0f, 650.0f)) return fail("pi_zone_near_cm out of range");
     if (c.telemetry_rate_hz < 1u || c.telemetry_rate_hz > 100u) return fail("telemetry_rate_hz out of range");
     for (int i = 0; i < c.vactrol_count && i < BANK_CAPACITY; ++i) {
         const VactrolSettings& s = c.vactrol[size_t(i)];
+        if (s.source_mode > 4u) return fail("vactrol source_mode out of range");
         if (s.min_clamp > 1023u || s.max_clamp > 1023u || s.min_clamp > s.max_clamp)
             return fail("vactrol clamps out of range");
         if (s.manual_value > 1023u) return fail("vactrol manual_value out of range");
         if (!inRange(s.slew_per_ms, 0.1f, 50.0f)) return fail("vactrol slew_per_ms out of range");
         if (int(s.ave5_pot) >= AVE5_POT_COUNT) return fail("vactrol ave5_pot out of range");
+        if (!inRange(s.gamma, 0.1f, 4.0f)) return fail("vactrol gamma out of range");
     }
     for (int i = 0; i < c.relay_count && i < BANK_CAPACITY; ++i) {
         const FxRelaySettings& s = c.fx[size_t(i)];
         if (!s.enabled) continue;  // disabled rows carry no constraints
-        if (s.trigger > 7u) return fail("fx trigger out of range");
+        if (s.trigger > 10u) return fail("fx trigger out of range");
         if (s.press_length_ms < 30u || s.press_length_ms > 3000u) return fail("fx press_length_ms out of range");
         if (s.press_count < 1u || s.press_count > 5u) return fail("fx press_count out of range");
         if (s.press_gap_ms < 20u || s.press_gap_ms > 2000u) return fail("fx press_gap_ms out of range");
@@ -149,7 +156,10 @@ size_t configurationEncode(const CalibrationConfig& c, uint8_t* out, size_t cap)
     putU32(out + o, c.multiclick_window_ms);      o += 4;
     putU32(out + o, c.long_press_ms);             o += 4;
     putF32(out + o, c.breath_threshold);          o += 4;
+    putF32(out + o, c.lunge_threshold_cm_s);      o += 4;
+    putF32(out + o, c.retreat_threshold_cm_s);    o += 4;
     putU32(out + o, c.auto_trigger_cooldown_ms);  o += 4;
+    for (size_t i = 0; i < 9; ++i) out[o++] = c.gate_sensitivity[i];
     putF32(out + o, c.pi_zone_far_cm);            o += 4;
     putF32(out + o, c.pi_zone_near_cm);           o += 4;
     for (size_t i = 0; i < 32; ++i) out[o++] = uint8_t(c.wifi_ssid[i]);
@@ -163,12 +173,14 @@ size_t configurationEncode(const CalibrationConfig& c, uint8_t* out, size_t cap)
     for (size_t i = 0; i < 14; ++i) {
         if (i < size_t(c.vactrol_count)) {
             const VactrolSettings& s = c.vactrol[i];
-            out[o++] = s.auto_mode ? 1 : 0;
+            out[o++] = s.source_mode;
+            out[o++] = s.dynamic_slew ? 1 : 0;
             putU16(out + o, s.min_clamp);    o += 2;
             putU16(out + o, s.max_clamp);    o += 2;
             putF32(out + o, s.slew_per_ms);  o += 4;
             putU16(out + o, s.manual_value); o += 2;
             out[o++] = s.ave5_pot;
+            putF32(out + o, s.gamma);        o += 4;
         } else {
             for (size_t k = 0; k < kVactrolRec; ++k) out[o++] = 0;
         }
@@ -241,7 +253,10 @@ LoadResult configurationDecode(const uint8_t* data, size_t len, CalibrationConfi
     t.multiclick_window_ms = getU32(p + o);      o += 4;
     t.long_press_ms = getU32(p + o);             o += 4;
     t.breath_threshold = getF32(p + o);          o += 4;
+    t.lunge_threshold_cm_s = getF32(p + o);      o += 4;
+    t.retreat_threshold_cm_s = getF32(p + o);    o += 4;
     t.auto_trigger_cooldown_ms = getU32(p + o);  o += 4;
+    for (size_t i = 0; i < 9; ++i) t.gate_sensitivity[i] = p[o++];
     t.pi_zone_far_cm = getF32(p + o);            o += 4;
     t.pi_zone_near_cm = getF32(p + o);           o += 4;
     for (size_t i = 0; i < 32; ++i) t.wifi_ssid[i] = char(p[o++]);
@@ -256,12 +271,14 @@ LoadResult configurationDecode(const uint8_t* data, size_t len, CalibrationConfi
     t.layout.relay_count = t.relay_count;
     for (size_t i = 0; i < 14; ++i) {
         VactrolSettings s{};
-        if (!boolByte(p, &o, &s.auto_mode)) return {LoadStatus::Invalid, "invalid bool byte"};
+        s.source_mode = p[o++];
+        if (!boolByte(p, &o, &s.dynamic_slew)) return {LoadStatus::Invalid, "invalid bool byte"};
         s.min_clamp = getU16(p + o);    o += 2;
         s.max_clamp = getU16(p + o);    o += 2;
         s.slew_per_ms = getF32(p + o);  o += 4;
         s.manual_value = getU16(p + o); o += 2;
         s.ave5_pot = p[o++];
+        s.gamma = getF32(p + o);        o += 4;
         t.vactrol[i] = s;
     }
     for (size_t i = 0; i < 14; ++i) {
@@ -313,7 +330,16 @@ void configurationMigrateFromV4(const CalibrationConfigV4& o, CalibrationConfig&
     n.long_press_ms = o.long_press_ms;           n.breath_threshold = o.breath_threshold;
     n.auto_trigger_cooldown_ms = o.auto_trigger_cooldown_ms;
     n.pi_zone_far_cm = o.pi_zone_far_cm;         n.pi_zone_near_cm = o.pi_zone_near_cm;
-    for (size_t i = 0; i < 6; ++i) n.vactrol[i] = o.vactrol[i];
+    for (size_t i = 0; i < 6; ++i) {
+        n.vactrol[i].source_mode = o.vactrol[i].auto_mode ? 1 : 0;
+        n.vactrol[i].dynamic_slew = false;
+        n.vactrol[i].min_clamp = o.vactrol[i].min_clamp;
+        n.vactrol[i].max_clamp = o.vactrol[i].max_clamp;
+        n.vactrol[i].slew_per_ms = o.vactrol[i].slew_per_ms;
+        n.vactrol[i].manual_value = o.vactrol[i].manual_value;
+        n.vactrol[i].ave5_pot = o.vactrol[i].ave5_pot;
+        n.vactrol[i].gamma = 1.0f;
+    }
     for (size_t i = 0; i < 8; ++i) {
         const FxRelaySettingsV4& s = o.fx[i];
         FxRelaySettings d{};
@@ -338,6 +364,98 @@ void configurationMigrateFromV4(const CalibrationConfigV4& o, CalibrationConfig&
         n.layout.relay_pins[i] = (i < 8) ? LEGACY_RELAY_PINS[i] : -1;
     }
     n.config_version = 5;
+}
+
+namespace {
+bool parseV4Bytes(const uint8_t* b, CalibrationConfigV4& o) {
+    auto b8 = [&](size_t off) -> uint8_t { return b[off]; };
+    auto b16 = [&](size_t off) -> uint16_t { return getU16(b + off); };
+    auto b32 = [&](size_t off) -> uint32_t { return getU32(b + off); };
+    auto bf32 = [&](size_t off) -> float { return getF32(b + off); };
+    auto boolAt = [&](size_t off, bool* dst) -> bool {
+        if (b[off] > 1) return false;
+        *dst = (b[off] != 0);
+        return true;
+    };
+    o.D_min = bf32(0);
+    o.D_max = bf32(4);
+    o.hysteresis = bf32(8);
+    o.gamma_exponent = bf32(12);
+    o.slew_rate_limit = bf32(16);
+    o.breathing_depth_M = bf32(20);
+    o.pwm_min_clamp = b8(24);
+    o.pwm_max_clamp = b8(25);
+    if (!boolAt(26, &o.touch_inverted)) return false;
+    o.variance_threshold_cm = bf32(28);
+    o.stationary_lock_time_ms = b32(32);
+    o.agc_epsilon = bf32(36);
+    o.agc_window_size = static_cast<size_t>(b32(40));
+    o.button_debounce_ms = b32(44);
+    o.multiclick_window_ms = b32(48);
+    o.long_press_ms = b32(52);
+    o.breath_threshold = bf32(56);
+    o.auto_trigger_cooldown_ms = b32(60);
+    for (size_t i = 0; i < 6; ++i) {
+        const size_t base = 64 + i * 16;
+        VactrolSettingsV4 s{};
+        if (!boolAt(base, &s.auto_mode)) return false;
+        s.min_clamp = b16(base + 2);
+        s.max_clamp = b16(base + 4);
+        s.slew_per_ms = bf32(base + 8);
+        s.manual_value = b16(base + 12);
+        s.ave5_pot = b8(base + 14);
+        o.vactrol[i] = s;
+    }
+    for (size_t i = 0; i < 8; ++i) {
+        const size_t base = 160 + i * 26;
+        FxRelaySettingsV4 s{};
+        if (!boolAt(base, &s.enabled)) return false;
+        s.trigger = b8(base + 1);
+        s.press_length_ms = b16(base + 2);
+        s.press_count = b8(base + 4);
+        s.press_gap_ms = b16(base + 6);
+        if (!boolAt(base + 8, &s.clock_enable)) return false;
+        s.clock_interval_ms = b16(base + 10);
+        for (size_t k = 0; k < 12; ++k) s.name[k] = static_cast<char>(b8(base + 12 + k));
+        s.ave5_button = b8(base + 24);
+        o.fx[i] = s;
+    }
+    if (!boolAt(368, &o.boot.enabled)) return false;
+    o.boot.start_delay_ms = b16(370);
+    o.boot.step_count = b8(372);
+    for (size_t i = 0; i < 12; ++i) {
+        const size_t base = 374 + i * 8;
+        BootStep s{};
+        s.relay = b8(base);
+        s.presses = b8(base + 1);
+        s.length_ms = b16(base + 2);
+        s.gap_ms = b16(base + 4);
+        s.wait_after_ms = b16(base + 6);
+        o.boot.steps[i] = s;
+    }
+    o.pi_zone_far_cm = bf32(472);
+    o.pi_zone_near_cm = bf32(476);
+    for (size_t k = 0; k < 32; ++k) o.wifi_ssid[k] = static_cast<char>(b8(480 + k));
+    for (size_t k = 0; k < 64; ++k) o.wifi_password[k] = static_cast<char>(b8(512 + k));
+    o.telemetry_rate_hz = b16(576);
+    o.config_version = b8(578);
+    return true;
+}
+}  // namespace
+
+LoadResult loadConfigurationBlob(const uint8_t* data, size_t len, CalibrationConfig& out) {
+    if (data == nullptr || len == 0) return {LoadStatus::Invalid, "null or empty blob"};
+    if (len == 580) {
+        CalibrationConfigV4 legacy{};
+        if (!parseV4Bytes(data, legacy)) return {LoadStatus::Invalid, "v4 image has a bool byte that is not 0/1"};
+        CalibrationConfig staged{};
+        configurationMigrateFromV4(legacy, staged);
+        const char* verr = nullptr;
+        if (!configurationValidate(staged, &verr)) return {LoadStatus::Invalid, verr};
+        out = staged;
+        return {LoadStatus::Migrated, nullptr};
+    }
+    return configurationDecode(data, len, out);
 }
 
 }  // namespace apparatus

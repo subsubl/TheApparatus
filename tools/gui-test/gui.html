@@ -64,6 +64,8 @@ canvas{width:100%;height:160px;background:#fafafa;border:1px solid #e0e0e0;borde
 </div></div>
 
 <div class="panel"><h2>Radar Gates (stationary)</h2><div id="gates"></div>
+<div style="margin-top:8px"><b>Sensitivity (0-100)</b></div>
+<div id="gateSens"></div>
 <div class="note">◄ = peak gate used by DSP centroid interpolation</div></div>
 
 <div class="panel" style="grid-column:span 2"><h2>Radar Preview — Top-Down View</h2>
@@ -81,7 +83,12 @@ canvas{width:100%;height:160px;background:#fafafa;border:1px solid #e0e0e0;borde
 
 <div class="panel"><h2>Sensor Calibration</h2><div id="calib"></div>
 <button class="btn" id="saveBtn">Save to NVS</button>
-<button class="btn" id="resetBtn" style="background:#666">Factory Reset</button></div>
+<button class="btn" id="resetBtn" style="background:#666">Factory Reset</button>
+<div style="display:flex;gap:8px;margin-top:8px">
+<button class="mini-btn" id="exportBtn" style="background:#1565c0">Export JSON</button>
+<input type="file" id="importFile" accept=".json" style="display:none">
+<button class="mini-btn" id="importBtn" style="background:#2e7d32">Import JSON</button>
+</div></div>
 
 <div class="panel" style="grid-column:span 2"><h2>Relay Bank — WJ-AVE5 Buttons</h2>
 <div class="relay-grid" id="relays"></div></div>
@@ -98,7 +105,7 @@ const cv=document.getElementById('scope'),cx=cv.getContext('2d');
 const CW=cv.width,CH=cv.height,CY=CH/2,SC=CH*.42;
 const rv=document.getElementById('radar'),rx=rv.getContext('2d');
 const RW=rv.width,RH=rv.height,RBASE_Y=RH-20;RMAX_CM=675;RSCALE=(RH-40)/RMAX_CM;
-const TRIGGERS=["Manual","Layer 1 Return (Idle)","Layer 2 Entry (Macro)","Breath Lock (Micro)","Layer 3 Cut (Contact)","Inhale Peak","Exhale Peak","Layer 3 Release (un-latch)"];
+const TRIGGERS=["Manual","Layer 3 Cut (Contact)","Layer 3 Release (un-latch)","Layer 2 Entry (Macro)","Layer 1 Return (Idle)","Breath Lock (Micro)","Inhale Peak","Exhale Peak","Lunge","Retreat","Velocity Zero"];
 let AVE5_BUTTONS=[],AVE5_POTS=[];   // filled from config payload
 const VAC_NAMES=["Mix/T-Bar","Color X","Color Y","Wipe Speed","Effect Level","Aux Mod"];
 const PIN_OPTIONS=[4,5,12,13,14,15,16,17,18,19,21,22,23,25,26,27,32,33];
@@ -117,6 +124,11 @@ function handle(m){
  if(m.type==='telemetry')drawTele(m.payload);
  else if(m.type==='config'){buildUI(m.payload);}
  else if(m.type==='saved'){flash('Saved to NVS');}
+ else if(m.type==='pin_ok'){flash('Pin updated');}
+ else if(m.type==='pin_fail'){flash('Pin remap rejected');}
+ else if(m.type==='channel_added'){flash('Channel added');}
+ else if(m.type==='channel_removed'){flash('Channel removed');}
+ else if(m.type==='channel_failed'){flash('Channel operation failed');}
 }
 
 function drawTele(p){
@@ -197,25 +209,46 @@ function buildUI(c){CFG=c;
  ['hysteresis','Hysteresis',0,100,1,'cm'],['gamma_exponent','Gamma γ',0.1,4,0.01,''],
  ['breathing_depth_M','Breath depth M',0,1,0.01,''],['slew_rate_limit','Slew rate',0.1,20,0.1,'/ms×.01'],
  ['variance_threshold_cm','Variance thr',1,30,0.5,'cm'],['breath_threshold','Breath trig thr',0.1,1,0.05,'σ'],
+ ['lunge_threshold_cm_s','Lunge thr',-150,-10,5,'cm/s'],['retreat_threshold_cm_s','Retreat thr',10,150,5,'cm/s'],
  ['pi_zone_near_cm','Pi zone near',40,400,5,'cm'],['pi_zone_far_cm','Pi zone far',100,650,5,'cm']];
  document.getElementById('calib').innerHTML=cal.map(([k,l,mn,mx,st,u])=>
   `<div class="slider-row"><label>${l}</label><input type="range" id="c_${k}" min="${mn}" max="${mx}" step="${st}" value="${c[k]}" oninput="upd('${k}',this.value)"><span class="val" id="cv_${k}">${c[k]}${u}</span></div>`).join('')
  +`<div class="slider-row"><label>PWM min/max clamp</label>
  <input type="number" id="c_pwm_min_clamp" min="0" max="254" value="${c.pwm_min_clamp}" style="width:70px">
  <input type="number" id="c_pwm_max_clamp" min="1" max="255" value="${c.pwm_max_clamp}" style="width:70px"></div>`;
+ document.getElementById('gateSens').innerHTML=(c.gate_sensitivity||[50,50,50,50,50,50,50,50,50]).map((v,i)=>
+  `<div class="slider-row"><label>G${i}</label><input type="range" id="gsens_${i}" min="0" max="100" value="${v}" oninput="document.getElementById('gsv_${i}').textContent=this.value"><span class="val" id="gsv_${i}">${v}</span></div>`).join('');
  // vactrols
- document.getElementById('vactrols').innerHTML=c.vactrol.map((v,i)=>{
+ let vacHtml=`<div style="display:flex;gap:8px;margin-bottom:8px">
+  <button class="mini-btn" style="flex:1;background:#2e7d32" onclick="addChan('vactrol')">+ Add Vactrol</button>
+  <button class="mini-btn" style="flex:1;background:#8b0000" onclick="remChan('vactrol')">− Remove Vactrol</button>
+ </div>`;
+ vacHtml+=(c.vactrol||[]).map((v,i)=>{
   const n=VAC_NAMES[i]||`Vactrol ${i+1}`;
-  return `<div class="vac-card"><div class="vac-head"><span class="vac-name">${i+1}. ${n}</span>
-  <label class="vac-auto"><input type="checkbox" id="va_${i}" ${v.auto_mode?'checked':''} onchange="setVacAuto(${i},this.checked)"> AUTO</label></div>
+  const curPin=v.pin!==undefined?v.pin:PIN_OPTIONS[0];
+   return `<div class="vac-card"><div class="vac-head"><span class="vac-name">${i+1}. ${n}</span>
+   <select id="vsrc_${i}" style="font-size:.75rem;padding:2px" onchange="setVacSource(${i})">
+    <option value="0" ${v.source_mode===0?'selected':''}>Manual</option>
+    <option value="1" ${v.source_mode===1?'selected':''}>Distance</option>
+    <option value="2" ${v.source_mode===2?'selected':''}>Speed</option>
+    <option value="3" ${v.source_mode===3?'selected':''}>Breath</option>
+   </select></div>
   <div class="slider-row"><label>Drives</label><select id="vpot_${i}" style="flex:1" onchange="setVacPot(${i})">${AVE5_POTS.map((p,pi)=>`<option value="${pi}" ${v.ave5_pot===pi?'selected':''}>${p}</option>`).join('')}</select></div>
-  <div class="slider-row"><label>Manual level</label><input type="range" id="vs_${i}" min="0" max="1023" value="${v.manual_value}" oninput="setVac(${i},this.value)" ${v.auto_mode?'disabled':''}><span class="val" id="vv${i}">${v.manual_value}</span></div>
+  <div class="slider-row"><label>GPIO</label><select id="vpin_${i}" onchange="setVacPin(${i})" style="flex:1">${PIN_OPTIONS.map(p=>`<option value="${p}" ${curPin===p?'selected':''}>${p}</option>`).join('')}</select></div>
+   <div class="slider-row"><label>Manual level</label><input type="range" id="vs_${i}" min="0" max="1023" value="${v.manual_value}" oninput="setVac(${i},this.value)" ${v.source_mode!==0?'disabled':''}><span class="val" id="vv${i}">${v.manual_value}</span></div>
   <div class="slider-row"><label>Clamp min / max</label>
   <input type="number" id="vcmin_${i}" min="0" max="1022" value="${v.min_clamp}" style="width:80px">
   <input type="number" id="vcmax_${i}" min="1" max="1023" value="${v.max_clamp}" style="width:80px">
-  <input type="number" id="vslew_${i}" step="0.1" min="0.1" value="${v.slew_per_ms}" title="slew/ms" style="width:80px"></div></div>`}).join('');
+  <input type="number" id="vslew_${i}" step="0.1" min="0.1" value="${v.slew_per_ms}" title="slew/ms" style="width:80px">
+   <input type="number" id="vgamma_${i}" step="0.01" min="0.1" max="5.0" value="${v.gamma}" title="gamma" style="width:80px">
+   <label style="font-size:0.75rem"><input type="checkbox" id="vdyn_${i}" ${v.dynamic_slew?'checked':''}> Dyn Slew</label></div></div>`}).join('');
+ document.getElementById('vactrols').innerHTML=vacHtml;
  // relays
- document.getElementById('relays').innerHTML=c.fx.map((r,i)=>
+ let relayHtml=`<div style="grid-column:span 2;display:flex;gap:8px;margin-bottom:8px">
+  <button class="mini-btn" style="flex:1;background:#2e7d32" onclick="addChan('relay')">+ Add Relay</button>
+  <button class="mini-btn" style="flex:1;background:#8b0000" onclick="remChan('relay')">− Remove Relay</button>
+ </div>`;
+ relayHtml+=(c.fx||[]).map((r,i)=>
   `<div class="relay-card" id="rcard${i}"><div class="relay-name">${r.name}<span class="relay-dot" id="rdot${i}"></span></div>
   <select id="rb_${i}" title="WJ-AVE5 button this relay presses" onchange="setRelayBtn(${i})">${AVE5_BUTTONS.map((b,bi)=>`<option value="${bi}" ${r.ave5_button===bi?'selected':''}>${b}</option>`).join('')}</select>
   <select id="rt_${i}" onchange="setRelayCfg(${i})">${TRIGGERS.map((t,ti)=>`<option value="${ti}" ${r.trigger===ti?'selected':''}>${t}</option>`).join('')}</select>
@@ -231,6 +264,7 @@ function buildUI(c){CFG=c;
   <select id="rpin_${i}" onchange="remapPin(${i})" style="flex:1">${PIN_OPTIONS.map(p=>`<option ${r.pin===p?'selected':''}>${p}</option>`).join('')}</select></div>
   <button class="mini-btn" onclick="fireRelay(${i})">⚡ FIRE</button>
   <button class="mini-btn stop" onclick="stopRelay(${i})">■ STOP</button></div>`).join('');
+ document.getElementById('relays').innerHTML=relayHtml;
 
  // boot sequence editor
  const bt=c.boot;
@@ -256,8 +290,18 @@ const BOOT_STEPS_MAX=12;
 function upd(k,v){CFG[k]=parseFloat(v);const u={D_min:'cm',D_max:'cm',hysteresis:'cm'}[k]||'';
  document.getElementById('cv_'+k).textContent=v+u;}
 function setVac(i,v){ws.send(JSON.stringify({type:'vactrol_manual',ch:i,value:parseInt(v)}));document.getElementById('vv'+i).textContent=v}
+function setVacSource(i){
+ const m=parseInt(document.getElementById('vsrc_'+i).value);
+ document.getElementById('vs_'+i).disabled=(m!==0);
+ ws.send(JSON.stringify({type:'vactrol_source',ch:i,mode:m}));
+}
+function setVacPin(i){
+ ws.send(JSON.stringify({type:'vactrol_pin',ch:i,pin:parseInt(document.getElementById('vpin_'+i).value)}));
+}
 function setVacAuto(i,on){document.getElementById('vs_'+i).disabled=on;
  ws.send(JSON.stringify({type:'vactrol_auto',ch:i,auto:on}))}
+function addChan(b){ws.send(JSON.stringify({type:'add_channel',bank:b,pin:-1}))}
+function remChan(b){ws.send(JSON.stringify({type:'remove_channel',bank:b}))}
 function setRelayCfg(i,clockOnly){
  if(clockOnly){const en=document.getElementById('rclk_'+i).checked;
   document.getElementById('rci_'+i).disabled=!en;
@@ -280,16 +324,21 @@ function stopRelay(i){ws.send(JSON.stringify({type:'relay_stop',index:i}))}
 function flash(t){const e=document.createElement('div');e.textContent=t;e.style.cssText='position:fixed;top:10px;right:10px;background:#113329;color:#fff;padding:8px 16px;border-radius:4px';document.body.appendChild(e);setTimeout(()=>e.remove(),2500)}
 document.getElementById('saveBtn').onclick=()=>{
  const p={};['D_min','D_max','hysteresis','gamma_exponent','breathing_depth_M','slew_rate_limit',
- 'variance_threshold_cm','breath_threshold','pi_zone_near_cm','pi_zone_far_cm'].forEach(k=>p[k]=CFG[k]);
+ 'variance_threshold_cm','breath_threshold','pi_zone_near_cm','pi_zone_far_cm',
+ 'lunge_threshold_cm_s','retreat_threshold_cm_s'].forEach(k=>p[k]=CFG[k]);
  p.pwm_min_clamp=parseInt(document.getElementById('c_pwm_min_clamp').value);
  p.pwm_max_clamp=parseInt(document.getElementById('c_pwm_max_clamp').value);
- p.vactrol=[];for(let i=0;i<CFG.vactrol.length;i++)p.vactrol.push({auto_mode:document.getElementById('va_'+i).checked,
+ p.gate_sensitivity = [];
+ for(let i=0;i<9;i++) p.gate_sensitivity.push(parseInt(document.getElementById('gsens_'+i).value));
+ p.vactrol=[];for(let i=0;i<(CFG.vactrol?CFG.vactrol.length:0);i++)p.vactrol.push({source_mode:parseInt(document.getElementById('vsrc_'+i).value),
+  dynamic_slew:document.getElementById('vdyn_'+i).checked,
   min_clamp:parseInt(document.getElementById('vcmin_'+i).value),
   max_clamp:parseInt(document.getElementById('vcmax_'+i).value),
   slew_per_ms:parseFloat(document.getElementById('vslew_'+i).value),
+  gamma:parseFloat(document.getElementById('vgamma_'+i).value),
   manual_value:parseInt(document.getElementById('vs_'+i).value),
   ave5_pot:parseInt(document.getElementById('vpot_'+i).value)});
- p.fx=CFG.fx.map((r,i)=>({trigger:parseInt(document.getElementById('rt_'+i).value),
+ p.fx=(CFG.fx||[]).map((r,i)=>({trigger:parseInt(document.getElementById('rt_'+i).value),
   press_length_ms:parseInt(document.getElementById('rl_'+i).value),
   press_count:parseInt(document.getElementById('rn_'+i).value),
   press_gap_ms:parseInt(document.getElementById('rg_'+i).value),
@@ -311,6 +360,30 @@ document.getElementById('saveBtn').onclick=()=>{
   step_count:ordered.length,steps:ordered};
  ws.send(JSON.stringify({type:'save_config',payload:p}))};
 document.getElementById('resetBtn').onclick=()=>confirm('Factory reset?')&&ws.send(JSON.stringify({type:'factory_reset'}));
+document.getElementById('exportBtn').onclick=()=>{
+  const blob = new Blob([JSON.stringify(CFG, null, 2)], {type: 'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'apparatus_config.json';
+  a.click();
+  URL.revokeObjectURL(url);
+};
+document.getElementById('importBtn').onclick=()=>document.getElementById('importFile').click();
+document.getElementById('importFile').onchange=e=>{
+  const file = e.target.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = ev => {
+    try {
+      const payload = JSON.parse(ev.target.result);
+      ws.send(JSON.stringify({type: 'save_config', payload: payload}));
+      flash('Import sent! Refreshing...');
+      setTimeout(()=>location.reload(), 1000);
+    } catch(err) { alert('Invalid JSON'); }
+  };
+  reader.readAsText(file);
+};
 connect();
 for(let i=0;i<9;i++)document.getElementById('gates').innerHTML+=`<div class="ebar-row"><div class="ebar-label">G${i} ${i*75}-${i*75+75}</div><div class="ebar-c"><div class="ebar" style="width:0%"></div></div><div class="ebar-v">0</div></div>`;
 </script></body></html>

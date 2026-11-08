@@ -19,15 +19,19 @@ const config = {
   breathing_depth_M: 0.35, slew_rate_limit: 4,
   variance_threshold_cm: 5, breath_threshold: 0.45,
   pi_zone_near_cm: 150, pi_zone_far_cm: 350,
+  lunge_threshold_cm_s: -35, retreat_threshold_cm_s: 35,
   pwm_min_clamp: 0, pwm_max_clamp: 255,
+  gate_sensitivity: [50, 50, 50, 50, 50, 50, 50, 50, 50],
+  vactrol_count: 6, relay_count: 8,
   ave5_buttons: ["(unassigned)", "STILL (freeze)", "STROBE", "MOSAIC", "PAINT",
     "NEGATIVE", "CUT (bus switch)", "A/B (bus select)", "WIPE (arm)",
     "WIPE PATTERN select", "SUPERIMPOSE (camera key)", "FADE (auto fade)"],
   ave5_pots: ["(free use / unlabeled)", "Mix/T-Bar lever", "Color balance X",
     "Color balance Y", "Wipe speed", "Effect level", "Fade lever", "Audio level"],
   vactrol: Array.from({ length: 6 }, (_, i) => ({
-    auto_mode: i === 0, min_clamp: 0, max_clamp: 255,
-    slew_per_ms: 2, manual_value: 128, ave5_pot: i + 1 })),
+    source_mode: i === 0 ? 1 : 0, dynamic_slew: false,
+    min_clamp: 0, max_clamp: 1023, slew_per_ms: 2.0, gamma: 1.0,
+    manual_value: 128, ave5_pot: i + 1, pin: [13, 14, 27, 26, 25, 33][i] })),
   fx: Array.from({ length: 8 }, (_, i) => ({
     name: "WJ-BTN" + (i + 1), trigger: 0, press_length_ms: 120,
     press_count: 1, press_gap_ms: 150, pin: [4,18,19,21,22,23,32,15][i],
@@ -84,6 +88,46 @@ wss.on("connection", (ws) => {
     if (msg.type === "get_config") ws.send(JSON.stringify({ type: "config", payload: config }));
     else if (msg.type === "save_config") ws.send(JSON.stringify({ type: "saved" }));
     else if (msg.type === "relay_pin") ws.send(JSON.stringify({ type: msg.pin === 99 ? "pin_fail" : "pin_ok" }));
+    else if (msg.type === "vactrol_pin") ws.send(JSON.stringify({ type: msg.pin === 99 ? "pin_fail" : "pin_ok" }));
+    else if (msg.type === "vactrol_source") {
+      if (config.vactrol[msg.ch]) config.vactrol[msg.ch].source_mode = msg.mode;
+    }
+    else if (msg.type === "vactrol_pot") {
+      if (config.vactrol[msg.ch]) config.vactrol[msg.ch].ave5_pot = msg.pot;
+    }
+    else if (msg.type === "relay_ave5_button") {
+      if (config.fx[msg.index]) config.fx[msg.index].ave5_button = msg.button;
+    }
+    else if (msg.type === "add_channel") {
+      if (msg.bank === "vactrol" && config.vactrol.length < 14) {
+        config.vactrol.push({ source_mode: 0, dynamic_slew: false, min_clamp: 0, max_clamp: 1023, slew_per_ms: 2.0, gamma: 1.0, manual_value: 0, ave5_pot: 0, pin: 12 });
+        config.vactrol_count = config.vactrol.length;
+        ws.send(JSON.stringify({ type: "channel_added" }));
+        ws.send(JSON.stringify({ type: "config", payload: config }));
+      } else if (msg.bank === "relay" && config.fx.length < 14) {
+        config.fx.push({ name: "WJ-BTN" + (config.fx.length + 1), trigger: 0, press_length_ms: 120, press_count: 1, press_gap_ms: 150, pin: 16, clock_enable: false, clock_interval_ms: 5000, ave5_button: 0 });
+        config.relay_count = config.fx.length;
+        ws.send(JSON.stringify({ type: "channel_added" }));
+        ws.send(JSON.stringify({ type: "config", payload: config }));
+      } else {
+        ws.send(JSON.stringify({ type: "channel_failed" }));
+      }
+    }
+    else if (msg.type === "remove_channel") {
+      if (msg.bank === "vactrol" && config.vactrol.length > 1) {
+        config.vactrol.pop();
+        config.vactrol_count = config.vactrol.length;
+        ws.send(JSON.stringify({ type: "channel_removed" }));
+        ws.send(JSON.stringify({ type: "config", payload: config }));
+      } else if (msg.bank === "relay" && config.fx.length > 1) {
+        config.fx.pop();
+        config.relay_count = config.fx.length;
+        ws.send(JSON.stringify({ type: "channel_removed" }));
+        ws.send(JSON.stringify({ type: "config", payload: config }));
+      } else {
+        ws.send(JSON.stringify({ type: "channel_failed" }));
+      }
+    }
   });
   ws.on("close", () => clearInterval(iv));
 });

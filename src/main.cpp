@@ -94,32 +94,51 @@ static bool touchPlateUpdate() {
  * NVS PERSISTENCE
  * ============================================================================ */
 
+void saveConfiguration();
+
 void loadConfiguration() {
     g_preferences.begin(NVS_NAMESPACE, true);
     if (g_preferences.isKey(NVS_KEY_CONFIG)) {
         size_t len = g_preferences.getBytesLength(NVS_KEY_CONFIG);
-        CalibrationConfig loaded;
-        if (len == sizeof(CalibrationConfig) &&
-            g_preferences.getBytes(NVS_KEY_CONFIG, &loaded, len) == len &&
-            loaded.config_version == CONFIG_VERSION) {
-            g_config = loaded;
-            log_i("Config loaded from NVS (v%u)", loaded.config_version);
-        } else {
-            log_w("NVS config stale (size %u, v%u) - defaults", len,
-                  len >= sizeof(uint8_t) ? 0 : 0);
-            // Keep defaults on mismatch; struct layout changed -> fresh start
+        if (len > 0 && len <= 2048) {
+            uint8_t buf[2048];
+            size_t read_bytes = g_preferences.getBytes(NVS_KEY_CONFIG, buf, len);
+            if (read_bytes == len) {
+                CalibrationConfig decoded{};
+                LoadResult lr = loadConfigurationBlob(buf, len, decoded);
+                if (lr.status == LoadStatus::Ok) {
+                    g_config = decoded;
+                    log_i("Config loaded from NVS (APP5 envelope, %u bytes)", len);
+                    g_preferences.end();
+                    return;
+                } else if (lr.status == LoadStatus::Migrated) {
+                    g_config = decoded;
+                    log_i("Migrated legacy v4 NVS config to v5");
+                    g_preferences.end();
+                    saveConfiguration();
+                    return;
+                } else {
+                    log_w("NVS config decode failed: %s - using defaults", lr.error ? lr.error : "unknown");
+                }
+            }
         }
     } else {
-        log_i("No NVS config - defaults");
+        log_i("No NVS config - using defaults");
     }
     g_preferences.end();
 }
 
 void saveConfiguration() {
+    uint8_t buf[1024];
+    size_t encoded = configurationEncode(g_config, buf, sizeof(buf));
+    if (encoded == 0) {
+        log_e("saveConfiguration: validation or encoding failed!");
+        return;
+    }
     g_preferences.begin(NVS_NAMESPACE, false);
-    g_config.config_version = CONFIG_VERSION;
-    g_preferences.putBytes(NVS_KEY_CONFIG, &g_config, sizeof(CalibrationConfig));
+    g_preferences.putBytes(NVS_KEY_CONFIG, buf, encoded);
     g_preferences.end();
+    log_i("Saved v5 configuration to NVS (%u bytes)", encoded);
 }
 
 static volatile bool g_factory_reset_requested = false;
@@ -270,11 +289,11 @@ void loop() {
         p.pi_trigger = g_state_machine.getPiTrigger();
         p.gamma_shaped = g_state_machine.getGammaShaped();
         p.base_pwm_f = g_state_machine.getBasePWM();
-        for (int i = 0; i < RELAY_COUNT; i++) {
+        for (int i = 0; i < g_config.relay_count && i < BANK_CAPACITY; i++) {
             p.relay_seq[i] = g_relays.getSeqActive(i);
             p.relay_pressed[i] = g_relays.isPressed(i);
         }
-        for (int i = 0; i < VACTROL_COUNT; i++) {
+        for (int i = 0; i < g_config.vactrol_count && i < BANK_CAPACITY; i++) {
             p.vactrol_val[i] = g_vactrols.getValue(i);
             p.vactrol_auto[i] = (g_config.vactrol[i].source_mode != 0);
         }

@@ -145,6 +145,11 @@ function handle(m){
  if(m.type==='telemetry')drawTele(m.payload);
  else if(m.type==='config'){buildUI(m.payload);}
  else if(m.type==='saved'){flash('Saved to NVS');}
+ else if(m.type==='pin_ok'){flash('Pin updated');}
+ else if(m.type==='pin_fail'){flash('Pin remap rejected');}
+ else if(m.type==='channel_added'){flash('Channel added');}
+ else if(m.type==='channel_removed'){flash('Channel removed');}
+ else if(m.type==='channel_failed'){flash('Channel operation failed');}
 }
 
 function drawTele(p){
@@ -232,19 +237,25 @@ function buildUI(c){CFG=c;
  +`<div class="slider-row"><label>PWM min/max clamp</label>
  <input type="number" id="c_pwm_min_clamp" min="0" max="254" value="${c.pwm_min_clamp}" style="width:70px">
  <input type="number" id="c_pwm_max_clamp" min="1" max="255" value="${c.pwm_max_clamp}" style="width:70px"></div>`;
- document.getElementById('gateSens').innerHTML=c.gate_sensitivity.map((v,i)=>
+ document.getElementById('gateSens').innerHTML=(c.gate_sensitivity||[50,50,50,50,50,50,50,50,50]).map((v,i)=>
   `<div class="slider-row"><label>G${i}</label><input type="range" id="gsens_${i}" min="0" max="100" value="${v}" oninput="document.getElementById('gsv_${i}').textContent=this.value"><span class="val" id="gsv_${i}">${v}</span></div>`).join('');
  // vactrols
- document.getElementById('vactrols').innerHTML=c.vactrol.map((v,i)=>{
+ let vacHtml=`<div style="display:flex;gap:8px;margin-bottom:8px">
+  <button class="mini-btn" style="flex:1;background:#2e7d32" onclick="addChan('vactrol')">+ Add Vactrol</button>
+  <button class="mini-btn" style="flex:1;background:#8b0000" onclick="remChan('vactrol')">− Remove Vactrol</button>
+ </div>`;
+ vacHtml+=(c.vactrol||[]).map((v,i)=>{
   const n=VAC_NAMES[i]||`Vactrol ${i+1}`;
+  const curPin=v.pin!==undefined?v.pin:PIN_OPTIONS[0];
    return `<div class="vac-card"><div class="vac-head"><span class="vac-name">${i+1}. ${n}</span>
-   <select id="vsrc_${i}" style="font-size:.75rem;padding:2px">
+   <select id="vsrc_${i}" style="font-size:.75rem;padding:2px" onchange="setVacSource(${i})">
     <option value="0" ${v.source_mode===0?'selected':''}>Manual</option>
     <option value="1" ${v.source_mode===1?'selected':''}>Distance</option>
     <option value="2" ${v.source_mode===2?'selected':''}>Speed</option>
     <option value="3" ${v.source_mode===3?'selected':''}>Breath</option>
    </select></div>
   <div class="slider-row"><label>Drives</label><select id="vpot_${i}" style="flex:1" onchange="setVacPot(${i})">${AVE5_POTS.map((p,pi)=>`<option value="${pi}" ${v.ave5_pot===pi?'selected':''}>${p}</option>`).join('')}</select></div>
+  <div class="slider-row"><label>GPIO</label><select id="vpin_${i}" onchange="setVacPin(${i})" style="flex:1">${PIN_OPTIONS.map(p=>`<option value="${p}" ${curPin===p?'selected':''}>${p}</option>`).join('')}</select></div>
    <div class="slider-row"><label>Manual level</label><input type="range" id="vs_${i}" min="0" max="1023" value="${v.manual_value}" oninput="setVac(${i},this.value)" ${v.source_mode!==0?'disabled':''}><span class="val" id="vv${i}">${v.manual_value}</span></div>
   <div class="slider-row"><label>Clamp min / max</label>
   <input type="number" id="vcmin_${i}" min="0" max="1022" value="${v.min_clamp}" style="width:80px">
@@ -252,8 +263,13 @@ function buildUI(c){CFG=c;
   <input type="number" id="vslew_${i}" step="0.1" min="0.1" value="${v.slew_per_ms}" title="slew/ms" style="width:80px">
    <input type="number" id="vgamma_${i}" step="0.01" min="0.1" max="5.0" value="${v.gamma}" title="gamma" style="width:80px">
    <label style="font-size:0.75rem"><input type="checkbox" id="vdyn_${i}" ${v.dynamic_slew?'checked':''}> Dyn Slew</label></div></div>`}).join('');
+ document.getElementById('vactrols').innerHTML=vacHtml;
  // relays
- document.getElementById('relays').innerHTML=c.fx.map((r,i)=>
+ let relayHtml=`<div style="grid-column:span 2;display:flex;gap:8px;margin-bottom:8px">
+  <button class="mini-btn" style="flex:1;background:#2e7d32" onclick="addChan('relay')">+ Add Relay</button>
+  <button class="mini-btn" style="flex:1;background:#8b0000" onclick="remChan('relay')">− Remove Relay</button>
+ </div>`;
+ relayHtml+=(c.fx||[]).map((r,i)=>
   `<div class="relay-card" id="rcard${i}"><div class="relay-name">${r.name}<span class="relay-dot" id="rdot${i}"></span></div>
   <select id="rb_${i}" title="WJ-AVE5 button this relay presses" onchange="setRelayBtn(${i})">${AVE5_BUTTONS.map((b,bi)=>`<option value="${bi}" ${r.ave5_button===bi?'selected':''}>${b}</option>`).join('')}</select>
   <select id="rt_${i}" onchange="setRelayCfg(${i})">${TRIGGERS.map((t,ti)=>`<option value="${ti}" ${r.trigger===ti?'selected':''}>${t}</option>`).join('')}</select>
@@ -269,6 +285,7 @@ function buildUI(c){CFG=c;
   <select id="rpin_${i}" onchange="remapPin(${i})" style="flex:1">${PIN_OPTIONS.map(p=>`<option ${r.pin===p?'selected':''}>${p}</option>`).join('')}</select></div>
   <button class="mini-btn" onclick="fireRelay(${i})">⚡ FIRE</button>
   <button class="mini-btn stop" onclick="stopRelay(${i})">■ STOP</button></div>`).join('');
+ document.getElementById('relays').innerHTML=relayHtml;
 
  // boot sequence editor
  const bt=c.boot;
@@ -294,8 +311,18 @@ const BOOT_STEPS_MAX=12;
 function upd(k,v){CFG[k]=parseFloat(v);const u={D_min:'cm',D_max:'cm',hysteresis:'cm'}[k]||'';
  document.getElementById('cv_'+k).textContent=v+u;}
 function setVac(i,v){ws.send(JSON.stringify({type:'vactrol_manual',ch:i,value:parseInt(v)}));document.getElementById('vv'+i).textContent=v}
+function setVacSource(i){
+ const m=parseInt(document.getElementById('vsrc_'+i).value);
+ document.getElementById('vs_'+i).disabled=(m!==0);
+ ws.send(JSON.stringify({type:'vactrol_source',ch:i,mode:m}));
+}
+function setVacPin(i){
+ ws.send(JSON.stringify({type:'vactrol_pin',ch:i,pin:parseInt(document.getElementById('vpin_'+i).value)}));
+}
 function setVacAuto(i,on){document.getElementById('vs_'+i).disabled=on;
  ws.send(JSON.stringify({type:'vactrol_auto',ch:i,auto:on}))}
+function addChan(b){ws.send(JSON.stringify({type:'add_channel',bank:b,pin:-1}))}
+function remChan(b){ws.send(JSON.stringify({type:'remove_channel',bank:b}))}
 function setRelayCfg(i,clockOnly){
  if(clockOnly){const en=document.getElementById('rclk_'+i).checked;
   document.getElementById('rci_'+i).disabled=!en;
@@ -324,7 +351,7 @@ document.getElementById('saveBtn').onclick=()=>{
  p.pwm_max_clamp=parseInt(document.getElementById('c_pwm_max_clamp').value);
  p.gate_sensitivity = [];
  for(let i=0;i<9;i++) p.gate_sensitivity.push(parseInt(document.getElementById('gsens_'+i).value));
- p.vactrol=[];for(let i=0;i<CFG.vactrol.length;i++)p.vactrol.push({source_mode:parseInt(document.getElementById('vsrc_'+i).value),
+ p.vactrol=[];for(let i=0;i<(CFG.vactrol?CFG.vactrol.length:0);i++)p.vactrol.push({source_mode:parseInt(document.getElementById('vsrc_'+i).value),
   dynamic_slew:document.getElementById('vdyn_'+i).checked,
   min_clamp:parseInt(document.getElementById('vcmin_'+i).value),
   max_clamp:parseInt(document.getElementById('vcmax_'+i).value),
@@ -332,7 +359,7 @@ document.getElementById('saveBtn').onclick=()=>{
   gamma:parseFloat(document.getElementById('vgamma_'+i).value),
   manual_value:parseInt(document.getElementById('vs_'+i).value),
   ave5_pot:parseInt(document.getElementById('vpot_'+i).value)});
- p.fx=CFG.fx.map((r,i)=>({trigger:parseInt(document.getElementById('rt_'+i).value),
+ p.fx=(CFG.fx||[]).map((r,i)=>({trigger:parseInt(document.getElementById('rt_'+i).value),
   press_length_ms:parseInt(document.getElementById('rl_'+i).value),
   press_count:parseInt(document.getElementById('rn_'+i).value),
   press_gap_ms:parseInt(document.getElementById('rg_'+i).value),
@@ -460,6 +487,8 @@ void WebConsole::_sendFullConfig(AsyncWebSocketClient* client) {
     c["retreat_threshold_cm_s"] = g_config.retreat_threshold_cm_s;
     c["pwm_min_clamp"] = g_config.pwm_min_clamp;
     c["pwm_max_clamp"] = g_config.pwm_max_clamp;
+    c["vactrol_count"] = g_config.vactrol_count;
+    c["relay_count"] = g_config.relay_count;
 
     JsonArray gs = c["gate_sensitivity"].to<JsonArray>();
     for (int i = 0; i < RADAR_GATE_COUNT; i++) gs.add(g_config.gate_sensitivity[i]);
@@ -471,7 +500,7 @@ void WebConsole::_sendFullConfig(AsyncWebSocketClient* client) {
     for (unsigned q = 0; q < AVE5_POT_COUNT; q++) apots.add(AVE5_POTS[q]);
 
     JsonArray vac = c["vactrol"].to<JsonArray>();
-    for (int i = 0; i < VACTROL_COUNT; i++) {
+    for (int i = 0; i < g_config.vactrol_count; i++) {
         JsonObject v = vac.add<JsonObject>();
         v["source_mode"] = g_config.vactrol[i].source_mode;
         v["dynamic_slew"] = g_config.vactrol[i].dynamic_slew;
@@ -481,10 +510,11 @@ void WebConsole::_sendFullConfig(AsyncWebSocketClient* client) {
         v["manual_value"] = g_config.vactrol[i].manual_value;
         v["ave5_pot"] = g_config.vactrol[i].ave5_pot;
         v["gamma"] = g_config.vactrol[i].gamma;
+        v["pin"] = g_vactrols.getPin(i);
     }
 
     JsonArray fx = c["fx"].to<JsonArray>();
-    for (int i = 0; i < RELAY_COUNT; i++) {
+    for (int i = 0; i < g_config.relay_count; i++) {
         JsonObject r = fx.add<JsonObject>();
         r["name"] = g_config.fx[i].name;
         r["trigger"] = g_config.fx[i].trigger;
@@ -532,15 +562,15 @@ void WebConsole::_handleWsMessage(AsyncWebSocketClient* client, uint8_t* data, s
     }
     else if (!strcmp(type, "relay_fire")) {
         uint8_t idx = doc["index"] | 255;
-        if (_relay_fire && idx < RELAY_COUNT) _relay_fire(idx);
+        if (_relay_fire && idx < g_config.relay_count) _relay_fire(idx);
     }
     else if (!strcmp(type, "relay_stop")) {
         uint8_t idx = doc["index"] | 255;
-        if (_relay_stop && idx < RELAY_COUNT) _relay_stop(idx);
+        if (_relay_stop && idx < g_config.relay_count) _relay_stop(idx);
     }
     else if (!strcmp(type, "relay_cfg")) {
         uint8_t idx = doc["index"] | 255;
-        if (idx < RELAY_COUNT) {
+        if (idx < g_config.relay_count) {
             FxRelaySettings& s = g_config.fx[idx];
             s.trigger           = constrain(doc["trigger"].as<int>(), 0, FX_TRIGGER_COUNT - 1);
             s.press_length_ms   = constrain(doc["press_length_ms"].as<int>(), 30, 3000);
@@ -556,7 +586,7 @@ void WebConsole::_handleWsMessage(AsyncWebSocketClient* client, uint8_t* data, s
     }
     else if (!strcmp(type, "relay_ave5_button")) {
         uint8_t idx = doc["index"] | 255;
-        if (idx < RELAY_COUNT)
+        if (idx < g_config.relay_count)
             g_config.fx[idx].ave5_button =
                 constrain(doc["button"].as<int>(), 0, (int)AVE5_BUTTON_COUNT - 1);
     }
@@ -564,29 +594,71 @@ void WebConsole::_handleWsMessage(AsyncWebSocketClient* client, uint8_t* data, s
         uint8_t idx = doc["index"] | 255;
         uint8_t pin = doc["pin"] | 0;
         extern RelayManager g_relays;   // main.cpp global
-        bool ok = (idx < RELAY_COUNT) && g_relays.remapPin(idx, pin);
+        bool ok = (idx < g_config.relay_count) && g_relays.remapPin(idx, pin);
         JsonDocument ack2; ack2["type"] = ok ? "pin_ok" : "pin_fail";
         String o2; serializeJson(ack2, o2); client->text(o2);
         return;
     }
+    else if (!strcmp(type, "vactrol_pin")) {
+        uint8_t ch = doc["ch"] | 255;
+        uint8_t pin = doc["pin"] | 0;
+        extern VactrolManager g_vactrols;
+        bool ok = (ch < g_config.vactrol_count) && g_vactrols.remapPin(ch, pin);
+        JsonDocument ack2; ack2["type"] = ok ? "pin_ok" : "pin_fail";
+        String o2; serializeJson(ack2, o2); client->text(o2);
+        return;
+    }
+    else if (!strcmp(type, "vactrol_source")) {
+        uint8_t ch = doc["ch"] | 255;
+        if (ch < g_config.vactrol_count) {
+            g_config.vactrol[ch].source_mode = constrain(doc["mode"].as<int>(), 0, 3);
+        }
+    }
     else if (!strcmp(type, "vactrol_auto")) {
         uint8_t ch = doc["ch"] | 255;
         // Legacy auto toggle: map bool -> source_mode (0=Manual, 1=Distance/auto)
-        if (ch < VACTROL_COUNT)
+        if (ch < g_config.vactrol_count)
             g_config.vactrol[ch].source_mode = (doc["auto"] | false) ? 1 : 0;
     }
     else if (!strcmp(type, "vactrol_manual")) {
         uint8_t ch = doc["ch"] | 255;
-        if (ch < VACTROL_COUNT) {
+        if (ch < g_config.vactrol_count) {
             g_config.vactrol[ch].manual_value =
                 constrain(doc["value"].as<int>(), 0, VACTROL_PWM_MAX);
         }
     }
     else if (!strcmp(type, "vactrol_pot")) {
         uint8_t ch = doc["ch"] | 255;
-        if (ch < VACTROL_COUNT)
+        if (ch < g_config.vactrol_count)
             g_config.vactrol[ch].ave5_pot =
                 constrain(doc["pot"].as<int>(), 0, (int)AVE5_POT_COUNT - 1);
+    }
+    else if (!strcmp(type, "add_channel")) {
+        const char* bank = doc["bank"] | "";
+        int pin = doc["pin"] | -1;
+        bool ok = false;
+        if (!strcmp(bank, "vactrol")) {
+            ok = (g_vactrols.addVactrol(pin >= 0 ? (int8_t)pin : -1) >= 0);
+        } else if (!strcmp(bank, "relay")) {
+            ok = (g_relays.addRelay(pin >= 0 ? (int8_t)pin : -1) >= 0);
+        }
+        JsonDocument ack2; ack2["type"] = ok ? "channel_added" : "channel_failed";
+        String o2; serializeJson(ack2, o2); client->text(o2);
+        if (ok) _sendFullConfig(client);
+        return;
+    }
+    else if (!strcmp(type, "remove_channel")) {
+        const char* bank = doc["bank"] | "";
+        bool ok = false;
+        if (!strcmp(bank, "vactrol")) {
+            ok = g_vactrols.removeLastVactrol();
+        } else if (!strcmp(bank, "relay")) {
+            ok = g_relays.removeLastRelay();
+        }
+        JsonDocument ack2; ack2["type"] = ok ? "channel_removed" : "channel_failed";
+        String o2; serializeJson(ack2, o2); client->text(o2);
+        if (ok) _sendFullConfig(client);
+        return;
     }
     else if (!strcmp(type, "save_config")) {
         JsonObject p = doc["payload"];
@@ -617,7 +689,7 @@ void WebConsole::_handleWsMessage(AsyncWebSocketClient* client, uint8_t* data, s
         JsonArray vac = p["vactrol"].as<JsonArray>();
         int i = 0;
         for (JsonObject v : vac) {
-            if (i >= VACTROL_COUNT) break;
+            if (i >= g_config.vactrol_count) break;
             g_config.vactrol[i].source_mode  = v["source_mode"] | g_config.vactrol[i].source_mode;
             g_config.vactrol[i].dynamic_slew = v["dynamic_slew"] | g_config.vactrol[i].dynamic_slew;
             g_config.vactrol[i].min_clamp    = v["min_clamp"] | g_config.vactrol[i].min_clamp;
@@ -634,7 +706,7 @@ void WebConsole::_handleWsMessage(AsyncWebSocketClient* client, uint8_t* data, s
         i = 0;
         if (!fxp.isNull()) {
             for (JsonObject r : fxp) {
-                if (i >= RELAY_COUNT) break;
+                if (i >= g_config.relay_count) break;
                 g_config.fx[i].trigger         = constrain(r["trigger"].as<int>(), 0, FX_TRIGGER_COUNT - 1);
                 g_config.fx[i].press_length_ms = constrain(r["press_length_ms"].as<int>(), 30, 3000);
                 g_config.fx[i].press_count     = constrain(r["press_count"].as<int>(), 1, 5);
@@ -655,7 +727,8 @@ void WebConsole::_handleWsMessage(AsyncWebSocketClient* client, uint8_t* data, s
             int si = 0;
             for (JsonObject st : steps) {
                 if (si >= sc) break;
-                g_config.boot.steps[si].relay         = constrain(st["relay"].as<int>(), 0, RELAY_COUNT - 1);
+                st["relay"] = constrain(st["relay"].as<int>(), 0, g_config.relay_count > 0 ? (int)g_config.relay_count - 1 : 0);
+                g_config.boot.steps[si].relay         = st["relay"];
                 g_config.boot.steps[si].presses       = constrain(st["presses"].as<int>(), 1, 5);
                 g_config.boot.steps[si].length_ms     = constrain(st["length_ms"].as<int>(), 30, 5000);
                 g_config.boot.steps[si].gap_ms        = constrain(st["gap_ms"].as<int>(), 20, 5000);
@@ -718,11 +791,11 @@ void WebConsole::broadcastTelemetry(const TelemetryPacket& p) {
 
     JsonArray rseq = t["relay_seq"].to<JsonArray>();
     JsonArray rprs = t["relay_pressed"].to<JsonArray>();
-    for (int i = 0; i < RELAY_COUNT; i++) { rseq.add(p.relay_seq[i]); rprs.add(p.relay_pressed[i]); }
+    for (int i = 0; i < g_config.relay_count; i++) { rseq.add(p.relay_seq[i]); rprs.add(p.relay_pressed[i]); }
 
     JsonArray vval = t["vactrol_val"].to<JsonArray>();
     JsonArray vauto = t["vactrol_auto"].to<JsonArray>();
-    for (int i = 0; i < VACTROL_COUNT; i++) { vval.add(p.vactrol_val[i]); vauto.add(p.vactrol_auto[i]); }
+    for (int i = 0; i < g_config.vactrol_count; i++) { vval.add(p.vactrol_val[i]); vauto.add(p.vactrol_auto[i]); }
 
     String out; serializeJson(doc, out);
     _ws->textAll(out);

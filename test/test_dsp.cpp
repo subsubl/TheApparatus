@@ -7,6 +7,7 @@
 #include <cassert>
 #include <cmath>
 #include <vector>
+#include <limits>
 
 #include "../include/PinDefinitions.h"
 #include "../include/DSP.h"
@@ -25,6 +26,16 @@ void test_alphabeta_filter() {
     val = ab.update(200.0f, 0.1f); 
     assert(val > 100.0f && val < 200.0f);
 
+    // Feeding NaN/Inf must be rejected and preserve filter state
+    float before_nan = ab.getValue();
+    float nan_res = ab.update(std::numeric_limits<float>::quiet_NaN(), 0.1f);
+    assert(nan_res == before_nan);
+    assert(!std::isnan(ab.getValue()));
+
+    float inf_res = ab.update(std::numeric_limits<float>::infinity(), 0.1f);
+    assert(inf_res == before_nan);
+    assert(!std::isinf(ab.getValue()));
+
     std::cout << "[PASS] test_alphabeta_filter\n";
 }
 
@@ -38,6 +49,12 @@ void test_agc_normalizer() {
     }
     // Max in window is 10.0, output for 10.0 should be 1.0
     assert(std::abs(agc.getCurrentMax() - 10.0f) < 1e-4);
+
+    // Test zero-window safety & NaN immunity
+    AGCNormalizer agc_zero(0);
+    float out_nan = agc_zero.update(std::numeric_limits<float>::quiet_NaN());
+    assert(!std::isnan(out_nan));
+    assert(out_nan >= -1.0f && out_nan <= 1.0f);
 
     std::cout << "[PASS] test_agc_normalizer\n";
 }
@@ -54,6 +71,12 @@ void test_gate_interpolator() {
     assert(peak_gate == 2);
     assert(virtual_e > 0.0f);
 
+    // Zero / negative gate size clamp test
+    GateInterpolator interpolator_zero(0.0f);
+    float v_safe = interpolator_zero.interpolate(180.0f, energies, &peak_gate, &alpha);
+    assert(!std::isnan(v_safe));
+    assert(!std::isnan(alpha));
+
     std::cout << "[PASS] test_gate_interpolator\n";
 }
 
@@ -67,6 +90,11 @@ void test_biquad_filter() {
         dc_out = filter.process(10.0f);
     }
     assert(std::abs(dc_out) < 1.0f); // DC attenuated
+
+    // NaN input test
+    float nan_out = filter.process(std::numeric_limits<float>::quiet_NaN());
+    assert(!std::isnan(nan_out));
+    assert(!std::isinf(nan_out));
 
     std::cout << "[PASS] test_biquad_filter\n";
 }

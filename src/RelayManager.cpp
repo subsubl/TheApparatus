@@ -7,7 +7,9 @@
  */
 
 #include "RelayManager.h"
+#ifndef APPARATUS_NATIVE_TEST
 #include <Arduino.h>
+#endif
 
 /* ============================================================================
  * INIT
@@ -18,8 +20,8 @@ void RelayManager::begin() {
         int pin = g_config.layout.relay_pins[i];
 #ifndef APPARATUS_NATIVE_TEST
         if (pin >= 0) {
-            pinMode(pin, OUTPUT);
             digitalWrite(pin, RELAY_BOOT_SAFE_LEVEL);
+            pinMode(pin, OUTPUT);
         }
 #endif
         _rt[i] = FxRelayRuntime{};
@@ -46,8 +48,8 @@ bool RelayManager::remapPin(uint8_t index, int new_pin) {
         pinMode(old_pin, INPUT);
     }
     if (new_pin >= 0) {
-        pinMode(new_pin, OUTPUT);
         digitalWrite(new_pin, RELAY_BOOT_SAFE_LEVEL);
+        pinMode(new_pin, OUTPUT);
     }
 #endif
     log_i("Relay %u remapped: GPIO %d -> GPIO %d", index, old_pin, new_pin);
@@ -68,8 +70,8 @@ bool RelayManager::addRelay(int pin) {
     int new_pin = g_config.layout.relay_pins[idx];
 #ifndef APPARATUS_NATIVE_TEST
     if (new_pin >= 0) {
-        pinMode(new_pin, OUTPUT);
         digitalWrite(new_pin, RELAY_BOOT_SAFE_LEVEL);
+        pinMode(new_pin, OUTPUT);
     }
 #endif
     _rt[idx] = FxRelayRuntime{};
@@ -227,6 +229,7 @@ void RelayManager::setAllReleased() {
 
 bool RelayManager::_cooldownOk(uint8_t index) const {
     if (index >= BANK_CAPACITY) return false;
+    if (_last_breath_fire[index] == 0) return true;
     return (millis() - _last_breath_fire[index]) >= g_config.auto_trigger_cooldown_ms;
 }
 
@@ -247,7 +250,7 @@ void RelayManager::_autoTriggerCheck(bool state_changed, ApparatusState_t prev,
             bool fire = false;
             switch (s.trigger) {
                 case TRIG_ON_L3_CUT:      fire = (new_state == STATE_CONTACT); break;
-                case TRIG_ON_L3_RELEASE:  fire = (prev != STATE_CONTACT) &&
+                case TRIG_ON_L3_RELEASE:  fire = (prev == STATE_CONTACT) &&
                                                  (new_state != STATE_CONTACT); break;
                 case TRIG_ON_L2_ENTRY:    fire = (new_state == STATE_MACRO);   break;
                 case TRIG_ON_BREATH_LOCK: fire = (new_state == STATE_MICRO);   break;

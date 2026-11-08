@@ -122,7 +122,9 @@ void ApparatusStateMachine::_handleMacro(const RadarFrame& frame) {
 
     float filtered_dist = _dsp.getDistanceFiltered();
     float linear = _mapDistanceToPWM(filtered_dist);
-    _gamma_shaped = powf(linear, g_config.gamma_exponent);
+    float exponent = (g_config.gamma_exponent > 0.0f) ? g_config.gamma_exponent : 1.0f;
+    _gamma_shaped = powf(linear, exponent);
+    if (std::isnan(_gamma_shaped) || std::isinf(_gamma_shaped)) _gamma_shaped = linear;
     _base_pwm = _gamma_shaped * 255.0f;
 
     _pi_trigger_active = false;
@@ -185,7 +187,9 @@ float ApparatusStateMachine::_effectiveDistance(const RadarFrame& frame) const {
 
 float ApparatusStateMachine::_mapDistanceToPWM(float distance_cm) const {
     float clamped = constrain(distance_cm, g_config.D_min, g_config.D_max);
-    float linear = 1.0f - (clamped - g_config.D_min) / (g_config.D_max - g_config.D_min);
+    float span = g_config.D_max - g_config.D_min;
+    if (span <= 0.001f) span = 1.0f;
+    float linear = 1.0f - (clamped - g_config.D_min) / span;
     return constrain(linear, 0.0f, 1.0f);
 }
 
@@ -254,7 +258,9 @@ void ApparatusStateMachine::_transitionTo(ApparatusState_t new_state) {
 
 void ApparatusStateMachine::_updatePWMOutput(float target_norm) {
     uint32_t now = millis();
-    uint32_t dt = (now > _last_pwm_update) ? (now - _last_pwm_update) : 1;
+    uint32_t dt = now - _last_pwm_update;
+    if (dt == 0) dt = 1;
+    if (dt > 1000) dt = 1000;
     _last_pwm_update = now;
 
     float max_change = g_config.slew_rate_limit * dt * 0.01f;  // Per-ms glide

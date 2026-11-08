@@ -72,6 +72,7 @@ private:
     };
     ParseState _state = ParseState::SYNC_HEADER;
     uint8_t _sync_pos = 0;
+    uint8_t _footer_pos = 0;
     uint16_t _expected_data_len = 0;
     bool _frame_is_ack = false;
 

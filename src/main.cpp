@@ -312,7 +312,8 @@ void loop() {
               (unsigned)g_web.getClientCount());
     }
 
-    // 10. Heartbeat LED
+    // 10. Heartbeat LED (only if pin is not dedicated to UART1 PiLink TX)
+#if defined(STATUS_LED_PIN) && (STATUS_LED_PIN != PI_LINK_TX_PIN)
     static uint32_t last_led = 0;
     static bool led = false;
     if (millis() - last_led > 1000) {
@@ -320,6 +321,7 @@ void loop() {
         led = !led;
         digitalWrite(STATUS_LED_PIN, led);
     }
+#endif
 
     // Loop pacing
     uint32_t spent = millis() - loop_start;

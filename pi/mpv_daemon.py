@@ -109,21 +109,26 @@ def main():
 
     import serial  # pyserial: apt install python3-serial
 
-    ser = serial.Serial(SERIAL_PORT, BAUD, timeout=1)
-    buf = b""
-
     while True:
-        chunk = ser.read(64)
-        if chunk:
-            buf += chunk
-            while b"\n" in buf:
-                line, buf = buf.split(b"\n", 1)
-                try:
-                    handle(line.decode(errors="replace"))
-                except Exception as e:
-                    log(f"handler exception: {e}")
-        else:
-            time.sleep(0.01)
+        try:
+            ser = serial.Serial(SERIAL_PORT, BAUD, timeout=1)
+            buf = b""
+            log(f"serial connected on {SERIAL_PORT}@{BAUD}")
+            while True:
+                chunk = ser.read(64)
+                if chunk:
+                    buf += chunk
+                    while b"\n" in buf:
+                        line, buf = buf.split(b"\n", 1)
+                        try:
+                            handle(line.decode(errors="replace"))
+                        except Exception as e:
+                            log(f"handler exception: {e}")
+                else:
+                    time.sleep(0.01)
+        except Exception as e:
+            log(f"serial error on {SERIAL_PORT}: {e}, retrying in 2s...")
+            time.sleep(2.0)
 
 
 if __name__ == "__main__":

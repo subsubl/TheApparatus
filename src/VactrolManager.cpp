@@ -29,7 +29,9 @@ void VactrolManager::begin() {
 
 void VactrolManager::update(float mix_auto_target_0to1, float velocity_cm_s, float breath_wave, bool contact_active) {
     uint32_t now = millis();
-    uint32_t dt = (now > _last_update_ms) ? (now - _last_update_ms) : 1;
+    uint32_t dt = now - _last_update_ms;
+    if (dt == 0) dt = 1;
+    if (dt > 1000) dt = 1000;
     _last_update_ms = now;
 
     // We can map absolute velocity from 0..100 cm/s to 0..1
@@ -134,9 +136,11 @@ void VactrolManager::_writeChannel(uint8_t ch, uint16_t counts) {
 uint16_t VactrolManager::_applyGamma(uint8_t ch, float linear01) const {
     linear01 = constrain(linear01, 0.0f, 1.0f);
     float g = (ch < BANK_CAPACITY) ? g_config.vactrol[ch].gamma : 1.0f;
+    if (g <= 0.0f) g = 1.0f;
     if (g == 1.0f) return (uint16_t)(linear01 * VACTROL_PWM_MAX + 0.5f);
     float shaped = powf(linear01, g);
-    return (uint16_t)(shaped * VACTROL_PWM_MAX + 0.5f);
+    if (std::isnan(shaped) || std::isinf(shaped)) shaped = linear01;
+    return (uint16_t)(constrain(shaped, 0.0f, 1.0f) * VACTROL_PWM_MAX + 0.5f);
 }
 
 bool VactrolManager::addVactrol(int pin) {

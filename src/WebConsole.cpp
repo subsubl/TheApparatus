@@ -638,9 +638,9 @@ void WebConsole::_handleWsMessage(AsyncWebSocketClient* client, uint8_t* data, s
         int pin = doc["pin"] | -1;
         bool ok = false;
         if (!strcmp(bank, "vactrol")) {
-            ok = (g_vactrols.addVactrol(pin >= 0 ? (int8_t)pin : -1) >= 0);
+            ok = g_vactrols.addVactrol(pin >= 0 ? (int8_t)pin : -1);
         } else if (!strcmp(bank, "relay")) {
-            ok = (g_relays.addRelay(pin >= 0 ? (int8_t)pin : -1) >= 0);
+            ok = g_relays.addRelay(pin >= 0 ? (int8_t)pin : -1);
         }
         JsonDocument ack2; ack2["type"] = ok ? "channel_added" : "channel_failed";
         String o2; serializeJson(ack2, o2); client->text(o2);
@@ -767,7 +767,7 @@ void WebConsole::broadcastTelemetry(const TelemetryPacket& p) {
     if (now - _last_broadcast < _telemetry_interval_ms) return;
     _last_broadcast = now;
 
-    if (_ws->count() == 0) return;
+    if (!_ws || _ws->count() == 0) return;
 
     JsonDocument doc;
     doc["type"] = "telemetry";

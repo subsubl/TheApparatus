@@ -225,8 +225,10 @@ void RadarParser::_processByte(uint8_t byte) {
                     _parse_errors++;
                     _state = ParseState::SYNC_HEADER;
                     _frame_len = 0;
+                    _footer_pos = 0;
                 } else {
                     _state = ParseState::COLLECT_DATA;
+                    _footer_pos = 0;
                 }
             }
             break;
@@ -235,37 +237,41 @@ void RadarParser::_processByte(uint8_t byte) {
             _frame_buffer[_frame_len++] = byte;
             if (--_expected_data_len == 0) {
                 _state = ParseState::CHECK_FOOTER;
+                _footer_pos = 0;
             }
             break;
 
         case ParseState::CHECK_FOOTER:
             _frame_buffer[_frame_len++] = byte;
-            if (_frame_len == 14 + 0 && false) { /* unreachable guard */ }
-            if (_frame_len >= 10 &&
-                _frame_buffer[_frame_len - 4] == 0xF8 &&
-                _frame_buffer[_frame_len - 3] == 0xF7 &&
-                _frame_buffer[_frame_len - 2] == 0xF6 &&
-                _frame_buffer[_frame_len - 1] == 0xF5 &&
-                _frame_len == (size_t)(6 + (_frame_buffer[4] | (_frame_buffer[5] << 8)) + 4)) {
-                // Complete frame with valid footer
-                const uint8_t* data = &_frame_buffer[6];
-                uint16_t dlen = _frame_len - 10;
+            _footer_pos++;
+            if (_footer_pos == 4) {
+                const uint8_t* f = &_frame_buffer[_frame_len - 4];
+                bool valid_footer = false;
                 if (_frame_is_ack) {
-                    _handleAckFrame(data, dlen);
+                    valid_footer = (f[0] == 0x04 && f[1] == 0x03 && f[2] == 0x02 && f[3] == 0x01);
                 } else {
-                    _handleReportFrame(data, dlen);
+                    valid_footer = (f[0] == 0xF8 && f[1] == 0xF7 && f[2] == 0xF6 && f[3] == 0xF5);
+                }
+
+                if (valid_footer) {
+                    const uint8_t* data = &_frame_buffer[6];
+                    uint16_t dlen = _frame_len - 10;
+                    if (_frame_is_ack) {
+                        _handleAckFrame(data, dlen);
+                    } else {
+                        _handleReportFrame(data, dlen);
+                    }
+                } else {
+                    _parse_errors++;
                 }
                 _state = ParseState::SYNC_HEADER;
                 _frame_len = 0;
-            } else if (_frame_len > FRAME_BUFFER_SIZE - 2) {
-                // Ran off the end without a valid footer - resync
+                _footer_pos = 0;
+            } else if (_frame_len >= FRAME_BUFFER_SIZE) {
                 _parse_errors++;
                 _state = ParseState::SYNC_HEADER;
                 _frame_len = 0;
-            } else {
-                _state = ParseState::SYNC_HEADER;  // Footer mismatch - resync
-                _frame_len = 0;
-                _parse_errors++;
+                _footer_pos = 0;
             }
             break;
     }

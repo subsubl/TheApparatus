@@ -27,6 +27,13 @@
 #define HIGH 1
 #define LOW  0
 #endif
+#ifndef INPUT
+#define INPUT 0
+#define OUTPUT 1
+#endif
+inline void pinMode(int, int) {}
+inline void digitalWrite(int, int) {}
+inline int digitalRead(int) { return 0; }
 #ifndef constrain
 #define constrain(amt,low,high) ((amt)<(low)?(low):((amt)>(high)?(high):(amt)))
 #endif

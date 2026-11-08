@@ -37,6 +37,9 @@ public:
     }
 
     float update(float measurement, float dt) {
+        if (std::isnan(measurement) || std::isinf(measurement)) {
+            return _x;
+        }
         if (!_initialized) {
             _x = measurement;
             _v = 0.0f;
@@ -96,6 +99,7 @@ public:
         _last_peak_gate = -1;
         if (out_alpha) *out_alpha = 0.0f;
 
+        float gsz = (_gate_size > 0.0f) ? _gate_size : RADAR_GATE_SIZE_CM;
         if (!stationary_gate_energy || filtered_distance_cm <= 0.0f ||
             filtered_distance_cm >= RADAR_MAX_DISTANCE_CM) {
             if (out_peak_gate) *out_peak_gate = -1;
@@ -103,9 +107,9 @@ public:
         }
 
         // Fractional position within gate (original spec formula)
-        int gate_of_target = (int)(filtered_distance_cm / _gate_size);
+        int gate_of_target = (int)(filtered_distance_cm / gsz);
         gate_of_target = constrain(gate_of_target, 0, RADAR_GATE_COUNT - 1);
-        float alpha = fmodf(filtered_distance_cm, _gate_size) / _gate_size;
+        float alpha = fmodf(filtered_distance_cm, gsz) / gsz;
         alpha = constrain(alpha, 0.0f, 1.0f);
 
         // Peak-gate selection (master briefing): highest stationary energy wins.
@@ -187,8 +191,13 @@ public:
     }
 
     float process(float x) {
+        if (std::isnan(x) || std::isinf(x)) x = 0.0f;
         float y = _coeffs.b0 * x + _coeffs.b1 * _state.x1 + _coeffs.b2 * _state.x2
                 - _coeffs.a1 * _state.y1 - _coeffs.a2 * _state.y2;
+        if (std::isnan(y) || std::isinf(y)) {
+            reset();
+            return 0.0f;
+        }
         _state.x2 = _state.x1;
         _state.x1 = x;
         _state.y2 = _state.y1;
@@ -217,10 +226,13 @@ private:
 class AGCNormalizer {
 public:
     AGCNormalizer(size_t window_size = 40, float epsilon = 1e-6f)
-        : _window_size(window_size), _epsilon(epsilon),
-          _buffer(std::vector<float>(window_size, 0.0f)) {}
+        : _window_size((window_size == 0) ? 1 : window_size),
+          _epsilon((epsilon > 1e-6f) ? epsilon : 1e-6f),
+          _buffer(std::vector<float>(_window_size, 0.0f)),
+          _current_max(_epsilon) {}
 
     float update(float input) {
+        if (std::isnan(input) || std::isinf(input)) input = 0.0f;
         _buffer[_head] = input;
         _head = (_head + 1) % _window_size;
         if (_count < _window_size) _count++;
@@ -232,7 +244,7 @@ public:
         }
         _current_max = max_abs;
 
-        float n = input / max_abs;
+        float n = (max_abs > 0.0f) ? (input / max_abs) : 0.0f;
         return constrain(n, -1.0f, 1.0f);
     }
 
@@ -247,8 +259,8 @@ public:
     }
 
     void resize(size_t new_size) {
-        _window_size = new_size;
-        _buffer.assign(new_size, 0.0f);
+        _window_size = (new_size == 0) ? 1 : new_size;
+        _buffer.assign(_window_size, 0.0f);
         clear();
     }
 

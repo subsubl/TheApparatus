@@ -118,6 +118,7 @@ non-blocking sequencer** performs the wake-up button choreography:
 - Engineering report payload (`type=0x01`, wire length `0x23`):
   `AA | state(1) | mov_dist(2) | mov_E(1) | still_dist(2) | still_E(1) | det_dist(2) | max_mov_gate(1) | max_still_gate(1) | moving_gates(9×1) | stationary_gates(9×1) | 55 00`
 - ACK frames matched by echoed command word + status byte — no timing heuristics.
+- **v1.1.1 fixes:** the parser's minimum engineering payload (`ENG_PAYLOAD_LEN`) is now 32 bytes (LD2410B/C frames also carry light + OUT bytes before `55 00`); previously every valid engineering frame was rejected as a parse error. Any config session (e.g. gate sensitivities) re-asserts `0x62` before `0xFE`, since some firmware resets engineering mode on a config cycle. A rate-limited warning is logged if the radar falls back to BASIC frames (gate bars would stay at 0).
 
 ## State Machine
 

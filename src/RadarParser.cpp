@@ -296,6 +296,11 @@ void RadarParser::_handleReportFrame(const uint8_t* data, uint16_t len) {
             _new_frame_ready = true;
         }
     } else if (type == RADAR_REPORT_BASIC) {
+        static uint32_t s_last_basic_warn = 0;
+        if (millis() - s_last_basic_warn > 5000) {
+            s_last_basic_warn = millis();
+            log_w("Radar sending BASIC frames - engineering mode not active (gate energies will be 0)");
+        }
         // Basic mode still gives us state + distances (no gates).
         // Parse the basic block so the pipeline degrades gracefully.
         // AA | state(1) mov(2) movE(1) still(2) stillE(1) det(2) | 55 00 = 13 bytes payload
@@ -437,18 +442,31 @@ void RadarParser::printStatus() const {
 
 void RadarParser::setGateSensitivities(const uint8_t sensitivities[RADAR_GATE_COUNT]) {
 #ifndef APPARATUS_SIM_MODE
-    if (!_waitAckFor(RADAR_CMD_ENABLE_CONFIG, 0)) {
-        _sendCommand(RADAR_CMD_ENABLE_CONFIG, (const uint8_t*)"\x01\x00", 2);
-        if (!_waitAckFor(RADAR_CMD_ENABLE_CONFIG, 1000)) return;
+    // Drop stale bytes (hardware FIFO + parser buffer) so a partial report
+    // frame can't corrupt the ACK handshake.
+    while (Serial2.available()) Serial2.read();
+    while (_readByte() >= 0) {}
+
+    _sendCommand(RADAR_CMD_ENABLE_CONFIG, (const uint8_t*)"\x01\x00", 2);
+    if (!_waitAckFor(RADAR_CMD_ENABLE_CONFIG, 1000)) {
+        log_w("setGateSensitivities: ENABLE_CONFIG failed");
+        return;
     }
-    
+
     for (int i = 0; i < RADAR_GATE_COUNT; i++) {
         uint8_t payload[18];
         formatGateSensitivityPayload(i, sensitivities[i], sensitivities[i], payload);
         _sendCommand(0x0064, payload, 18);
         _waitAckFor(0x0064, 200);
     }
-    
+
+    // Some LD2410 firmware resets volatile engineering mode on a config
+    // cycle; re-assert it before closing the session.
+    _sendCommand(RADAR_CMD_ENG_MODE_ON);
+    if (!_waitAckFor(RADAR_CMD_ENG_MODE_ON, 1000)) {
+        log_w("setGateSensitivities: ENG_MODE_ON re-assert failed");
+    }
+
     _sendCommand(RADAR_CMD_DISABLE_CONFIG);
     _waitAckFor(RADAR_CMD_DISABLE_CONFIG, 500);
 #endif

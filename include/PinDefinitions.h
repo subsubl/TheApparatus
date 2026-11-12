@@ -142,7 +142,10 @@ static const uint8_t DATA_FOOTER[4] = {0xF8, 0xF7, 0xF6, 0xF5};
 #define RADAR_REPORT_ENGINEERING   0x01
 #define REPORT_HEAD_MARKER         0xAA
 #define REPORT_TAIL_MARKER         0x55
-#define ENG_PAYLOAD_LEN            35
+// Minimum engineering payload length AFTER the type byte (AA ... 55 00):
+// 34 on LD2410B/C (light + OUT bytes), 32 on older LD2410. Gate data ends at
+// p[29], so accept both. (The old value 35 rejected every valid frame.)
+#define ENG_PAYLOAD_LEN            32
 
 #define RADAR_GATE_COUNT           9
 #define RADAR_GATE_SIZE_CM         75
